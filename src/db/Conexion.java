@@ -20,6 +20,7 @@ public class Conexion {
     private final static String PASS="######";
     //private final static String DB="######";
     private final static String DB="######";
+    //linea de prueba
     public Connection getConnection(){
         
         Properties propiedadesConexion = new Properties();
