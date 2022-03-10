@@ -15,12 +15,13 @@ import java.util.Properties;
  * @author alfon
  */
 public class Conexion {
+    //IGNORADO!
     private final static String SERVER="######";
     private final static String USER="######";
     private final static String PASS="######";
     //private final static String DB="######";
     private final static String DB="######";
-    //linea de prueba
+
     public Connection getConnection(){
         
         Properties propiedadesConexion = new Properties();
