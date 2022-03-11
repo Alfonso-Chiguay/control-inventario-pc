@@ -7,7 +7,8 @@
             <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/modelo/VentaProducto.java</file>
             <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/controlador/ConProducto.java</file>
             <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/controlador/ConVenta.java</file>
-            <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/modelo/Venta.java</file>
+            <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/controlador/OfflineQueuesBD.java</file>
+            <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/piliscoffeepos/Main.java</file>
             <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/vista/Inicio.java</file>
             <file>file:/C:/Users/alfon/Desktop/PilisCoffePOS/PilisCoffeePOS/src/vista/IngresarProducto.java</file>
         </group>
