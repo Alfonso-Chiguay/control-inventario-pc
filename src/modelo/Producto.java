@@ -70,8 +70,8 @@ public class Producto {
         return stock;
     }
 
-    public void setStock(int stock) throws Exception {
-        if(stock <= 0) throw new Exception("El stock no puede ser menor o igual a 0");
+    public void setStock(int stock){
+        
         this.stock = stock;
     }
 

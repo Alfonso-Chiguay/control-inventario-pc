@@ -175,7 +175,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         btn_salir.setBackground(new java.awt.Color(94, 84, 142));
         btn_salir.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btn_salir.setForeground(new java.awt.Color(255, 255, 255));
-        btn_salir.setText("Salir sin guardar");
+        btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);

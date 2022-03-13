@@ -479,6 +479,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         if(continuar){
             if(CONEXION.isNetworkOnline()){
                t.start();
+               JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
                this.dispose();
             }
             else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
@@ -560,6 +561,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 limpiarCampos();
                 codigo = "";
                 habilitarCampos();
+                JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
             }
             else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
 

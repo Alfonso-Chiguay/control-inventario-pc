@@ -597,8 +597,17 @@ public class NuevaVenta extends javax.swing.JFrame {
 
                 ConVenta cVenta = new ConVenta();
                 boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                if(operacion){                    
+                if(operacion){     
+                    cVenta.stockNegativo(lista, this);
                     btn_confirmar.setText("Ingresar otra venta");
+                    txt_codigoBarra.setEnabled(false);
+                    cb_productos.setEnabled(false);
+                    btn_elegirProducto.setEnabled(false);
+                    cb_tipoVenta.setEnabled(false);
+                    tbl_detalleVenta.setEnabled(false);
+                    btn_calcularVuelto.setEnabled(false);
+                    txt_pagoEfectivo.setEnabled(false);
+                    btn_eliminarFila.setEnabled(false);
                 }
                     
                 
@@ -617,8 +626,15 @@ public class NuevaVenta extends javax.swing.JFrame {
                 txt_pagoEfectivo.setText("$0");
                 txt_vuelto.setText("$0");
                 cb_tipoVenta.setSelectedIndex(0);
-                btn_calcularVuelto.setEnabled(true);        
+                txt_codigoBarra.setEnabled(true);
+                cb_productos.setEnabled(true);
+                btn_elegirProducto.setEnabled(true);
+                cb_tipoVenta.setEnabled(true);
+                tbl_detalleVenta.setEnabled(true);
+                btn_calcularVuelto.setEnabled(true);
                 txt_pagoEfectivo.setEnabled(true);
+                btn_eliminarFila.setEnabled(true);
+                btn_confirmar.setText("Confirmar venta");
             }
         }
     }//GEN-LAST:event_btn_confirmarActionPerformed
