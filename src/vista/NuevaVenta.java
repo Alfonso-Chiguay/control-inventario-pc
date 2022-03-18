@@ -95,7 +95,13 @@ public class NuevaVenta extends javax.swing.JFrame {
 
                 }   
             }
-            
+            else{
+               int ingresar = JOptionPane.showConfirmDialog(null, "No hay un producto ingresado con este codigo, ¿Quiere registrarlo?", "Error buscando producto", JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION); 
+               if(ingresar == 0){
+                   IngresarProducto ventana = new IngresarProducto();
+                   ventana.setVisible(true);
+               }
+            }
 
 
         }
@@ -597,8 +603,7 @@ public class NuevaVenta extends javax.swing.JFrame {
 
                 ConVenta cVenta = new ConVenta();
                 boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                if(operacion){     
-                    cVenta.stockNegativo(lista, this);
+                if(operacion){                         
                     btn_confirmar.setText("Ingresar otra venta");
                     txt_codigoBarra.setEnabled(false);
                     cb_productos.setEnabled(false);

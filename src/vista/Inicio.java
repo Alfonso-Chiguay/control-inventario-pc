@@ -43,7 +43,8 @@ public class Inicio extends javax.swing.JFrame {
         menu_informes = new javax.swing.JMenu();
         mi_infVentaDiario = new javax.swing.JMenuItem();
         mi_infVentaPeriodo = new javax.swing.JMenuItem();
-        mi_infVentaPeriodo1 = new javax.swing.JMenuItem();
+        mi_infVerStock = new javax.swing.JMenuItem();
+        mi_infStockNegativo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -170,11 +171,27 @@ public class Inicio extends javax.swing.JFrame {
         mi_infVentaPeriodo.setText("Informe venta por periodo");
         menu_informes.add(mi_infVentaPeriodo);
 
-        mi_infVentaPeriodo1.setBackground(new java.awt.Color(159, 134, 192));
-        mi_infVentaPeriodo1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        mi_infVentaPeriodo1.setForeground(new java.awt.Color(35, 25, 66));
-        mi_infVentaPeriodo1.setText("Ver Stock");
-        menu_informes.add(mi_infVentaPeriodo1);
+        mi_infVerStock.setBackground(new java.awt.Color(159, 134, 192));
+        mi_infVerStock.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        mi_infVerStock.setForeground(new java.awt.Color(35, 25, 66));
+        mi_infVerStock.setText("Ver Stock");
+        mi_infVerStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_infVerStockActionPerformed(evt);
+            }
+        });
+        menu_informes.add(mi_infVerStock);
+
+        mi_infStockNegativo.setBackground(new java.awt.Color(159, 134, 192));
+        mi_infStockNegativo.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        mi_infStockNegativo.setForeground(new java.awt.Color(35, 25, 66));
+        mi_infStockNegativo.setText("Informe diario stock negativo");
+        mi_infStockNegativo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_infStockNegativoActionPerformed(evt);
+            }
+        });
+        menu_informes.add(mi_infStockNegativo);
 
         mb_barraPrincipal.add(menu_informes);
 
@@ -222,6 +239,14 @@ public class Inicio extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_mi_consultarPrecioActionPerformed
 
+    private void mi_infVerStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_infVerStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mi_infVerStockActionPerformed
+
+    private void mi_infStockNegativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_infStockNegativoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mi_infStockNegativoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -268,9 +293,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem mi_cargaMasiva;
     private javax.swing.JMenuItem mi_consultarPrecio;
     private javax.swing.JMenuItem mi_editarStockPrecio;
+    private javax.swing.JMenuItem mi_infStockNegativo;
     private javax.swing.JMenuItem mi_infVentaDiario;
     private javax.swing.JMenuItem mi_infVentaPeriodo;
-    private javax.swing.JMenuItem mi_infVentaPeriodo1;
+    private javax.swing.JMenuItem mi_infVerStock;
     private javax.swing.JMenuItem mi_ingresarProducto;
     private javax.swing.JMenuItem mi_nuevaVenta;
     // End of variables declaration//GEN-END:variables
