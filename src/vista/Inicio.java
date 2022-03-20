@@ -1,4 +1,5 @@
 package vista;
+import controlador.ConInformes;
 import controlador.ConProducto;
 import java.awt.*;  
 import java.util.ArrayList;
@@ -163,6 +164,11 @@ public class Inicio extends javax.swing.JFrame {
         mi_infVentaDiario.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         mi_infVentaDiario.setForeground(new java.awt.Color(35, 25, 66));
         mi_infVentaDiario.setText("Informe venta diario");
+        mi_infVentaDiario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_infVentaDiarioActionPerformed(evt);
+            }
+        });
         menu_informes.add(mi_infVentaDiario);
 
         mi_infVentaPeriodo.setBackground(new java.awt.Color(159, 134, 192));
@@ -244,8 +250,14 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_infVerStockActionPerformed
 
     private void mi_infStockNegativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_infStockNegativoActionPerformed
-        // TODO add your handling code here:
+        ConInformes cInforme = new ConInformes();
+        cInforme.informeStockNegativo();
     }//GEN-LAST:event_mi_infStockNegativoActionPerformed
+
+    private void mi_infVentaDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_infVentaDiarioActionPerformed
+        ReporteDiario ventana = new ReporteDiario();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_mi_infVentaDiarioActionPerformed
 
     /**
      * @param args the command line arguments

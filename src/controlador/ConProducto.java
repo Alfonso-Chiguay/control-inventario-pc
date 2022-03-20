@@ -317,4 +317,32 @@ public class ConProducto {
         }
        
     }
+    
+    public ArrayList<Producto> stockNegativo(){
+        ArrayList<Producto> lista = new ArrayList<>();
+        try {
+            Statement stmt = CONNECTION.createStatement();
+            String query = "SELECT codigo_barra, nombre, stock FROM PRODUCTO WHERE stock < 0;";
+
+            ResultSet rs = stmt.executeQuery(query);
+
+
+            while(rs.next()){
+                Producto p = new Producto();
+                p.setCodigo_barra(rs.getString(1));
+                p.setNombre(rs.getString(2));
+                p.setStock(rs.getInt(3));
+                lista.add(p);
+            }
+            
+            
+
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return lista;
+    }
+    
 }

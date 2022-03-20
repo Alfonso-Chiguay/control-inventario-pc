@@ -49,5 +49,29 @@ public class ConVenta {
         }
     }
     
+    public ArrayList<Venta> ventasDia(String fecha){
+        //la fecha debe venir en formato año-mes-dia
+        ArrayList<Venta> lista = new ArrayList<>();
+        try {
+            Statement stmt = CONNECTION.createStatement();
+            String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha+" 00:00:00' AND '"+fecha+" 23:59:59';";
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()){
+                Venta v = new Venta();
+                v.setFolio(rs.getInt(1));
+                v.setFecha(rs.getString(2));
+                v.setTipo_venta(rs.getString(3));
+                v.setTotal(rs.getInt(4));
+                lista.add(v);
+            }
+            
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+    
     
 }

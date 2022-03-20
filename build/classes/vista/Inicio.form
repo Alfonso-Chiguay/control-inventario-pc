@@ -153,6 +153,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Informe venta diario"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mi_infVentaDiarioActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mi_infVentaPeriodo">
               <Properties>
