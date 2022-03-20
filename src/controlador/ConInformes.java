@@ -139,7 +139,7 @@ public class ConInformes {
             titulo.setAlignment(Chunk.ALIGN_CENTER);
 
             titulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 20, Font.BOLD, BaseColor.RED));
-            titulo.add("\nDETALLE DE VENTA DEL "+fechaSolicitada);
+            titulo.add("\nDETALLE DE VENTA DEL "+today);
             
             Paragraph subtitulo = new Paragraph();
             subtitulo.setAlignment(Chunk.ALIGN_CENTER);
@@ -323,7 +323,7 @@ public class ConInformes {
             
             
             
-            Paragraph firma = new Paragraph("\n\n\n________________________");
+            Paragraph firma = new Paragraph("\n\n\n\n\n________________________");
             firma.setAlignment(Chunk.ALIGN_RIGHT);
             documento.add(firma);
             firma = new Paragraph("V° B° REVISION          ");
