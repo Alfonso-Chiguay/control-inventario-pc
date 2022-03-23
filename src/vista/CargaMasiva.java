@@ -17,7 +17,11 @@ import javax.swing.JOptionPane;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
  *
@@ -32,12 +36,13 @@ public class CargaMasiva extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
         this.setTitle("Pili's Coffee POS Software | Carga masiva de productos");
-        InternalFrame.setVisible(false);
-        ProgressBar.setVisible(false);
+
         ProgressBar.setUI(new BasicProgressBarUI() {
             protected Color getSelectionBackground() { return Color.black; };
             protected Color getSelectionForeground() { return Color.white; };
         });
+
+                
         
     }
 
@@ -54,8 +59,6 @@ public class CargaMasiva extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_descargaPlantilla = new javax.swing.JButton();
         btn_subirArchivo = new javax.swing.JButton();
-        InternalFrame = new javax.swing.JInternalFrame();
-        FIleChooser = new javax.swing.JFileChooser();
         ProgressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -87,20 +90,6 @@ public class CargaMasiva extends javax.swing.JFrame {
             }
         });
 
-        InternalFrame.setIconifiable(true);
-        InternalFrame.setTitle("Seleccione el archivo de carga masiva");
-        InternalFrame.setVisible(true);
-        InternalFrame.getContentPane().setLayout(new java.awt.CardLayout());
-
-        FIleChooser.setCurrentDirectory(new java.io.File("C:\\Users\\alfon\\Desktop\\PilisCoffePOS\\Carga masiva"));
-        FIleChooser.setInheritsPopupMenu(true);
-        FIleChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FIleChooserActionPerformed(evt);
-            }
-        });
-        InternalFrame.getContentPane().add(FIleChooser, "card2");
-
         ProgressBar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         ProgressBar.setForeground(new java.awt.Color(159, 134, 192));
         ProgressBar.setStringPainted(true);
@@ -121,8 +110,7 @@ public class CargaMasiva extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_descargaPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
-                                .addComponent(btn_subirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(InternalFrame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE))
+                                .addComponent(btn_subirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,11 +121,9 @@ public class CargaMasiva extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_descargaPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_subirArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(InternalFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
                 .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,7 +131,7 @@ public class CargaMasiva extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 836, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -158,8 +144,8 @@ public class CargaMasiva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_descargaPlantillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_descargaPlantillaActionPerformed
-        String  rutaPlantilla = "src\\\\Plantillas\\\\Carga masiva productos.xlsx";   
-        String rutaDescarga =System.getProperty("user.home")+"\\Desktop\\PilisCoffePOS\\Carga masiva\\"; 
+        String  rutaPlantilla = "src/Plantillas/Carga masiva productos.xlsx";   
+        String rutaDescarga =System.getProperty("user.home")+"/Desktop/Carga masiva/"; 
         File archivoCopia = new File(rutaPlantilla);       
         File rutaFinalCopia = new File(rutaDescarga+archivoCopia.getName());  
         try{
@@ -175,38 +161,29 @@ public class CargaMasiva extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_descargaPlantillaActionPerformed
 
     private void btn_subirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_subirArchivoActionPerformed
-        InternalFrame.setVisible(true);
-        ProgressBar.setVisible(true);
-    }//GEN-LAST:event_btn_subirArchivoActionPerformed
+        //InternalFrame.setVisible(true);
+        String ruta =System.getProperty("user.home")+"/Desktop/Carga masiva/"; 
+        JFileChooser jf = new JFileChooser(ruta);
+        jf.updateUI();
 
-    private void FIleChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FIleChooserActionPerformed
-        if(!evt.getActionCommand().equals("CancelSelection")){   
-            String archivoSeleccionado = FIleChooser.getSelectedFile().toString();
-            if(archivoSeleccionado.contains("Carga masiva productos.xlsx")){
-                File archivoCarga = FIleChooser.getSelectedFile();    
+        jf.showOpenDialog(this);
+        File archivo = jf.getSelectedFile();
+        if(archivo != null){
+            if(archivo.toString().contains("Carga masiva productos.xlsx")){
                 int confirmar = JOptionPane.showConfirmDialog(this, "Este proceso puede tardar unos minutos, ¿desea continuar?", "Confirmar carga", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(confirmar == 0){  
                     if(CONEXION.isNetworkOnline()){
                         ConProducto cProducto = new ConProducto();
-                        cProducto.cargaMasiva(archivoCarga, ProgressBar, InternalFrame);
-
+                        cProducto.cargaMasiva(archivo, ProgressBar, this);
                     }
                     else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
-
-
-                }    
-            }  
-            else JOptionPane.showMessageDialog(this, "El archivo debe llamarse 'Carga masiva productos.xlsx'", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
-                
-                        
+                }   
+            }
             
         }
-        else {
-            InternalFrame.dispose();
-            ProgressBar.setVisible(false);
-        }
+        ProgressBar.setVisible(true);
         
-    }//GEN-LAST:event_FIleChooserActionPerformed
+    }//GEN-LAST:event_btn_subirArchivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,14 +215,16 @@ public class CargaMasiva extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+
+
+                
                 new CargaMasiva().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser FIleChooser;
-    private javax.swing.JInternalFrame InternalFrame;
     private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JButton btn_descargaPlantilla;
     private javax.swing.JButton btn_subirArchivo;

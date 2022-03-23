@@ -3,6 +3,10 @@ import controlador.ConInformes;
 import controlador.ConProducto;
 import java.awt.*;  
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Producto;
 
 
@@ -15,7 +19,18 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Inicio");                        
+        this.setTitle("Pili's Coffee POS Software | Inicio");  
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CargaMasiva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(CargaMasiva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(CargaMasiva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(CargaMasiva.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 
@@ -289,6 +304,9 @@ public class Inicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
+                
+                
                 new Inicio().setVisible(true);
             }
         });

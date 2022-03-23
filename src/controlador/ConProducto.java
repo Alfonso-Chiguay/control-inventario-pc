@@ -12,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;  
 import java.util.ArrayList;
 import java.util.Iterator;  
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -108,7 +109,7 @@ public class ConProducto {
         return lista;
     }
     
-    public void cargaMasiva(File archivoExcel, JProgressBar ProgressBar, JInternalFrame InternalFrame){
+    public void cargaMasiva(File archivoExcel, JProgressBar ProgressBar, JFrame Frame){
         ArrayList<Producto> productosNoIngresados = new ArrayList<>();
         ArrayList<Producto> productosIngresados = new ArrayList<>();
         
@@ -140,10 +141,10 @@ public class ConProducto {
                 }   
             }
             
-            final int totalFilas = filas;
+            if(filas > 0){
+                final int totalFilas = filas;           
             
-            
-            Thread t = new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     final Iterator<Row> itr = sheet.iterator(); 
@@ -260,15 +261,21 @@ public class ConProducto {
                     }  
                 ProgressBar.setValue(100);
                 ProgressBar.setString(String.valueOf("100%"));
-                JOptionPane.showMessageDialog(InternalFrame, String.valueOf(productosIngresados.size())+" Productos ingresados correctamente \n"+String.valueOf(productosNoIngresados.size())+" Productos NO ingresados.\n"+totalFilas+" Productos procesados en total.","Status de carga",JOptionPane.INFORMATION_MESSAGE);
-                InternalFrame.setVisible(false);
+                JOptionPane.showMessageDialog(Frame, String.valueOf(productosIngresados.size())+" Productos ingresados correctamente \n"+String.valueOf(productosNoIngresados.size())+" Productos NO ingresados.\n"+totalFilas+" Productos procesados en total.","Status de carga",JOptionPane.INFORMATION_MESSAGE);
+                Frame.setVisible(false);
                 ProgressBar.setValue(0);
                 ProgressBar.setVisible(false);
                 }
             });
             
-            t.start();
+                t.start();  
+              
+            }
+            else{
+                JOptionPane.showMessageDialog(Frame, "No hay productos para subir", "Error subiendo productos", JOptionPane.INFORMATION_MESSAGE);
+            }
             
+ 
         }        
         catch(Exception e){  
             e.printStackTrace();  
