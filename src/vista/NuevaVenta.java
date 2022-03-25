@@ -308,7 +308,7 @@ public class NuevaVenta extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -555,15 +555,32 @@ public class NuevaVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_codigoBarraActionPerformed
 
     private void tbl_detalleVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_detalleVentaKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+
+        if(evt.getKeyCode() == KeyEvent.VK_F1){
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-            for(int i = 0; i< table.getRowCount(); i ++){                
-                int cantidad = (int) table.getValueAt(i, 3);
-                int precio = (int)table.getValueAt(i, 2);
-                String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*precio));
-                table.setValueAt(valorTotal, i, 4);                
-            }
+            int row = tbl_detalleVenta.getSelectedRow();
+            int cantidad = (int) table.getValueAt(row, 3);
+            table.setValueAt(cantidad+1, row, 3);
+            int precio = (int)table.getValueAt(row, 2);
+            String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*precio));
+            table.setValueAt(valorTotal, row, 4); 
+            lostFocus(null, tbl_detalleVenta);
             threadPRECIO.run();
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_F2){
+            DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+            int row = tbl_detalleVenta.getSelectedRow();
+            int cantidad = (int) table.getValueAt(row, 3);
+            if(cantidad -1 > 0){
+                table.setValueAt(cantidad-1, row, 3);
+                int precio = (int)table.getValueAt(row, 2);
+                String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*precio));
+                table.setValueAt(valorTotal, row, 4); 
+                lostFocus(null, tbl_detalleVenta);
+                threadPRECIO.run();
+            }
+                
+            
         }
     }//GEN-LAST:event_tbl_detalleVentaKeyPressed
 

@@ -293,8 +293,8 @@
                       <Table columnCount="5" rowCount="0">
                         <Column editable="false" title="COD. PRODUCTO" type="java.lang.String"/>
                         <Column editable="false" title="NOMBRE" type="java.lang.String"/>
-                        <Column editable="true" title="PRECIO (UN.)" type="java.lang.Integer"/>
-                        <Column editable="true" title="CANTIDAD" type="java.lang.Integer"/>
+                        <Column editable="false" title="PRECIO (UN.)" type="java.lang.Integer"/>
+                        <Column editable="false" title="CANTIDAD" type="java.lang.Integer"/>
                         <Column editable="false" title="PRECIO TOTAL" type="java.lang.String"/>
                       </Table>
                     </Property>
