@@ -262,9 +262,8 @@ public class ConProducto {
                 ProgressBar.setValue(100);
                 ProgressBar.setString(String.valueOf("100%"));
                 JOptionPane.showMessageDialog(Frame, String.valueOf(productosIngresados.size())+" Productos ingresados correctamente \n"+String.valueOf(productosNoIngresados.size())+" Productos NO ingresados.\n"+totalFilas+" Productos procesados en total.","Status de carga",JOptionPane.INFORMATION_MESSAGE);
-                Frame.setVisible(false);
                 ProgressBar.setValue(0);
-                ProgressBar.setVisible(false);
+                ProgressBar.setString(String.valueOf("0%"));
                 }
             });
             

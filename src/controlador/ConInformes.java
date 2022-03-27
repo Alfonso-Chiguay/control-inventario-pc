@@ -13,12 +13,14 @@ import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.Producto;
 import modelo.Venta;
 
 public class ConInformes {
     
-    public void informeStockNegativo(){
+    public void informeStockNegativo(JFrame ventana){
         Document documento = new Document();
         try {
 
@@ -100,7 +102,7 @@ public class ConInformes {
             documento.add(firma);           
             
             documento.close();
-            
+            JOptionPane.showMessageDialog(ventana, "Reporte generado con éxito", "Stock negativo", JOptionPane.INFORMATION_MESSAGE);
             Desktop.getDesktop().open(new File(ruta));
             
         } 
