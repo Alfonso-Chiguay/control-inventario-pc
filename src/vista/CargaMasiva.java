@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -58,9 +59,9 @@ public class CargaMasiva extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btn_descargaPlantilla = new javax.swing.JButton();
-        btn_subirArchivo = new javax.swing.JButton();
         ProgressBar = new javax.swing.JProgressBar();
+        btn_plantilla = new javax.swing.JLabel();
+        btn_subir = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -72,46 +73,56 @@ public class CargaMasiva extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Carga masiva de productos");
 
-        btn_descargaPlantilla.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_descargaPlantilla.setForeground(new java.awt.Color(127, 85, 57));
-        btn_descargaPlantilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/download.png"))); // NOI18N
-        btn_descargaPlantilla.setText(" Descargar plantilla");
-        btn_descargaPlantilla.setFocusPainted(false);
-        btn_descargaPlantilla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_descargaPlantillaActionPerformed(evt);
-            }
-        });
-
-        btn_subirArchivo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_subirArchivo.setForeground(new java.awt.Color(127, 85, 57));
-        btn_subirArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/upload.png"))); // NOI18N
-        btn_subirArchivo.setText(" Subir archivo de carga");
-        btn_subirArchivo.setFocusPainted(false);
-        btn_subirArchivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_subirArchivoActionPerformed(evt);
-            }
-        });
-
         ProgressBar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         ProgressBar.setForeground(new java.awt.Color(127, 85, 57));
         ProgressBar.setBorderPainted(false);
         ProgressBar.setStringPainted(true);
 
+        btn_plantilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_solid.png"))); // NOI18N
+        btn_plantilla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_plantillaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_plantillaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_plantillaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_plantillaMouseReleased(evt);
+            }
+        });
+
+        btn_subir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_solid.png"))); // NOI18N
+        btn_subir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_subirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_subirMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_subirMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_subirMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                     .addComponent(ProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_descargaPlantilla, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_subirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_plantilla)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_subir)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -119,13 +130,13 @@ public class CargaMasiva extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_descargaPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_subirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_plantilla)
+                    .addComponent(btn_subir))
                 .addGap(30, 30, 30)
                 .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +154,14 @@ public class CargaMasiva extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_descargaPlantillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_descargaPlantillaActionPerformed
+    private void btn_plantillaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_plantillaMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_click.png"));
+        btn_plantilla.setIcon(botonClick);
+    }//GEN-LAST:event_btn_plantillaMouseEntered
+
+    private void btn_plantillaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_plantillaMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_click.png"));
+        btn_plantilla.setIcon(botonClick);
         String  rutaPlantilla = "src/Plantillas/Carga masiva productos.xlsx";   
         String rutaDescarga =System.getProperty("user.home")+"/Desktop/Carga masiva/"; 
         File archivoCopia = new File(rutaPlantilla);       
@@ -157,11 +175,33 @@ public class CargaMasiva extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo obtener la copia", "Copia fallida", JOptionPane.WARNING_MESSAGE);  
             System.out.println(e.getMessage());
         }
+        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_solid.png"));
+        btn_plantilla.setIcon(botonClick);
+    }//GEN-LAST:event_btn_plantillaMousePressed
 
-    }//GEN-LAST:event_btn_descargaPlantillaActionPerformed
+    private void btn_plantillaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_plantillaMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_solid.png"));
+        btn_plantilla.setIcon(botonClick);
+    }//GEN-LAST:event_btn_plantillaMouseExited
 
-    private void btn_subirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_subirArchivoActionPerformed
-        //InternalFrame.setVisible(true);
+    private void btn_plantillaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_plantillaMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/descargarplantilla_solid.png"));
+        btn_plantilla.setIcon(botonClick);
+    }//GEN-LAST:event_btn_plantillaMouseReleased
+
+    private void btn_subirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_click.png"));
+        btn_subir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_subirMouseEntered
+
+    private void btn_subirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_solid.png"));
+        btn_subir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_subirMouseExited
+
+    private void btn_subirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_click.png"));
+        btn_subir.setIcon(botonClick);
         String ruta =System.getProperty("user.home")+"/Desktop/Carga masiva/"; 
         JFileChooser jf = new JFileChooser(ruta);
         jf.updateUI();
@@ -181,9 +221,15 @@ public class CargaMasiva extends javax.swing.JFrame {
             }
             
         }
-        ProgressBar.setVisible(true);
-        
-    }//GEN-LAST:event_btn_subirArchivoActionPerformed
+        ProgressBar.setVisible(true);   
+        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_solid.png"));
+        btn_subir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_subirMousePressed
+
+    private void btn_subirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/subirarchivocarga_solid.png"));
+        btn_subir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_subirMouseReleased
 
     /**
      * @param args the command line arguments
@@ -226,8 +272,8 @@ public class CargaMasiva extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar ProgressBar;
-    private javax.swing.JButton btn_descargaPlantilla;
-    private javax.swing.JButton btn_subirArchivo;
+    private javax.swing.JLabel btn_plantilla;
+    private javax.swing.JLabel btn_subir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

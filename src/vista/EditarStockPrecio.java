@@ -12,6 +12,7 @@ import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.LogStockPrecio;
 import modelo.Producto;
@@ -28,6 +29,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     public Producto productoGlobal = new Producto();
     public String stockActual = "";
     public String precioAntiguo = "";
+    private boolean disabled_buttons;
 
     
     public EditarStockPrecio() {
@@ -48,12 +50,12 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         for(Trabajador t: listaTrabajadores){
             cb_Trabajador.addItem(t.getId_trabajador()+" - "+t.getNombre());
         }
-        
-        
-        
-        
+        disabled_buttons = false;
         
     }
+    
+    
+    
     Thread t = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -114,10 +116,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         txt_nuevoPrecio = new javax.swing.JTextField();
         lbl_nuevoStock = new javax.swing.JLabel();
         txt_nuevoStock = new javax.swing.JTextField();
-        btn_buscar = new javax.swing.JButton();
         btn_confirmarDatos = new javax.swing.JButton();
         cb_Trabajador = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        btn_search = new javax.swing.JLabel();
         btn_guardarCerrar = new javax.swing.JButton();
         btn_guardarContinuar = new javax.swing.JButton();
         btn_limpiar = new javax.swing.JButton();
@@ -233,14 +235,6 @@ public class EditarStockPrecio extends javax.swing.JFrame {
             }
         });
 
-        btn_buscar.setForeground(new java.awt.Color(255, 255, 255));
-        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search2.png"))); // NOI18N
-        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarActionPerformed(evt);
-            }
-        });
-
         btn_confirmarDatos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btn_confirmarDatos.setForeground(new java.awt.Color(127, 85, 57));
         btn_confirmarDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirm.png"))); // NOI18N
@@ -259,6 +253,22 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user.png"))); // NOI18N
         jLabel6.setText("¿QUIÉN MODIFICA?");
 
+        btn_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"))); // NOI18N
+        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_searchMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_searchMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_searchMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -269,51 +279,57 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txt_nombreProducto, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_stockActual)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_precioActual, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(chk_precio)
-                                        .addComponent(chk_stock, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addGap(20, 20, 20)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_nuevoPrecio)
-                                        .addComponent(txt_nuevoStock)
-                                        .addComponent(lbl_nuevoPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lbl_nuevoStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                                        .addComponent(txt_codigoProducto, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btn_buscar))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_stockActual)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_precioActual, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chk_precio)
+                                    .addComponent(chk_stock, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_nuevoPrecio)
+                                    .addComponent(txt_nuevoStock)
+                                    .addComponent(lbl_nuevoPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_nuevoStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_confirmarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cb_Trabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                                            .addComponent(txt_codigoProducto, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btn_search)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(40, 40, 40)))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_codigoProducto)
-                    .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_codigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -347,9 +363,9 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_Trabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(btn_confirmarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         btn_guardarCerrar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -535,11 +551,28 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         chk_stock.setEnabled(true);
         txt_nuevoPrecio.setEditable(true);
         txt_nuevoStock.setEditable(true);
-        btn_buscar.setEnabled(true);
+        //btn_buscar.setEnabled(true);
         btn_limpiar.setEnabled(true);
         btn_confirmarDatos.setEnabled(true);
         cb_Trabajador.setEnabled(true);
+        
+        disabled_buttons = false;
+        des_habilitar_buttons();
+        
+        
     }
+    
+    private void des_habilitar_buttons(){
+        if(disabled_buttons){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_disabled.png"));
+            btn_search.setIcon(botonClick);
+        }
+        else{
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));
+            btn_search.setIcon(botonClick); 
+        }
+    }
+    
     
     private void btn_guardarContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarContinuarActionPerformed
         ConProducto cProducto = new ConProducto();
@@ -662,43 +695,6 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         onlyNumberField(evt);
     }//GEN-LAST:event_txt_nuevoStockKeyTyped
 
-    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        ConProducto cProducto = new ConProducto();
-        Producto p = cProducto.obtenerProducto(txt_codigoProducto.getText());
-        productoGlobal = p;
-        if(!p.getNombre().equals("")){
-            chk_precio.setSelected(false);
-            txt_nuevoPrecio.setEditable(false);
-            txt_nuevoPrecio.setText("");
-            chk_stock.setSelected(false);
-            txt_nuevoStock.setEditable(false);
-            txt_nuevoStock.setText("");
-            cb_Trabajador.setEnabled(true);
-
-
-            txt_nombreProducto.setText(p.getNombre());
-            
-            txt_precioActual.setText(String.valueOf(p.getPrecio()));
-            if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
-            else{
-                String valor = txt_precioActual.getText().replace("$", "").replace(".", "");
-                txt_precioActual.setText(String.format("$%,d",Integer.valueOf(valor)));
-            }
-            txt_stockActual.setText(String.valueOf(p.getStock()));
-            chk_precio.setEnabled(true);
-            chk_stock.setEnabled(true);
-            codigo = txt_codigoProducto.getText();
-        }
-        else{
-            codigo = txt_codigoProducto.getText();
-            limpiarCampos();
-            txt_codigoProducto.setText(codigo);
-            JOptionPane.showMessageDialog(this, "No existe un producto asociado al codigo "+codigo,"Error obteniendo producto",JOptionPane.ERROR_MESSAGE);
-            
-            
-        }
-    }//GEN-LAST:event_btn_buscarActionPerformed
-
     private void chk_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_stockActionPerformed
         if(chk_stock.isSelected()){
             txt_nuevoStock.setEditable(true);
@@ -720,10 +716,14 @@ public class EditarStockPrecio extends javax.swing.JFrame {
             chk_stock.setEnabled(false);
             txt_nuevoPrecio.setEditable(false);
             txt_nuevoStock.setEditable(false);
-            btn_buscar.setEnabled(false);
+            //btn_buscar.setEnabled(false);
             btn_limpiar.setEnabled(false);
             btn_confirmarDatos.setEnabled(false);
             cb_Trabajador.setEnabled(false);
+            
+            disabled_buttons = true;
+            
+            des_habilitar_buttons();
             
             
         }
@@ -738,6 +738,70 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private void lbl_nuevoStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_nuevoStockMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_lbl_nuevoStockMouseEntered
+
+    private void btn_searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMousePressed
+        if(!disabled_buttons){    
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_click.png"));
+            btn_search.setIcon(botonClick);
+
+            ConProducto cProducto = new ConProducto();
+            Producto p = cProducto.obtenerProducto(txt_codigoProducto.getText());
+            productoGlobal = p;
+            if(!p.getNombre().equals("")){
+                chk_precio.setSelected(false);
+                txt_nuevoPrecio.setEditable(false);
+                txt_nuevoPrecio.setText("");
+                chk_stock.setSelected(false);
+                txt_nuevoStock.setEditable(false);
+                txt_nuevoStock.setText("");
+                cb_Trabajador.setEnabled(true);
+
+
+                txt_nombreProducto.setText(p.getNombre());
+
+                txt_precioActual.setText(String.valueOf(p.getPrecio()));
+                if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
+                else{
+                    String valor = txt_precioActual.getText().replace("$", "").replace(".", "");
+                    txt_precioActual.setText(String.format("$%,d",Integer.valueOf(valor)));
+                }
+                txt_stockActual.setText(String.valueOf(p.getStock()));
+                chk_precio.setEnabled(true);
+                chk_stock.setEnabled(true);
+                codigo = txt_codigoProducto.getText();
+            }
+            else{
+                codigo = txt_codigoProducto.getText();
+                limpiarCampos();
+                txt_codigoProducto.setText(codigo);
+                JOptionPane.showMessageDialog(this, "No existe un producto asociado al codigo "+codigo,"Error obteniendo producto",JOptionPane.ERROR_MESSAGE);            
+            }
+            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));
+            btn_search.setIcon(botonClick);
+        }
+    }//GEN-LAST:event_btn_searchMousePressed
+
+    private void btn_searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseReleased
+        if(!disabled_buttons){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));            
+            btn_search.setIcon(botonClick);
+        }
+    }//GEN-LAST:event_btn_searchMouseReleased
+
+    private void btn_searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseExited
+        if(!disabled_buttons){    
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));
+            btn_search.setIcon(botonClick);
+        }
+    }//GEN-LAST:event_btn_searchMouseExited
+
+    private void btn_searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseEntered
+        if(!disabled_buttons){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_click.png"));
+            btn_search.setIcon(botonClick);           
+        }
+
+    }//GEN-LAST:event_btn_searchMouseEntered
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
@@ -806,12 +870,12 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_confirmarDatos;
     private javax.swing.JButton btn_guardarCerrar;
     private javax.swing.JButton btn_guardarContinuar;
     private javax.swing.JButton btn_limpiar;
     private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel btn_search;
     private javax.swing.JComboBox<String> cb_Trabajador;
     private javax.swing.JCheckBox chk_precio;
     private javax.swing.JCheckBox chk_stock;

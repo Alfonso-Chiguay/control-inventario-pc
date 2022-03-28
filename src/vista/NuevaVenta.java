@@ -881,7 +881,10 @@ public class NuevaVenta extends javax.swing.JFrame {
                             cb_productos.setEnabled(false);
                             tbl_detalleVenta.setEnabled(false);
                             txt_pagoEfectivo.setEnabled(false);                    
-                            disabled_buttons = true;                    
+                            disabled_buttons = true;   
+                            rb_efectivo.setEnabled(false);
+                            rb_debito.setEnabled(false);
+                            rb_credito.setEnabled(false);
                             des_activar_botones();
                         }                   
 
@@ -909,7 +912,10 @@ public class NuevaVenta extends javax.swing.JFrame {
                     txt_codigoBarra.setEnabled(true);
                     cb_productos.setEnabled(true);
                     tbl_detalleVenta.setEnabled(true);
-                    txt_pagoEfectivo.setEnabled(true);               
+                    txt_pagoEfectivo.setEnabled(true); 
+                    rb_efectivo.setEnabled(true);
+                    rb_debito.setEnabled(true);
+                    rb_credito.setEnabled(true);
                     disabled_buttons = false;
                     des_activar_botones();
                 }
@@ -1270,7 +1276,10 @@ public class NuevaVenta extends javax.swing.JFrame {
                         cb_productos.setEnabled(false);
                         tbl_detalleVenta.setEnabled(false);
                         txt_pagoEfectivo.setEnabled(false);                    
-                        disabled_buttons = true;                    
+                        disabled_buttons = true;   
+                        rb_efectivo.setEnabled(false);
+                        rb_debito.setEnabled(false);
+                        rb_credito.setEnabled(false);
                         des_activar_botones();
                     }                   
 
@@ -1298,7 +1307,10 @@ public class NuevaVenta extends javax.swing.JFrame {
                 txt_codigoBarra.setEnabled(true);
                 cb_productos.setEnabled(true);
                 tbl_detalleVenta.setEnabled(true);
-                txt_pagoEfectivo.setEnabled(true);               
+                txt_pagoEfectivo.setEnabled(true);  
+                rb_efectivo.setEnabled(true);
+                rb_debito.setEnabled(true);
+                rb_credito.setEnabled(true);
                 disabled_buttons = false;
                 des_activar_botones();
             }
