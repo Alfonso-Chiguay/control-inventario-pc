@@ -5,6 +5,7 @@ import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Producto;
 
@@ -36,16 +37,16 @@ public class IngresarProducto extends javax.swing.JFrame {
         txt_precio = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_stockInicial = new javax.swing.JTextField();
-        btn_guardarCerrar = new javax.swing.JButton();
-        btn_guardarContinuar = new javax.swing.JButton();
-        btn_limpiar = new javax.swing.JButton();
-        btn_salir = new javax.swing.JButton();
+        btn_salir = new javax.swing.JLabel();
+        btn_limpiar = new javax.swing.JLabel();
+        btn_guardarYOtro = new javax.swing.JLabel();
+        btn_guardarYCerrar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(230, 204, 178));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 85, 57));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("INGRESO DE NUEVO PRODUCTO");
@@ -151,43 +152,67 @@ public class IngresarProducto extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        btn_guardarCerrar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_guardarCerrar.setForeground(new java.awt.Color(127, 85, 57));
-        btn_guardarCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
-        btn_guardarCerrar.setText("Guardar y cerrar");
-        btn_guardarCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guardarCerrarActionPerformed(evt);
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"))); // NOI18N
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_salirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_salirMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_salirMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_salirMouseReleased(evt);
             }
         });
 
-        btn_guardarContinuar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_guardarContinuar.setForeground(new java.awt.Color(127, 85, 57));
-        btn_guardarContinuar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save edit.png"))); // NOI18N
-        btn_guardarContinuar.setText("Guardar e ingresar otro");
-        btn_guardarContinuar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guardarContinuarActionPerformed(evt);
+        btn_limpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"))); // NOI18N
+        btn_limpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_limpiarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_limpiarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_limpiarMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_limpiarMouseReleased(evt);
             }
         });
 
-        btn_limpiar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_limpiar.setForeground(new java.awt.Color(127, 85, 57));
-        btn_limpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clear.png"))); // NOI18N
-        btn_limpiar.setText("Limpiar campos");
-        btn_limpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_limpiarActionPerformed(evt);
+        btn_guardarYOtro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"))); // NOI18N
+        btn_guardarYOtro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_guardarYOtroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_guardarYOtroMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_guardarYOtroMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_guardarYOtroMouseReleased(evt);
             }
         });
 
-        btn_salir.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_salir.setForeground(new java.awt.Color(127, 85, 57));
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leave.png"))); // NOI18N
-        btn_salir.setText("Salir");
-        btn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salirActionPerformed(evt);
+        btn_guardarYCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"))); // NOI18N
+        btn_guardarYCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_guardarYCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_guardarYCerrarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_guardarYCerrarMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_guardarYCerrarMouseReleased(evt);
             }
         });
 
@@ -195,21 +220,23 @@ public class IngresarProducto extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_guardarContinuar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_limpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn_guardarCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(34, 34, 34))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btn_guardarYCerrar)
+                                        .addComponent(btn_guardarYOtro))
+                                    .addComponent(btn_limpiar, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(13, 13, 13))
+                            .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,24 +245,25 @@ public class IngresarProducto extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btn_guardarCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_guardarContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_limpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addComponent(btn_guardarYCerrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_guardarYOtro)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_limpiar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,49 +273,6 @@ public class IngresarProducto extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btn_salirActionPerformed
-
-    private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
-        limpiarCampos();
-    }//GEN-LAST:event_btn_limpiarActionPerformed
-
-    private void btn_guardarCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarCerrarActionPerformed
-        String codigo = txt_codigoProducto.getText();
-        String nombre = txt_nombreProducto.getText();
-        String precio = txt_precio.getText().replace("$", "").replace(".", "");
-        String stock = txt_stockInicial.getText();
-        try{
-            Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
-            ConProducto cProducto = new ConProducto();
-            if(cProducto.existeCodigo(codigo)){
-                JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){
-                    if(CONEXION.isNetworkOnline()){
-                        boolean ingreso = cProducto.ingresarProducto(p);
-                        if(ingreso){
-                            JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose();
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
-                        }       
-                    }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
-            
-                }  
-            }
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_btn_guardarCerrarActionPerformed
 
     private void txt_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyTyped
         onlyNumberField(evt);
@@ -318,7 +303,61 @@ public class IngresarProducto extends javax.swing.JFrame {
         if(txt_stockInicial.getText().equals("")) txt_stockInicial.setText("0");
     }//GEN-LAST:event_txt_stockInicialFocusLost
 
-    private void btn_guardarContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarContinuarActionPerformed
+    private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_click.png"));
+        btn_salir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_salirMouseEntered
+
+    private void btn_salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_click.png"));
+        btn_salir.setIcon(botonClick);
+        this.dispose();
+    }//GEN-LAST:event_btn_salirMousePressed
+
+    private void btn_salirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"));
+        btn_salir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_salirMouseExited
+
+    private void btn_salirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"));
+        btn_salir.setIcon(botonClick);
+    }//GEN-LAST:event_btn_salirMouseReleased
+
+    private void btn_limpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_click.png"));
+        btn_limpiar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_limpiarMouseEntered
+
+    private void btn_limpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"));
+        btn_limpiar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_limpiarMouseExited
+
+    private void btn_limpiarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_click.png"));
+        btn_limpiar.setIcon(botonClick);
+        limpiarCampos();
+    }//GEN-LAST:event_btn_limpiarMousePressed
+
+    private void btn_limpiarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"));
+        btn_limpiar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_limpiarMouseReleased
+
+    private void btn_guardarYOtroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
+        btn_guardarYOtro.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYOtroMouseEntered
+
+    private void btn_guardarYOtroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"));
+        btn_guardarYOtro.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYOtroMouseExited
+
+    private void btn_guardarYOtroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
+        btn_guardarYOtro.setIcon(botonClick);
         String codigo = txt_codigoProducto.getText();
         String nombre = txt_nombreProducto.getText().replace("'"," ");
         String precio = txt_precio.getText().replace("$", "").replace(".", "");
@@ -351,7 +390,64 @@ public class IngresarProducto extends javax.swing.JFrame {
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btn_guardarContinuarActionPerformed
+    }//GEN-LAST:event_btn_guardarYOtroMousePressed
+
+    private void btn_guardarYOtroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"));
+        btn_guardarYOtro.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYOtroMouseReleased
+
+    private void btn_guardarYCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
+        btn_guardarYCerrar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYCerrarMouseEntered
+
+    private void btn_guardarYCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"));
+        btn_guardarYCerrar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYCerrarMouseExited
+
+    private void btn_guardarYCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
+        btn_guardarYCerrar.setIcon(botonClick);
+        String codigo = txt_codigoProducto.getText();
+        String nombre = txt_nombreProducto.getText();
+        String precio = txt_precio.getText().replace("$", "").replace(".", "");
+        String stock = txt_stockInicial.getText();
+        try{
+            Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
+            ConProducto cProducto = new ConProducto();
+            if(cProducto.existeCodigo(codigo)){
+                JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirmar == 0){
+                    if(CONEXION.isNetworkOnline()){
+                        boolean ingreso = cProducto.ingresarProducto(p);
+                        if(ingreso){
+                            JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+                        }       
+                    }
+                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
+            
+                }  
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
+        }
+         
+    }//GEN-LAST:event_btn_guardarYCerrarMousePressed
+
+    private void btn_guardarYCerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"));
+        btn_guardarYCerrar.setIcon(botonClick);
+    }//GEN-LAST:event_btn_guardarYCerrarMouseReleased
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
@@ -402,10 +498,10 @@ public class IngresarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_guardarCerrar;
-    private javax.swing.JButton btn_guardarContinuar;
-    private javax.swing.JButton btn_limpiar;
-    private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel btn_guardarYCerrar;
+    private javax.swing.JLabel btn_guardarYOtro;
+    private javax.swing.JLabel btn_limpiar;
+    private javax.swing.JLabel btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

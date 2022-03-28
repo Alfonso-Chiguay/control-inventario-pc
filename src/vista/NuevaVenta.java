@@ -65,24 +65,24 @@ public class NuevaVenta extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         disabled_buttons = false;
-        
+        tbl_detalleVenta.getTableHeader().setReorderingAllowed(false);
         tbl_detalleVenta.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //829
-        tbl_detalleVenta.getColumnModel().getColumn(0).setPreferredWidth(130);
-        tbl_detalleVenta.getColumnModel().getColumn(0).setMinWidth(130);
-        tbl_detalleVenta.getColumnModel().getColumn(0).setMaxWidth(130);
-        tbl_detalleVenta.getColumnModel().getColumn(1).setPreferredWidth(380);
-        tbl_detalleVenta.getColumnModel().getColumn(1).setMinWidth(380);
-        tbl_detalleVenta.getColumnModel().getColumn(1).setMaxWidth(380);
+        tbl_detalleVenta.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tbl_detalleVenta.getColumnModel().getColumn(0).setMinWidth(150);
+        tbl_detalleVenta.getColumnModel().getColumn(0).setMaxWidth(150);
+        tbl_detalleVenta.getColumnModel().getColumn(1).setPreferredWidth(370);
+        tbl_detalleVenta.getColumnModel().getColumn(1).setMinWidth(370);
+        tbl_detalleVenta.getColumnModel().getColumn(1).setMaxWidth(370);
         tbl_detalleVenta.getColumnModel().getColumn(2).setPreferredWidth(110);
         tbl_detalleVenta.getColumnModel().getColumn(2).setMinWidth(110);
         tbl_detalleVenta.getColumnModel().getColumn(2).setMaxWidth(110);
         tbl_detalleVenta.getColumnModel().getColumn(3).setPreferredWidth(87);
         tbl_detalleVenta.getColumnModel().getColumn(3).setMinWidth(87);
         tbl_detalleVenta.getColumnModel().getColumn(3).setMaxWidth(87);        
-        tbl_detalleVenta.getColumnModel().getColumn(4).setPreferredWidth(120);    
-        tbl_detalleVenta.getColumnModel().getColumn(4).setMinWidth(120);
-        tbl_detalleVenta.getColumnModel().getColumn(4).setMaxWidth(120);      
+        tbl_detalleVenta.getColumnModel().getColumn(4).setPreferredWidth(110);    
+        tbl_detalleVenta.getColumnModel().getColumn(4).setMinWidth(110);
+        tbl_detalleVenta.getColumnModel().getColumn(4).setMaxWidth(110);      
         
         tbl_detalleVenta.setRowHeight(35);
         tbl_detalleVenta.setFont(new Font("Times New Roman", Font.PLAIN, 22));
@@ -102,6 +102,10 @@ public class NuevaVenta extends javax.swing.JFrame {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
         tbl_detalleVenta.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        
+
+        cb_productos.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        
         
         seleccionEfectivo();
         
@@ -281,7 +285,6 @@ public class NuevaVenta extends javax.swing.JFrame {
         btn_salir = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1060));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(230, 204, 178));
@@ -414,7 +417,7 @@ public class NuevaVenta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "COD. PRODUCTO", "NOMBRE", "PRECIO (UN.)", "CANTIDAD", "PRECIO TOTAL"
+                "COD. PRODUCTO", "NOMBRE", "PRECIO (UN.)", "CANTIDAD", "TOTAL"
             }
         ) {
             Class[] types = new Class [] {
@@ -675,14 +678,12 @@ public class NuevaVenta extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 103, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(249, 249, 249))
+                            .addComponent(jLabel4)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(txt_pagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(btn_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)))
+                                .addComponent(btn_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(txt_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -846,41 +847,55 @@ public class NuevaVenta extends javax.swing.JFrame {
         if(evt.getKeyCode() == KeyEvent.VK_F10){
             if(!disabled_buttons){ 
                 ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
-                btn_confirmaVenta.setIcon(botonClick);  
-                if(tbl_detalleVenta.getRowCount() > 0){
-                    DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                    Venta venta = new Venta();
-                    ArrayList<VentaProducto> lista = new ArrayList<>();
+                btn_confirmaVenta.setIcon(botonClick); 
+                
+                if(tbl_detalleVenta.getRowCount() > 0){  
+                    int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if(confirmar == JOptionPane.YES_OPTION){
+                        
+                        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                        btn_confirmaVenta.setIcon(botonClick);  
+                        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                        Venta venta = new Venta();
+                        ArrayList<VentaProducto> lista = new ArrayList<>();
 
-                    venta.setTipo_venta(seleccion());
-                    venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
-                    for(int i = 0; i< table.getRowCount(); i ++){                
-                        String codigo_barra = table.getValueAt(i, 0).toString();
-                        int cantidad = (int) table.getValueAt(i, 3);
-                        int precio = (int)table.getValueAt(i, 2);
-                        int valorTotal = cantidad*precio;
-                        VentaProducto vp = new VentaProducto();
-                        vp.setCodigo_barra(codigo_barra);
-                        vp.setCantidad(cantidad);
-                        vp.setTotal(valorTotal);
-                        lista.add(vp);
+                        venta.setTipo_venta(seleccion());
+                        venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
+                        for(int i = 0; i< table.getRowCount(); i ++){                
+                            String codigo_barra = table.getValueAt(i, 0).toString();
+                            int cantidad = (int) table.getValueAt(i, 3);
+                            int precio = (int)table.getValueAt(i, 2);
+                            int valorTotal = cantidad*precio;
+                            VentaProducto vp = new VentaProducto();
+                            vp.setCodigo_barra(codigo_barra);
+                            vp.setCantidad(cantidad);
+                            vp.setTotal(valorTotal);
+                            lista.add(vp);
+                        }
+
+                        ConVenta cVenta = new ConVenta();
+                        boolean operacion = cVenta.registrarVenta(venta, lista, this);
+                        if(operacion){                         
+
+                            txt_codigoBarra.setEnabled(false);
+                            cb_productos.setEnabled(false);
+                            tbl_detalleVenta.setEnabled(false);
+                            txt_pagoEfectivo.setEnabled(false);                    
+                            disabled_buttons = true;                    
+                            des_activar_botones();
+                        }                   
+
                     }
-
-                    ConVenta cVenta = new ConVenta();
-                    boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                    if(operacion){                         
-
-                        txt_codigoBarra.setEnabled(false);
-                        cb_productos.setEnabled(false);
-                        tbl_detalleVenta.setEnabled(false);
-                        txt_pagoEfectivo.setEnabled(false);                    
-                        disabled_buttons = true;                    
-                        des_activar_botones();
-                    }                   
-
+                    else{
+                        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                        btn_confirmaVenta.setIcon(botonClick);  
+                    }
+                    
                 }
                 else{
                     JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
+                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                    btn_confirmaVenta.setIcon(botonClick);                      
                 }
             }    
             else{
@@ -911,6 +926,8 @@ public class NuevaVenta extends javax.swing.JFrame {
     private void tbl_detalleVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_detalleVentaKeyPressed
 
         if(evt.getKeyCode() == KeyEvent.VK_F1){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/agregar1_click.png"));
+            btn_agregar1.setIcon(botonClick); 
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
             int cantidad = (int) table.getValueAt(row, 3);
@@ -920,8 +937,12 @@ public class NuevaVenta extends javax.swing.JFrame {
             table.setValueAt(valorTotal, row, 4); 
             lostFocus(null, tbl_detalleVenta);
             threadPRECIO.run();
+            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/agregar1_solid.png"));
+            btn_agregar1.setIcon(botonClick); 
         }
         else if(evt.getKeyCode() == KeyEvent.VK_F2){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/quitar1_click.png"));
+            btn_quitar1.setIcon(botonClick);             
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
             int cantidad = (int) table.getValueAt(row, 3);
@@ -933,6 +954,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                 lostFocus(null, tbl_detalleVenta);
                 threadPRECIO.run();
             }
+            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/quitar1_solid.png"));
+            btn_quitar1.setIcon(botonClick);  
         }
         else if(evt.getKeyCode() == KeyEvent.VK_F3){
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
@@ -1024,12 +1047,14 @@ public class NuevaVenta extends javax.swing.JFrame {
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
             int cantidad = (int) table.getValueAt(row, 3);
-            table.setValueAt(cantidad, row, 3);
+            table.setValueAt(cantidad+1, row, 3);
             int precio = (int)table.getValueAt(row, 2);
             String valorTotal = String.format("$%,d",Integer.valueOf((cantidad + 1)*precio));
             table.setValueAt(valorTotal, row, 4); 
             lostFocus(null, tbl_detalleVenta);
-            threadPRECIO.run();         
+            threadPRECIO.run();  
+            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/agregar1_solid.png"));
+            btn_agregar1.setIcon(botonClick); 
             
         }
     }//GEN-LAST:event_btn_agregar1MousePressed
@@ -1069,7 +1094,9 @@ public class NuevaVenta extends javax.swing.JFrame {
                 table.setValueAt(valorTotal, row, 4); 
                 lostFocus(null, tbl_detalleVenta);
                 threadPRECIO.run();
-            }            
+            }
+            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/quitar1_solid.png"));
+            btn_quitar1.setIcon(botonClick);             
         }
     }//GEN-LAST:event_btn_quitar1MousePressed
 
@@ -1211,40 +1238,53 @@ public class NuevaVenta extends javax.swing.JFrame {
         if(!disabled_buttons){ 
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
             btn_confirmaVenta.setIcon(botonClick);  
+            
             if(tbl_detalleVenta.getRowCount() > 0){
-                DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                Venta venta = new Venta();
-                ArrayList<VentaProducto> lista = new ArrayList<>();
-                
-                venta.setTipo_venta(seleccion());
-                venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
-                for(int i = 0; i< table.getRowCount(); i ++){                
-                    String codigo_barra = table.getValueAt(i, 0).toString();
-                    int cantidad = (int) table.getValueAt(i, 3);
-                    int precio = (int)table.getValueAt(i, 2);
-                    int valorTotal = cantidad*precio;
-                    VentaProducto vp = new VentaProducto();
-                    vp.setCodigo_barra(codigo_barra);
-                    vp.setCantidad(cantidad);
-                    vp.setTotal(valorTotal);
-                    lista.add(vp);
+                int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if(confirmar == JOptionPane.YES_OPTION){
+                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                    btn_confirmaVenta.setIcon(botonClick);  
+                    DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                    Venta venta = new Venta();
+                    ArrayList<VentaProducto> lista = new ArrayList<>();
+
+                    venta.setTipo_venta(seleccion());
+                    venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
+                    for(int i = 0; i< table.getRowCount(); i ++){                
+                        String codigo_barra = table.getValueAt(i, 0).toString();
+                        int cantidad = (int) table.getValueAt(i, 3);
+                        int precio = (int)table.getValueAt(i, 2);
+                        int valorTotal = cantidad*precio;
+                        VentaProducto vp = new VentaProducto();
+                        vp.setCodigo_barra(codigo_barra);
+                        vp.setCantidad(cantidad);
+                        vp.setTotal(valorTotal);
+                        lista.add(vp);
+                    }
+
+                    ConVenta cVenta = new ConVenta();
+                    boolean operacion = cVenta.registrarVenta(venta, lista, this);
+                    if(operacion){                         
+
+                        txt_codigoBarra.setEnabled(false);
+                        cb_productos.setEnabled(false);
+                        tbl_detalleVenta.setEnabled(false);
+                        txt_pagoEfectivo.setEnabled(false);                    
+                        disabled_buttons = true;                    
+                        des_activar_botones();
+                    }                   
+
+                }
+                else{
+                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                    btn_confirmaVenta.setIcon(botonClick);  
                 }
 
-                ConVenta cVenta = new ConVenta();
-                boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                if(operacion){                         
-                    
-                    txt_codigoBarra.setEnabled(false);
-                    cb_productos.setEnabled(false);
-                    tbl_detalleVenta.setEnabled(false);
-                    txt_pagoEfectivo.setEnabled(false);                    
-                    disabled_buttons = true;                    
-                    des_activar_botones();
-                }                   
-                
             }
             else{
                 JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
+                botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                btn_confirmaVenta.setIcon(botonClick);  
             }
         }    
         else{

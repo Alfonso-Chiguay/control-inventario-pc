@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 /**
@@ -103,19 +104,21 @@ public class ReporteDiario extends javax.swing.JFrame {
         txt_anio = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btn_generaReporte = new javax.swing.JButton();
+        btn_generarReporte = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(224, 177, 203));
+        jPanel1.setBackground(new java.awt.Color(230, 204, 178));
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(35, 25, 66));
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(127, 85, 57));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Reporte diario de venta");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cashmachine.png"))); // NOI18N
+        jLabel1.setText(" Reporte diario de venta");
 
-        jPanel2.setBackground(new java.awt.Color(224, 177, 203));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de reporte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(230, 204, 178));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "Fecha de reporte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
+        jPanel2.setForeground(new java.awt.Color(127, 85, 57));
 
         txt_dia.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         txt_dia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -169,7 +172,7 @@ public class ReporteDiario extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,14 +187,19 @@ public class ReporteDiario extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        btn_generaReporte.setBackground(new java.awt.Color(94, 84, 142));
-        btn_generaReporte.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_generaReporte.setForeground(new java.awt.Color(255, 255, 255));
-        btn_generaReporte.setText("Generar Reporte");
-        btn_generaReporte.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_generaReporte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_generaReporteActionPerformed(evt);
+        btn_generarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"))); // NOI18N
+        btn_generarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_generarReporteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_generarReporteMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_generarReporteMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_generarReporteMouseReleased(evt);
             }
         });
 
@@ -206,7 +214,7 @@ public class ReporteDiario extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_generaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_generarReporte)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,9 +224,9 @@ public class ReporteDiario extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_generaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_generarReporte)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,19 +243,6 @@ public class ReporteDiario extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_generaReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generaReporteActionPerformed
-        ConInformes informe = new ConInformes();
-        String mes;
-        if((cb_mes.getSelectedIndex()+1)<10){
-            mes = "0"+String.valueOf(cb_mes.getSelectedIndex()+1);
-        }
-        else{
-           mes = String.valueOf(cb_mes.getSelectedIndex()+1); 
-        }
-        String fecha=txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
-        informe.informeVentaDiario(fecha);
-    }//GEN-LAST:event_btn_generaReporteActionPerformed
 
     private void txt_diaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_diaKeyTyped
         txt_dia.setTransferHandler(null);
@@ -272,6 +267,36 @@ public class ReporteDiario extends javax.swing.JFrame {
     private void txt_anioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_anioFocusLost
         anioValido(txt_anio);
     }//GEN-LAST:event_txt_anioFocusLost
+
+    private void btn_generarReporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
+        btn_generarReporte.setIcon(botonClick); 
+        ConInformes informe = new ConInformes();
+        String mes;
+        if((cb_mes.getSelectedIndex()+1)<10){
+            mes = "0"+String.valueOf(cb_mes.getSelectedIndex()+1);
+        }
+        else{
+           mes = String.valueOf(cb_mes.getSelectedIndex()+1); 
+        }
+        String fecha=txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
+        informe.informeVentaDiario(fecha);
+    }//GEN-LAST:event_btn_generarReporteMousePressed
+
+    private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
+        btn_generarReporte.setIcon(botonClick);
+    }//GEN-LAST:event_btn_generarReporteMouseEntered
+
+    private void btn_generarReporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
+        btn_generarReporte.setIcon(botonClick);
+    }//GEN-LAST:event_btn_generarReporteMouseExited
+
+    private void btn_generarReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
+        btn_generarReporte.setIcon(botonClick);
+    }//GEN-LAST:event_btn_generarReporteMouseReleased
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
         if(!(Character.isDigit(enter))){
@@ -336,7 +361,7 @@ public class ReporteDiario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_generaReporte;
+    private javax.swing.JLabel btn_generarReporte;
     private javax.swing.JComboBox<String> cb_mes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
