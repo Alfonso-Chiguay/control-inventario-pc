@@ -411,7 +411,7 @@ public class ReportePeriodo extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_dia2FocusLost
 
     private void txt_dia2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dia2KeyTyped
-        txt_dia.setTransferHandler(null);
+        txt_dia2.setTransferHandler(null);
         maxCharacter(2, txt_dia2, evt);
         onlyNumberField(evt);
     }//GEN-LAST:event_txt_dia2KeyTyped
