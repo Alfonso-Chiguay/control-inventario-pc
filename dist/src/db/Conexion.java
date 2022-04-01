@@ -20,7 +20,7 @@ public class Conexion {
     private final static String PASS="LaLo14!!";
     //private final static String DB="piliscof_posdb";
     private final static String DB="piliscof_posdb_desarrollo";
-
+    
     public Connection getConnection(){
         
         Properties propiedadesConexion = new Properties();

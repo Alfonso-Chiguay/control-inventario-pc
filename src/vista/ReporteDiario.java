@@ -122,7 +122,6 @@ public class ReporteDiario extends javax.swing.JFrame {
 
         txt_dia.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         txt_dia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_dia.setText("31");
         txt_dia.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_diaFocusLost(evt);
@@ -139,7 +138,6 @@ public class ReporteDiario extends javax.swing.JFrame {
 
         txt_anio.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         txt_anio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_anio.setText("2022");
         txt_anio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_anioFocusLost(evt);
@@ -252,7 +250,7 @@ public class ReporteDiario extends javax.swing.JFrame {
 
     private void txt_anioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_anioKeyTyped
         txt_anio.setTransferHandler(null);
-        maxCharacter(4, txt_dia, evt);        
+        maxCharacter(4, txt_anio, evt);        
         onlyNumberField(evt);
         
     }//GEN-LAST:event_txt_anioKeyTyped
@@ -272,6 +270,7 @@ public class ReporteDiario extends javax.swing.JFrame {
         ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
         btn_generarReporte.setIcon(botonClick); 
         ConInformes informe = new ConInformes();
+        txt_diaFocusLost(null);
         String mes;
         if((cb_mes.getSelectedIndex()+1)<10){
             mes = "0"+String.valueOf(cb_mes.getSelectedIndex()+1);
@@ -279,8 +278,8 @@ public class ReporteDiario extends javax.swing.JFrame {
         else{
            mes = String.valueOf(cb_mes.getSelectedIndex()+1); 
         }
-        String fecha=txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
-        informe.informeVentaDiario(fecha);
+        String fecha = txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
+        informe.informeVentaPeriodo(fecha, fecha);
     }//GEN-LAST:event_btn_generarReporteMousePressed
 
     private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered
@@ -306,7 +305,7 @@ public class ReporteDiario extends javax.swing.JFrame {
     
     private void maxCharacter(int cantidad, JTextField campo, java.awt.event.KeyEvent evt){
         if(campo.getText().length() == cantidad){
-            evt.consume();
+            campo.setText("");
         }
     }
     

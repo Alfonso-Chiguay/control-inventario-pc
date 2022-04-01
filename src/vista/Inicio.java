@@ -66,6 +66,7 @@ public class Inicio extends javax.swing.JFrame {
         lbl_headerVenta = new javax.swing.JLabel();
         lbl_headerInventario = new javax.swing.JLabel();
         lbl_headerReporte = new javax.swing.JLabel();
+        btn_ventaPeriodo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -193,6 +194,22 @@ public class Inicio extends javax.swing.JFrame {
 
         lbl_headerReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Módulo de reportes header.png"))); // NOI18N
 
+        btn_ventaPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/ventaperiodo_solid.png"))); // NOI18N
+        btn_ventaPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_ventaPeriodoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_ventaPeriodoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_ventaPeriodoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_ventaPeriodoMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -224,16 +241,17 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(btn_actualizarStockPrecio)
                                 .addGap(118, 118, 118))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(220, 220, 220)
-                                .addComponent(btn_ventaDiaria)
-                                .addGap(27, 27, 27)
-                                .addComponent(btn_stockNegativo)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(60, 60, 60)
+                        .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(btn_ventaDiaria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_ventaPeriodo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_stockNegativo)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +277,8 @@ public class Inicio extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_ventaDiaria)
-                            .addComponent(btn_stockNegativo))))
+                            .addComponent(btn_stockNegativo)
+                            .addComponent(btn_ventaPeriodo))))
                 .addGap(236, 236, 236))
         );
 
@@ -434,6 +453,28 @@ public class Inicio extends javax.swing.JFrame {
         btn_stockNegativo.setIcon(botonClick);
     }//GEN-LAST:event_btn_stockNegativoMouseReleased
 
+    private void btn_ventaPeriodoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ventaPeriodoMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ventaperiodo_click.png"));
+        btn_ventaPeriodo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ventaPeriodoMouseEntered
+
+    private void btn_ventaPeriodoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ventaPeriodoMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ventaperiodo_solid.png"));
+        btn_ventaPeriodo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ventaPeriodoMouseExited
+
+    private void btn_ventaPeriodoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ventaPeriodoMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ventaperiodo_click.png"));
+        btn_ventaPeriodo.setIcon(botonClick);
+        ReportePeriodo ventana = new ReportePeriodo();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btn_ventaPeriodoMousePressed
+
+    private void btn_ventaPeriodoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ventaPeriodoMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ventaperiodo_solid.png"));
+        btn_ventaPeriodo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ventaPeriodoMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -480,6 +521,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel btn_nuevoProducto;
     private javax.swing.JLabel btn_stockNegativo;
     private javax.swing.JLabel btn_ventaDiaria;
+    private javax.swing.JLabel btn_ventaPeriodo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_headerInventario;
     private javax.swing.JLabel lbl_headerReporte;

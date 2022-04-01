@@ -13,12 +13,14 @@ import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.Producto;
 import modelo.Venta;
 
 public class ConInformes {
     
-    public void informeStockNegativo(){
+    public void informeStockNegativo(JFrame ventana){
         Document documento = new Document();
         try {
 
@@ -100,7 +102,7 @@ public class ConInformes {
             documento.add(firma);           
             
             documento.close();
-            
+            JOptionPane.showMessageDialog(ventana, "Reporte generado con éxito", "Stock negativo", JOptionPane.INFORMATION_MESSAGE);
             Desktop.getDesktop().open(new File(ruta));
             
         } 
@@ -109,10 +111,10 @@ public class ConInformes {
         }
     }
     
-    public void informeVentaDiario(String fecha){
+    public void informeVentaPeriodo(String fecha1, String fecha2){
         ConVenta cVenta = new ConVenta();
         ////////////////////
-        ArrayList<Venta> listado = cVenta.ventasDia(fecha);
+        ArrayList<Venta> listado = cVenta.ventasDia(fecha1, fecha2);
         ////////////////////
         Document documento = new Document();
         try {
@@ -126,9 +128,17 @@ public class ConInformes {
             formatter = new SimpleDateFormat("HHmmss");
             String hora = formatter.format(date);
             
+            String fechaSolicitada, ruta;
             
-            String fechaSolicitada = fecha.split("-")[2]+"-"+fecha.split("-")[1]+"-"+fecha.split("-")[0]+" "+hora;
-            String ruta = System.getProperty("user.home")+"/Desktop/Reportes/Venta diaria/Venta diaria "+fechaSolicitada+".pdf";
+            if(fecha1.equals(fecha2)){
+                fechaSolicitada = fecha1.split("-")[2]+"-"+fecha1.split("-")[1]+"-"+fecha1.split("-")[0]+" "+hora;
+                ruta = System.getProperty("user.home")+"/Desktop/Reportes/Venta diaria/Venta diaria "+fechaSolicitada+".pdf";
+            }
+            else{
+                fechaSolicitada = fecha1.split("-")[2]+"-"+fecha1.split("-")[1]+"-"+fecha1.split("-")[0]+" al "+fecha2.split("-")[2]+"-"+fecha2.split("-")[1]+"-"+fecha2.split("-")[0]+" "+hora;
+                ruta = System.getProperty("user.home")+"/Desktop/Reportes/Venta periodo/Ventas "+fechaSolicitada+".pdf";
+            }
+            
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
@@ -138,8 +148,19 @@ public class ConInformes {
             Paragraph titulo = new Paragraph();
             titulo.setAlignment(Chunk.ALIGN_CENTER);
 
-            titulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 20, Font.BOLD, BaseColor.RED));
-            titulo.add("\nDETALLE DE VENTA DEL "+today);
+            
+            if(!fecha1.equals(fecha2)){
+                titulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 16, Font.BOLD, BaseColor.RED));
+                String fecha_ini, fecha_fin;
+                fecha_ini = fecha1.split("-")[2]+"-"+fecha1.split("-")[1]+"-"+fecha1.split("-")[0];
+                fecha_fin = fecha2.split("-")[2]+"-"+fecha2.split("-")[1]+"-"+fecha2.split("-")[0];
+                titulo.add("\nVENTAS DEL "+fecha_ini+" al "+fecha_fin);                
+            }
+            else{
+                titulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 20, Font.BOLD, BaseColor.RED));
+                titulo.add("\nDETALLE DE VENTA DEL "+fechaSolicitada.split(" ")[0]);
+            }
+            
             
             Paragraph subtitulo = new Paragraph();
             subtitulo.setAlignment(Chunk.ALIGN_CENTER);
@@ -180,7 +201,7 @@ public class ConInformes {
                 Paragraph venta = new Paragraph();
                 venta.setAlignment(Chunk.ALIGN_LEFT);
                 venta.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.NORMAL, new BaseColor(16, 125, 67)));
-                venta.add("TOTAL DE VENTA DEL DIA:  "+str_totalVenta);
+                venta.add("TOTAL DE VENTAS:  "+str_totalVenta);
                 documento.add(venta);
                 venta = new Paragraph();
                 venta.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
@@ -195,7 +216,7 @@ public class ConInformes {
                 venta.add("CRÉDITO:   "+str_credito+"\n\n");
                 documento.add(venta);
                 
-                ArrayList<Object[]> resumenMetodoPago = cVenta.resumenVentaMetodoPago(fecha);
+                ArrayList<Object[]> resumenMetodoPago = cVenta.resumenVentaMetodoPago(fecha1, fecha2);
                 
 
 
@@ -282,7 +303,7 @@ public class ConInformes {
                 tituloProducto.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLUE));
                 tituloProducto.add("\n\n\n\nDETALLE DE PRODUCTOS VENDIDOS\n\n");
                 
-                ArrayList<Object[]> detalleProducto = cVenta.detalleProductoVendido(fecha);
+                ArrayList<Object[]> detalleProducto = cVenta.detalleProductoVendido(fecha1, fecha2);
                 PdfPTable tablaProductos = new PdfPTable(new float[]{50,20,20});
 
                 cell.setPhrase(new Phrase("PRODUCTO", font));
@@ -323,7 +344,7 @@ public class ConInformes {
             
             
             
-            Paragraph firma = new Paragraph("\n\n\n\n\n________________________");
+            Paragraph firma = new Paragraph("\n\n\n________________________");
             firma.setAlignment(Chunk.ALIGN_RIGHT);
             documento.add(firma);
             firma = new Paragraph("V° B° REVISION          ");

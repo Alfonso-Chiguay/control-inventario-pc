@@ -49,12 +49,12 @@ public class ConVenta {
         }
     }
     
-    public ArrayList<Venta> ventasDia(String fecha){
+    public ArrayList<Venta> ventasDia(String fecha1, String fecha2){
         //la fecha debe venir en formato año-mes-dia
         ArrayList<Venta> lista = new ArrayList<>();
         try {
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha+" 00:00:00' AND '"+fecha+" 23:59:59';";
+            String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59';";
             ResultSet rs = stmt.executeQuery(query);
             
             while(rs.next()){
@@ -72,7 +72,7 @@ public class ConVenta {
         return lista;
     }
     
-    public ArrayList<Object[]> resumenVentaMetodoPago(String fecha){
+    public ArrayList<Object[]> resumenVentaMetodoPago(String fecha1, String fecha2){
         ArrayList<Object[]> detalle = new ArrayList<>();
         try {
             Statement stmt = CONNECTION.createStatement();
@@ -80,7 +80,7 @@ public class ConVenta {
             String query = "SELECT V.folio, V.tipo_venta, DATE_FORMAT(V.fecha, '%d/%m/%Y %H:%i:%s') as FECHA, SUM(VP.valor_total) " +
                             "FROM VENTA V JOIN VENTA_PRODUCTO VP ON V.folio = VP.folio " +
                             "JOIN PRODUCTO P ON VP.codigo_barra = P.codigo_barra " +
-                            "WHERE fecha BETWEEN '"+fecha+" 00:00:00' AND '"+fecha+" 23:59:59' " +
+                            "WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59' " +
                             "GROUP BY V.folio";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
@@ -102,7 +102,7 @@ public class ConVenta {
         return detalle;
     }
     
-    public ArrayList<Object[]> detalleProductoVendido(String fecha){
+    public ArrayList<Object[]> detalleProductoVendido(String fecha1, String fecha2){
         ArrayList<Object[]> detalle = new ArrayList<>();
         try {
             Statement stmt = CONNECTION.createStatement();
@@ -110,7 +110,7 @@ public class ConVenta {
             String query = "SELECT P.nombre, sum(VP.cantidad), sum(VP.valor_total) " +
                             "FROM VENTA V JOIN VENTA_PRODUCTO VP ON V.folio = VP.folio " +
                             "JOIN PRODUCTO P ON VP.codigo_barra = P.codigo_barra " +
-                            "WHERE fecha BETWEEN '"+fecha+" 00:00:00' AND '"+fecha+" 23:59:59' " +
+                            "WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59' " +
                             "GROUP BY P.nombre;";
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
