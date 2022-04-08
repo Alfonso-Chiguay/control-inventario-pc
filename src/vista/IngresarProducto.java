@@ -356,39 +356,45 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarYOtroMouseExited
 
     private void btn_guardarYOtroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMousePressed
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
-        btn_guardarYOtro.setIcon(botonClick);
-        String codigo = txt_codigoProducto.getText();
-        String nombre = txt_nombreProducto.getText().replace("'"," ");
-        String precio = txt_precio.getText().replace("$", "").replace(".", "");
-        String stock = txt_stockInicial.getText();
-        try{
-            Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
-            ConProducto cProducto = new ConProducto();
-            if(cProducto.existeCodigo(codigo)){
-                JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){
-                    if(CONEXION.isNetworkOnline()){
-                        boolean ingreso = cProducto.ingresarProducto(p);
-                        if(ingreso){
-                            JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                            limpiarCampos();
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
+            btn_guardarYOtro.setIcon(botonClick);
+            String codigo = txt_codigoProducto.getText();
+            String nombre = txt_nombreProducto.getText().replace("'"," ");
+            String precio = txt_precio.getText().replace("$", "").replace(".", "");
+            String stock = txt_stockInicial.getText();
+            try{
+                Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
+                ConProducto cProducto = new ConProducto();
+                if(cProducto.existeCodigo(codigo)){
+                    JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirmar == 0){
+                        if(CONEXION.isNetworkOnline()){
+                            boolean ingreso = cProducto.ingresarProducto(p);
+                            if(ingreso){
+                                JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                limpiarCampos();
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+                            }   
                         }
-                        else{
-                            JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
-                        }   
-                    }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
+                        else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
 
-                                       
-                }  
+
+                    }  
+                }
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Ingresar producto fallido", JOptionPane.WARNING_MESSAGE);   
         }
     }//GEN-LAST:event_btn_guardarYOtroMousePressed
 
@@ -408,40 +414,45 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarYCerrarMouseExited
 
     private void btn_guardarYCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMousePressed
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
-        btn_guardarYCerrar.setIcon(botonClick);
-        String codigo = txt_codigoProducto.getText();
-        String nombre = txt_nombreProducto.getText();
-        String precio = txt_precio.getText().replace("$", "").replace(".", "");
-        String stock = txt_stockInicial.getText();
-        try{
-            Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
-            ConProducto cProducto = new ConProducto();
-            if(cProducto.existeCodigo(codigo)){
-                JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){
-                    if(CONEXION.isNetworkOnline()){
-                        boolean ingreso = cProducto.ingresarProducto(p);
-                        if(ingreso){
-                            JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose();
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
+            btn_guardarYCerrar.setIcon(botonClick);
+            String codigo = txt_codigoProducto.getText();
+            String nombre = txt_nombreProducto.getText();
+            String precio = txt_precio.getText().replace("$", "").replace(".", "");
+            String stock = txt_stockInicial.getText();
+            try{
+                Producto p = new Producto(codigo,nombre,Integer.valueOf(precio), Integer.valueOf(stock)); 
+                ConProducto cProducto = new ConProducto();
+                if(cProducto.existeCodigo(codigo)){
+                    JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirmar == 0){
+                        if(CONEXION.isNetworkOnline()){
+                            boolean ingreso = cProducto.ingresarProducto(p);
+                            if(ingreso){
+                                JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                this.dispose();
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+                            }       
                         }
-                        else{
-                            JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
-                        }       
-                    }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
-            
-                }  
+                        else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
+
+                    }  
+                }
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
+        else{                
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Ingreso producto fallido", JOptionPane.WARNING_MESSAGE);           
         }
-         
     }//GEN-LAST:event_btn_guardarYCerrarMousePressed
 
     private void btn_guardarYCerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMouseReleased

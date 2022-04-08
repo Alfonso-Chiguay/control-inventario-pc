@@ -10,24 +10,25 @@ public class ConLogStockPrecio {
     public final static Connection CONNECTION = CONEXION.getConnection();
     
     
-    public void RegistrarLog(LogStockPrecio log){
+    public void RegistrarLog(LogStockPrecio logSP){
+        Logs log = new Logs();
         try{
             Statement stmt = CONNECTION.createStatement();
             String query = "INSERT INTO LOG_STOCK_PRECIO VALUES("
-                    + ""+log.getId_trabajador()+","
-                    + "'"+log.getCodigo_barra()+"',"
-                    + log.getStock_antiguo()+","
-                    + log.getStock_agregado()+","
-                    + log.getPrecio_antiguo()+","
-                    + log.getPrecio_nuevo()+",'"
-                    + log.getFecha()+"');";
-            //System.out.println(query);
+                    + ""+logSP.getId_trabajador()+","
+                    + "'"+logSP.getCodigo_barra()+"',"
+                    + logSP.getStock_antiguo()+","
+                    + logSP.getStock_agregado()+","
+                    + logSP.getPrecio_antiguo()+","
+                    + logSP.getPrecio_nuevo()+",'"
+                    + logSP.getFecha()+"');";
+            log.RegistrarLog("[Query][ConLogStockPrecio|RegistrarLog] "+query);
             stmt.executeUpdate(query);
-            System.out.println("Se ingresó log");
+            log.RegistrarLog("[ConLogStockPrecio|RegistrarLog] Ingreso exitoso");
            
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            log.RegistrarLog("[ERROR][ConLogStockPrecio|RegistrarLog] "+e.getMessage());
            
         }
     }

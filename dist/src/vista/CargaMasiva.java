@@ -216,7 +216,7 @@ public class CargaMasiva extends javax.swing.JFrame {
                         ConProducto cProducto = new ConProducto();
                         cProducto.cargaMasiva(archivo, ProgressBar, this);
                     }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
+                    else JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
                 }   
             }
             

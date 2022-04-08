@@ -1,0 +1,5 @@
+<17:46:59> [Conexion|getConnection] Conexion a base de datos exitosa
+<17:46:59> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<17:46:59> [ConProducto|listarProductos] Consulta exitosa
+<17:47:14> [Query][ConProducto|obtenerProducto] SELECT * FROM PRODUCTO WHERE codigo_barra = '111';
+<17:47:14> [ConProducto|obtenerProducto] Consulta exitosa, pero sin datos

@@ -15,6 +15,7 @@ public class ConVenta {
     public final static Connection CONNECTION = CONEXION.getConnection();
     
     public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana){
+        Logs log = new Logs();
         try{
             Statement stmt = CONNECTION.createStatement();
             
@@ -22,9 +23,9 @@ public class ConVenta {
                             + "(SELECT NOW() FROM DUAL), '"
                             + venta.getTipo_venta() +"',"
                             + venta.getTotal()+ ");";                   
-            
+            log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);            
             stmt.executeUpdate(query);
-            
+            log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");             
             for(VentaProducto vp: detalleVenta){
                 query = "INSERT INTO VENTA_PRODUCTO VALUES ('"
                         + vp.getCodigo_barra() + "', "
@@ -34,27 +35,34 @@ public class ConVenta {
                 stmt.executeUpdate(query);
                 
                 query = "UPDATE PRODUCTO SET stock = stock - " + vp.getCantidad() + " WHERE codigo_barra = '" + vp.getCodigo_barra() + "';";
+                log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
                 stmt.executeUpdate(query);
+                log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");                   
             }
             
             query = "UPDATE SEQ_FOLIO SET nuevo_folio = nuevo_folio + 1;";
+            log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                
             stmt.executeUpdate(query);
+           log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");               
             
             JOptionPane.showMessageDialog(ventana, "Venta registrada con éxito", "Venta ingresada", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(ventana, "No se pudo ingresar la venta", "Venta erronea", JOptionPane.INFORMATION_MESSAGE);
+            log.RegistrarLog("[ERROR][ConVenta|registrarVenta] "+e.getMessage());               
             return false;
         }
     }
     
     public ArrayList<Venta> ventasDia(String fecha1, String fecha2){
         //la fecha debe venir en formato año-mes-dia
+        Logs log = new Logs();
         ArrayList<Venta> lista = new ArrayList<>();
         try {
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59';";
+            log.RegistrarLog("[Query][ConVenta|ventasDia] "+query);            
             ResultSet rs = stmt.executeQuery(query);
             
             while(rs.next()){
@@ -64,16 +72,19 @@ public class ConVenta {
                 v.setTipo_venta(rs.getString(3));
                 v.setTotal(rs.getInt(4));
                 lista.add(v);
-            }            
+            }   
+           log.RegistrarLog("[ConVenta|ventasDia] Consulta exitosa");               
+            
         } 
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.RegistrarLog("[ERROR][ConVenta|ventasDia] "+e.getMessage());   
         }
         return lista;
     }
     
     public ArrayList<Object[]> resumenVentaMetodoPago(String fecha1, String fecha2){
         ArrayList<Object[]> detalle = new ArrayList<>();
+        Logs log = new Logs();
         try {
             Statement stmt = CONNECTION.createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
@@ -82,6 +93,7 @@ public class ConVenta {
                             "JOIN PRODUCTO P ON VP.codigo_barra = P.codigo_barra " +
                             "WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59' " +
                             "GROUP BY V.folio";
+            log.RegistrarLog("[Query][ConVenta|resumenVentaMetodoPago] "+query);              
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 Object[] item = {
@@ -93,10 +105,11 @@ public class ConVenta {
                 
                 detalle.add(item);                        
             }
+           log.RegistrarLog("[ConVenta|resumenVentaMetodoPago] Consulta exitosa");                
             
         } 
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.RegistrarLog("[ERROR][ConVenta|resumenVentaMetodoPago] "+e.getMessage());   
         }
                
         return detalle;
@@ -104,6 +117,7 @@ public class ConVenta {
     
     public ArrayList<Object[]> detalleProductoVendido(String fecha1, String fecha2){
         ArrayList<Object[]> detalle = new ArrayList<>();
+        Logs log = new Logs();
         try {
             Statement stmt = CONNECTION.createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
@@ -112,6 +126,7 @@ public class ConVenta {
                             "JOIN PRODUCTO P ON VP.codigo_barra = P.codigo_barra " +
                             "WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59' " +
                             "GROUP BY P.nombre;";
+            log.RegistrarLog("[Query][ConVenta|detalleProductoVendido] "+query);               
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 Object[] item = {
@@ -122,10 +137,11 @@ public class ConVenta {
                 
                 detalle.add(item);                        
             }
+           log.RegistrarLog("[ConVenta|detalleProductoVendido] Consulta exitosa");               
             
         } 
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.RegistrarLog("[ERROR][ConVenta|detalleProductoVendido] "+e.getMessage()); 
         }
                
         return detalle;

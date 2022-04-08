@@ -13,11 +13,12 @@ public class ConTrabajador {
     public final static Connection CONNECTION = CONEXION.getConnection();
     
     public ArrayList<Trabajador> listarTrabajadores(){
-        ArrayList<Trabajador> listado = new ArrayList<Trabajador>();        
+        ArrayList<Trabajador> listado = new ArrayList<Trabajador>(); 
+        Logs log = new Logs();        
         try {            
             Statement stmt = CONNECTION.createStatement();
             String consulta = "SELECT * FROM TRABAJADOR;";
-            //System.out.println(consulta);
+            log.RegistrarLog("[Query][ConTrabajador|listarTrabajadores] "+consulta);
             ResultSet rs = stmt.executeQuery(consulta);
             while(rs.next()){
                 Trabajador t = new Trabajador();
@@ -25,10 +26,11 @@ public class ConTrabajador {
                 t.setNombre(rs.getString(2));
                 listado.add(t);                
             }
+            log.RegistrarLog("[ConTrabajador|listarTrabajadores] Consulta exitosa");            
             return listado;
         } 
         catch (Exception e) {        
-            System.out.println("ERROR [Metodo listarTrabajadores]: "+e.getMessage());
+            log.RegistrarLog("[ERROR][ConTrabajador|listarTrabajadores] "+e.getMessage()); 
             return listado;
         }
         

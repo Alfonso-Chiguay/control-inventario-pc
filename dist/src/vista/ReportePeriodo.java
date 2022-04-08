@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.ConInformes;
+import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.text.DateFormat;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -349,7 +351,7 @@ public class ReportePeriodo extends javax.swing.JFrame {
     private void txt_diaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_diaFocusLost
         diaValido(txt_dia);
         if(Integer.parseInt(txt_dia.getText())<10){
-            txt_dia.setText("0"+txt_dia.getText());
+            txt_dia.setText("0"+Integer.parseInt(txt_dia.getText()));
         }
     }//GEN-LAST:event_txt_diaFocusLost
 
@@ -384,8 +386,13 @@ public class ReportePeriodo extends javax.swing.JFrame {
         }
         String fecha2 = txt_anio2.getText()+"-"+mes +"-"+txt_dia2.getText();
         
-        
-        informe.informeVentaPeriodo(fecha1, fecha2);
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            informe.informeVentaPeriodo(fecha1, fecha2);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
+        }        
     }//GEN-LAST:event_btn_generarReporteMousePressed
 
     private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered
@@ -406,12 +413,12 @@ public class ReportePeriodo extends javax.swing.JFrame {
     private void txt_dia2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_dia2FocusLost
         diaValido(txt_dia2);
         if(Integer.parseInt(txt_dia2.getText())<10){
-            txt_dia2.setText("0"+txt_dia2.getText());
+            txt_dia2.setText("0"+Integer.parseInt(txt_dia2.getText()));
         }
     }//GEN-LAST:event_txt_dia2FocusLost
 
     private void txt_dia2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dia2KeyTyped
-        txt_dia.setTransferHandler(null);
+        txt_dia2.setTransferHandler(null);
         maxCharacter(2, txt_dia2, evt);
         onlyNumberField(evt);
     }//GEN-LAST:event_txt_dia2KeyTyped

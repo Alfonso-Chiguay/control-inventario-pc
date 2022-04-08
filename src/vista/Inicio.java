@@ -1,11 +1,13 @@
 package vista;
 import controlador.ConInformes;
 import controlador.ConProducto;
+import db.Conexion;
 import java.awt.*;  
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Producto;
@@ -300,10 +302,16 @@ public class Inicio extends javax.swing.JFrame {
     private void btn_nuevaVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nuevaVentaMousePressed
         ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/nuevaventa_click.png"));
         btn_nuevaVenta.setIcon(botonClick);
-        ConProducto cProducto = new ConProducto();
-        ArrayList<Producto> listado = cProducto.listarProductos();
-        NuevaVenta ventana = new NuevaVenta(listado);
-        ventana.setVisible(true);
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            ConProducto cProducto = new ConProducto();
+            ArrayList<Producto> listado = cProducto.listarProductos();
+            NuevaVenta ventana = new NuevaVenta(listado);
+            ventana.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Abrir nueva venta fallido", JOptionPane.WARNING_MESSAGE);   
+        }
     }//GEN-LAST:event_btn_nuevaVentaMousePressed
 
     private void btn_nuevaVentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nuevaVentaMouseReleased

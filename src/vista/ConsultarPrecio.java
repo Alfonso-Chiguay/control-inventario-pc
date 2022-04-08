@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.ConProducto;
+import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
@@ -185,16 +186,23 @@ public class ConsultarPrecio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
-        ConProducto cProducto = new ConProducto();
-        Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
-        if(!p.getNombre().equals("")){
-            lbl_precio.setText(String.format("$%,d",Integer.valueOf(p.getPrecio())));
-            txt_nombreProducto.setText(p.getNombre());
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            ConProducto cProducto = new ConProducto();
+            Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
+            if(!p.getNombre().equals("")){
+                lbl_precio.setText(String.format("$%,d",Integer.valueOf(p.getPrecio())));
+                txt_nombreProducto.setText(p.getNombre());
+            }
+            else {
+                lbl_precio.setText("");
+                txt_nombreProducto.setText("NO EXISTE PRODUCTO REGISTRADO");
+            }            
         }
-        else {
-            lbl_precio.setText("");
-            txt_nombreProducto.setText("");
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Consultar precio fallido", JOptionPane.WARNING_MESSAGE);   
         }
+
     }//GEN-LAST:event_txt_codigoProductoActionPerformed
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){

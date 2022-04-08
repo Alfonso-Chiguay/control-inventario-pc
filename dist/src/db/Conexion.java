@@ -5,6 +5,7 @@
  */
 package db;
 
+import controlador.Logs;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,11 +19,11 @@ public class Conexion {
     private final static String SERVER="www.piliscoffee.cl:3306";
     private final static String USER="piliscof_achiguay";
     private final static String PASS="LaLo14!!";
-    //private final static String DB="piliscof_posdb";
-    private final static String DB="piliscof_posdb_desarrollo";
-    
+    private final static String DB="piliscof_posdb";
+    //private final static String DB="piliscof_posdb_desarrollo";
+
     public Connection getConnection(){
-        
+        Logs log = new Logs();
         Properties propiedadesConexion = new Properties();
         
         try{
@@ -30,12 +31,12 @@ public class Conexion {
             propiedadesConexion.put("password", PASS);
             Connection conn = DriverManager.getConnection("jdbc:mysql://"+SERVER+"/"+DB
                     ,propiedadesConexion);
-            
+            log.RegistrarLog("[Conexion|getConnection] Conexion a base de datos exitosa");  
             return conn;
         
         }
         catch(Exception err){
-            System.out.println(err.getMessage());            
+            log.RegistrarLog("[ERROR][Conexion|getConnection] "+err.getMessage());            
             return null;
         }
         

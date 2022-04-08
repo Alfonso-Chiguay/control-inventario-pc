@@ -7,6 +7,7 @@ package vista;
 
 import controlador.ConProducto;
 import controlador.ConVenta;
+import db.Conexion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -104,8 +105,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         tbl_detalleVenta.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
         
 
-        cb_productos.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        
+        cb_productos.setFont(new Font("Times New Roman", Font.PLAIN, 20));       
         
         seleccionEfectivo();
         
@@ -837,88 +837,99 @@ public class NuevaVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoBarraActionPerformed
-        threadAutomatico.run();
-        txt_codigoBarra.setText("");
-        threadPRECIO.run();
-        
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            threadAutomatico.run();
+            txt_codigoBarra.setText("");
+            threadPRECIO.run();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
+        }
     }//GEN-LAST:event_txt_codigoBarraActionPerformed
 
     private void pressF10_ESC(java.awt.event.KeyEvent evt){
         if(evt.getKeyCode() == KeyEvent.VK_F10){
-            if(!disabled_buttons){ 
-                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
-                btn_confirmaVenta.setIcon(botonClick); 
-                
-                if(tbl_detalleVenta.getRowCount() > 0){  
-                    int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                    if(confirmar == JOptionPane.YES_OPTION){
-                        
-                        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                        btn_confirmaVenta.setIcon(botonClick);  
-                        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                        Venta venta = new Venta();
-                        ArrayList<VentaProducto> lista = new ArrayList<>();
+            Conexion conexion = new Conexion();
+            if(conexion.isNetworkOnline()){
+                if(!disabled_buttons){ 
+                    ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
+                    btn_confirmaVenta.setIcon(botonClick); 
 
-                        venta.setTipo_venta(seleccion());
-                        venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
-                        for(int i = 0; i< table.getRowCount(); i ++){                
-                            String codigo_barra = table.getValueAt(i, 0).toString();
-                            int cantidad = (int) table.getValueAt(i, 3);
-                            int precio = (int)table.getValueAt(i, 2);
-                            int valorTotal = cantidad*precio;
-                            VentaProducto vp = new VentaProducto();
-                            vp.setCodigo_barra(codigo_barra);
-                            vp.setCantidad(cantidad);
-                            vp.setTotal(valorTotal);
-                            lista.add(vp);
+                    if(tbl_detalleVenta.getRowCount() > 0){  
+                        int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                        if(confirmar == JOptionPane.YES_OPTION){
+
+                            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                            btn_confirmaVenta.setIcon(botonClick);  
+                            DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                            Venta venta = new Venta();
+                            ArrayList<VentaProducto> lista = new ArrayList<>();
+
+                            venta.setTipo_venta(seleccion());
+                            venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
+                            for(int i = 0; i< table.getRowCount(); i ++){                
+                                String codigo_barra = table.getValueAt(i, 0).toString();
+                                int cantidad = (int) table.getValueAt(i, 3);
+                                int precio = (int)table.getValueAt(i, 2);
+                                int valorTotal = cantidad*precio;
+                                VentaProducto vp = new VentaProducto();
+                                vp.setCodigo_barra(codigo_barra);
+                                vp.setCantidad(cantidad);
+                                vp.setTotal(valorTotal);
+                                lista.add(vp);
+                            }
+
+                            ConVenta cVenta = new ConVenta();
+                            boolean operacion = cVenta.registrarVenta(venta, lista, this);
+                            if(operacion){                         
+
+                                txt_codigoBarra.setEnabled(false);
+                                cb_productos.setEnabled(false);
+                                tbl_detalleVenta.setEnabled(false);
+                                txt_pagoEfectivo.setEnabled(false);                    
+                                disabled_buttons = true;   
+                                rb_efectivo.setEnabled(false);
+                                rb_debito.setEnabled(false);
+                                rb_credito.setEnabled(false);
+                                des_activar_botones();
+                            }                   
+
                         }
-
-                        ConVenta cVenta = new ConVenta();
-                        boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                        if(operacion){                         
-
-                            txt_codigoBarra.setEnabled(false);
-                            cb_productos.setEnabled(false);
-                            tbl_detalleVenta.setEnabled(false);
-                            txt_pagoEfectivo.setEnabled(false);                    
-                            disabled_buttons = true;   
-                            rb_efectivo.setEnabled(false);
-                            rb_debito.setEnabled(false);
-                            rb_credito.setEnabled(false);
-                            des_activar_botones();
-                        }                   
+                        else{
+                            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                            btn_confirmaVenta.setIcon(botonClick);  
+                        }
 
                     }
                     else{
+                        JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
                         botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                        btn_confirmaVenta.setIcon(botonClick);  
+                        btn_confirmaVenta.setIcon(botonClick);                      
                     }
-                    
-                }
+                }    
                 else{
-                    JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
-                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                    btn_confirmaVenta.setIcon(botonClick);                      
+                    int confirmar = JOptionPane.showConfirmDialog(this, "¿Ingresar nueva venta? Se borrarán los datos desplegados en la pantalla", "Nueva venta", JOptionPane.YES_NO_OPTION);
+                    if(confirmar == 0){
+                        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                        table.setRowCount(0);
+                        threadPRECIO.run();
+                        txt_pagoEfectivo.setText("$0");
+                        txt_vuelto.setText("$0");
+                        txt_codigoBarra.setEnabled(true);
+                        cb_productos.setEnabled(true);
+                        tbl_detalleVenta.setEnabled(true);
+                        txt_pagoEfectivo.setEnabled(true); 
+                        rb_efectivo.setEnabled(true);
+                        rb_debito.setEnabled(true);
+                        rb_credito.setEnabled(true);
+                        disabled_buttons = false;
+                        des_activar_botones();
+                    }
                 }
-            }    
+            }
             else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "¿Ingresar nueva venta? Se borrarán los datos desplegados en la pantalla", "Nueva venta", JOptionPane.YES_NO_OPTION);
-                if(confirmar == 0){
-                    DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                    table.setRowCount(0);
-                    threadPRECIO.run();
-                    txt_pagoEfectivo.setText("$0");
-                    txt_vuelto.setText("$0");
-                    txt_codigoBarra.setEnabled(true);
-                    cb_productos.setEnabled(true);
-                    tbl_detalleVenta.setEnabled(true);
-                    txt_pagoEfectivo.setEnabled(true); 
-                    rb_efectivo.setEnabled(true);
-                    rb_debito.setEnabled(true);
-                    rb_credito.setEnabled(true);
-                    disabled_buttons = false;
-                    des_activar_botones();
-                }
+                JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
             }
         }
         else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){

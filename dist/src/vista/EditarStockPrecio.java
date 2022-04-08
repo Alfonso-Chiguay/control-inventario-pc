@@ -139,6 +139,11 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true));
 
         txt_codigoProducto.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        txt_codigoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_codigoProductoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(127, 85, 57));
@@ -605,44 +610,51 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_nuevoStockMouseEntered
 
     private void btn_searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMousePressed
-        if(!disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_click.png"));
-            btn_search.setIcon(botonClick);
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){           
 
-            ConProducto cProducto = new ConProducto();
-            Producto p = cProducto.obtenerProducto(txt_codigoProducto.getText());
-            productoGlobal = p;
-            if(!p.getNombre().equals("")){
-                chk_precio.setSelected(false);
-                txt_nuevoPrecio.setEditable(false);
-                txt_nuevoPrecio.setText("");
-                chk_stock.setSelected(false);
-                txt_nuevoStock.setEditable(false);
-                txt_nuevoStock.setText("");
-                cb_Trabajador.setEnabled(true);
+            if(!disabled_buttons){    
+                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_click.png"));
+                btn_search.setIcon(botonClick);
+
+                ConProducto cProducto = new ConProducto();
+                Producto p = cProducto.obtenerProducto(txt_codigoProducto.getText());
+                productoGlobal = p;
+                if(!p.getNombre().equals("")){
+                    chk_precio.setSelected(false);
+                    txt_nuevoPrecio.setEditable(false);
+                    txt_nuevoPrecio.setText("");
+                    chk_stock.setSelected(false);
+                    txt_nuevoStock.setEditable(false);
+                    txt_nuevoStock.setText("");
+                    cb_Trabajador.setEnabled(true);
 
 
-                txt_nombreProducto.setText(p.getNombre());
+                    txt_nombreProducto.setText(p.getNombre());
 
-                txt_precioActual.setText(String.valueOf(p.getPrecio()));
-                if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
-                else{
-                    String valor = txt_precioActual.getText().replace("$", "").replace(".", "");
-                    txt_precioActual.setText(String.format("$%,d",Integer.valueOf(valor)));
+                    txt_precioActual.setText(String.valueOf(p.getPrecio()));
+                    if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
+                    else{
+                        String valor = txt_precioActual.getText().replace("$", "").replace(".", "");
+                        txt_precioActual.setText(String.format("$%,d",Integer.valueOf(valor)));
+                    }
+                    txt_stockActual.setText(String.valueOf(p.getStock()));
+                    chk_precio.setEnabled(true);
+                    chk_stock.setEnabled(true);
+                    codigo = txt_codigoProducto.getText();
                 }
-                txt_stockActual.setText(String.valueOf(p.getStock()));
-                chk_precio.setEnabled(true);
-                chk_stock.setEnabled(true);
-                codigo = txt_codigoProducto.getText();
+                else{
+                    codigo = txt_codigoProducto.getText();
+                    limpiarCampos();
+                    txt_codigoProducto.setText(codigo);
+                    JOptionPane.showMessageDialog(this, "No existe un producto asociado al codigo "+codigo,"Error obteniendo producto",JOptionPane.ERROR_MESSAGE);            
+                }
+                botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));
+                btn_search.setIcon(botonClick);
             }
-            else{
-                codigo = txt_codigoProducto.getText();
-                limpiarCampos();
-                txt_codigoProducto.setText(codigo);
-                JOptionPane.showMessageDialog(this, "No existe un producto asociado al codigo "+codigo,"Error obteniendo producto",JOptionPane.ERROR_MESSAGE);            
-            }
-            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/buscar_solid.png"));
-            btn_search.setIcon(botonClick);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
         }
     }//GEN-LAST:event_btn_searchMousePressed
 
@@ -711,71 +723,78 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_confirmarInfoMouseReleased
 
     private void btn_guardar_CerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_CerrarMousePressed
-        if(disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
-            btn_guardar_Cerrar.setIcon(botonClick);
-            ConProducto cProducto = new ConProducto();
-            Producto p = productoGlobal;
-            stockActual = txt_stockActual.getText();
-            precioAntiguo = txt_precioActual.getText();
-            codigo = txt_codigoProducto.getText();
-            int nuevoPrecio,nuevoStock;
-            boolean continuar = true;
-            String mensajeError = "";
-            //validar precios
-            if(!txt_nuevoPrecio.getText().equals("")){
-                nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
-                if(nuevoPrecio>0){
-                    try {
-                        p.setPrecio(nuevoPrecio);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        mensajeError = e.getMessage();                     
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            if(disabled_buttons){    
+                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
+                btn_guardar_Cerrar.setIcon(botonClick);
+                ConProducto cProducto = new ConProducto();
+                Producto p = productoGlobal;
+                stockActual = txt_stockActual.getText();
+                precioAntiguo = txt_precioActual.getText();
+                codigo = txt_codigoProducto.getText();
+                int nuevoPrecio,nuevoStock;
+                boolean continuar = true;
+                String mensajeError = "";
+                //validar precios
+                if(!txt_nuevoPrecio.getText().equals("")){
+                    nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
+                    if(nuevoPrecio>0){
+                        try {
+                            p.setPrecio(nuevoPrecio);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            mensajeError = e.getMessage();                     
+                            continuar = false;
+                        }
+                    }  
+                    else{
+                        mensajeError = "El precio no puede ser menor o igual a 0";
                         continuar = false;
                     }
-                }  
-                else{
-                    mensajeError = "El precio no puede ser menor o igual a 0";
+                }
+
+                if(!txt_nuevoStock.getText().equals("")){
+                    nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
+                    if(nuevoStock > 0){
+                        try {
+                            p.setStock(nuevoStock + p.getStock());
+                        } catch (Exception e) {
+                            mensajeError = e.getMessage();                    
+                            continuar = false;
+                        }
+                    }
+                    else{
+                        mensajeError = "El stock a agregar debe ser mayor a 0";
+                        continuar = false; 
+                    }
+                }
+
+                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
                     continuar = false;
+                    mensajeError = "No hay datos modificados";
                 }
-            }
 
-            if(!txt_nuevoStock.getText().equals("")){
-                nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
-                if(nuevoStock > 0){
-                    try {
-                        p.setStock(nuevoStock + p.getStock());
-                    } catch (Exception e) {
-                        mensajeError = e.getMessage();                    
-                        continuar = false;
+                if(continuar){
+                    if(CONEXION.isNetworkOnline()){
+                       t.start();
+                       JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
+                       this.dispose();
                     }
+                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
+
+
                 }
                 else{
-                    mensajeError = "El stock a agregar debe ser mayor a 0";
-                    continuar = false; 
+                    JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
+                    habilitarCampos();
                 }
-            }
-
-            if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
-                continuar = false;
-                mensajeError = "No hay datos modificados";
-            }
-
-            if(continuar){
-                if(CONEXION.isNetworkOnline()){
-                   t.start();
-                   JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
-                   this.dispose();
-                }
-                else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
-
 
             }
-            else{
-                JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
-                habilitarCampos();
-            }
-        
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Actualizar producto fallido", JOptionPane.WARNING_MESSAGE);   
         }
     }//GEN-LAST:event_btn_guardar_CerrarMousePressed
 
@@ -815,74 +834,82 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardar_continuarMouseExited
 
     private void btn_guardar_continuarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMousePressed
-        if(disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
-            btn_guardar_continuar.setIcon(botonClick);            
-            ConProducto cProducto = new ConProducto();
-            Producto p = productoGlobal;
-            stockActual = txt_stockActual.getText();
-            precioAntiguo = txt_precioActual.getText();
-            codigo = txt_codigoProducto.getText();
-            int nuevoPrecio,nuevoStock;
-            boolean continuar = true;
-            String mensajeError = "";
-            //validar precios
-            if(!txt_nuevoPrecio.getText().equals("")){
-                nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
-                if(nuevoPrecio>0){
-                    try {
-                        p.setPrecio(nuevoPrecio);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        mensajeError = e.getMessage();                     
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){           
+        
+            if(disabled_buttons){    
+                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
+                btn_guardar_continuar.setIcon(botonClick);            
+                ConProducto cProducto = new ConProducto();
+                Producto p = productoGlobal;
+                stockActual = txt_stockActual.getText();
+                precioAntiguo = txt_precioActual.getText();
+                codigo = txt_codigoProducto.getText();
+                int nuevoPrecio,nuevoStock;
+                boolean continuar = true;
+                String mensajeError = "";
+                //validar precios
+                if(!txt_nuevoPrecio.getText().equals("")){
+                    nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
+                    if(nuevoPrecio>0){
+                        try {
+                            p.setPrecio(nuevoPrecio);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            mensajeError = e.getMessage();                     
+                            continuar = false;
+                        }
+                    }  
+                    else{
+                        mensajeError = "El precio no puede ser menor o igual a 0";
                         continuar = false;
                     }
-                }  
-                else{
-                    mensajeError = "El precio no puede ser menor o igual a 0";
+                }
+
+                if(!txt_nuevoStock.getText().equals("")){
+                    nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
+                    if(nuevoStock > 0){
+                        try {
+                            p.setStock(nuevoStock + p.getStock());
+                        } catch (Exception e) {
+                            mensajeError = e.getMessage();                    
+                            continuar = false;
+                        }
+                    }
+                    else{
+                        mensajeError = "El stock a agregar debe ser mayor a 0";
+                        continuar = false; 
+                    }
+                }
+
+                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
                     continuar = false;
+                    mensajeError = "No hay datos modificados";
                 }
-            }
 
-            if(!txt_nuevoStock.getText().equals("")){
-                nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
-                if(nuevoStock > 0){
-                    try {
-                        p.setStock(nuevoStock + p.getStock());
-                    } catch (Exception e) {
-                        mensajeError = e.getMessage();                    
-                        continuar = false;
+                if(continuar){
+                    if(CONEXION.isNetworkOnline()){
+                        productoGlobal = p;
+                        t.start();
+                        JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
+                        limpiarCampos();                
+                        habilitarCampos();
+
                     }
+                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
+
+
                 }
                 else{
-                    mensajeError = "El stock a agregar debe ser mayor a 0";
-                    continuar = false; 
-                }
-            }
-
-            if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
-                continuar = false;
-                mensajeError = "No hay datos modificados";
-            }
-
-            if(continuar){
-                if(CONEXION.isNetworkOnline()){
-                    productoGlobal = p;
-                    t.start();
-                    JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
-                    limpiarCampos();                
+                    JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
                     habilitarCampos();
-
                 }
-                else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
-
-
-            }
-            else{
-                JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
-                habilitarCampos();
             }
         }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Actualizar producto fallido", JOptionPane.WARNING_MESSAGE);   
+        }
+                
     }//GEN-LAST:event_btn_guardar_continuarMousePressed
 
     private void btn_guardar_continuarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMouseReleased
@@ -941,6 +968,51 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"));
         btn_salir.setIcon(botonClick);
     }//GEN-LAST:event_btn_salirMouseReleased
+
+    private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
+        Conexion conexion = new Conexion();
+        if(conexion.isNetworkOnline()){
+            
+            if(!disabled_buttons){    
+                ConProducto cProducto = new ConProducto();
+                Producto p = cProducto.obtenerProducto(txt_codigoProducto.getText());
+                productoGlobal = p;
+                if(!p.getNombre().equals("")){
+                    chk_precio.setSelected(false);
+                    txt_nuevoPrecio.setEditable(false);
+                    txt_nuevoPrecio.setText("");
+                    chk_stock.setSelected(false);
+                    txt_nuevoStock.setEditable(false);
+                    txt_nuevoStock.setText("");
+                    cb_Trabajador.setEnabled(true);
+
+
+                    txt_nombreProducto.setText(p.getNombre());
+
+                    txt_precioActual.setText(String.valueOf(p.getPrecio()));
+                    if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
+                    else{
+                        String valor = txt_precioActual.getText().replace("$", "").replace(".", "");
+                        txt_precioActual.setText(String.format("$%,d",Integer.valueOf(valor)));
+                    }
+                    txt_stockActual.setText(String.valueOf(p.getStock()));
+                    chk_precio.setEnabled(true);
+                    chk_stock.setEnabled(true);
+                    codigo = txt_codigoProducto.getText();
+                }
+                else{
+                    codigo = txt_codigoProducto.getText();
+                    limpiarCampos();
+                    txt_codigoProducto.setText(codigo);
+                    JOptionPane.showMessageDialog(this, "No existe un producto asociado al codigo "+codigo,"Error obteniendo producto",JOptionPane.ERROR_MESSAGE);            
+                }
+
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
+        }
+    }//GEN-LAST:event_txt_codigoProductoActionPerformed
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();

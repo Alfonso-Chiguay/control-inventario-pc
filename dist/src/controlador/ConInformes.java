@@ -22,6 +22,7 @@ public class ConInformes {
     
     public void informeStockNegativo(JFrame ventana){
         Document documento = new Document();
+        Logs log = new Logs();
         try {
 
             Date date = Calendar.getInstance().getTime();
@@ -38,6 +39,7 @@ public class ConInformes {
             
             String ruta = System.getProperty("user.home")+"/Desktop/Reportes/Stock negativo/Informe stock negativo "+today+" "+hora+".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            log.RegistrarLog("[ConInformes|informeStockNegativo] Creacion reporte en blanco: "+ruta);
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
             header.scaleToFit(150, 150);
@@ -104,18 +106,17 @@ public class ConInformes {
             documento.close();
             JOptionPane.showMessageDialog(ventana, "Reporte generado con éxito", "Stock negativo", JOptionPane.INFORMATION_MESSAGE);
             Desktop.getDesktop().open(new File(ruta));
-            
+            log.RegistrarLog("[ConInformes|informeStockNegativo] Creacion de reporte exitoso");            
         } 
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.RegistrarLog("[ERROR][ConInformes|informeStockNegativo] "+e.getMessage());
         }
     }
     
     public void informeVentaPeriodo(String fecha1, String fecha2){
+        Logs log = new Logs();
         ConVenta cVenta = new ConVenta();
-        ////////////////////
         ArrayList<Venta> listado = cVenta.ventasDia(fecha1, fecha2);
-        ////////////////////
         Document documento = new Document();
         try {
             Date date = Calendar.getInstance().getTime();
@@ -140,6 +141,7 @@ public class ConInformes {
             }
             
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            log.RegistrarLog("[ConInformes|informeVentaPeriodo] Creacion reporte en blanco: "+ruta);            
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
             header.scaleToFit(150, 150);
@@ -351,10 +353,11 @@ public class ConInformes {
             firma.setAlignment(Chunk.ALIGN_RIGHT);
             documento.add(firma);        
             documento.close();
-            
+            log.RegistrarLog("[ConInformes|informeVentaPeriodo] Creacion de reporte exitoso");            
             Desktop.getDesktop().open(new File(ruta));
         } 
         catch (Exception e) {
+            log.RegistrarLog("[ERROR][ConInformes|informeVentaPeriodo] "+e.getMessage());
         }
         
     }
