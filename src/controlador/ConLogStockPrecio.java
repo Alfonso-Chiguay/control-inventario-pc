@@ -6,13 +6,14 @@ import java.sql.Statement;
 import modelo.LogStockPrecio;
 
 public class ConLogStockPrecio {
-    public final static Conexion CONEXION = new Conexion();
-    public final static Connection CONNECTION = CONEXION.getConnection();
+
     
     
     public void RegistrarLog(LogStockPrecio logSP){
         Logs log = new Logs();
         try{
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "INSERT INTO LOG_STOCK_PRECIO VALUES("
                     + ""+logSP.getId_trabajador()+","

@@ -54,6 +54,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
         this.setTitle("Pili's Coffee POS Software | Nueva venta");
+        productos = listado;
         DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
         table.setRowCount(0);
         cb_productos.addItem("(Seleccione un producto)");
@@ -118,8 +119,16 @@ public class NuevaVenta extends javax.swing.JFrame {
         @Override
         public void run() {
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-            ConProducto cProducto = new ConProducto();
-            Producto p = cProducto.obtenerProducto(txt_codigoBarra.getText());
+            //ConProducto cProducto = new ConProducto();
+            //Producto p = cProducto.obtenerProducto(txt_codigoBarra.getText());
+            Producto p = new Producto();
+            for(Producto producto: productos){
+                if(producto.getCodigo_barra().equals(txt_codigoBarra.getText())){
+                    p = producto;
+                    break;
+                }
+            }
+            
             if(!p.getNombre().equals("")){
                 int filas=table.getRowCount();
 
@@ -177,9 +186,16 @@ public class NuevaVenta extends javax.swing.JFrame {
         public void run() {
             if(!cb_productos.getSelectedItem().toString().equals("(Seleccione un producto)")){
                 DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                ConProducto cProducto = new ConProducto();
+                //ConProducto cProducto = new ConProducto();
+                //Producto p = cProducto.obtenerProducto(codigo);
                 String codigo = cb_productos.getSelectedItem().toString().replace(")", "ñÑñ").replace("(","ñÑñ").split("ñÑñ")[1];
-                Producto p = cProducto.obtenerProducto(codigo);
+                Producto p = new Producto();
+                for(Producto producto: productos){
+                    if(producto.getCodigo_barra().equals(codigo)){
+                        p = producto;
+                        break;
+                    }
+                }
                 if(!p.getNombre().equals("")){
                     int filas=table.getRowCount();
 
@@ -288,7 +304,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(230, 204, 178));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 740));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1924, 1045));
         jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPanel1KeyPressed(evt);
@@ -818,18 +834,18 @@ public class NuevaVenta extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1920, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1045, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -837,21 +853,15 @@ public class NuevaVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoBarraActionPerformed
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            threadAutomatico.run();
-            txt_codigoBarra.setText("");
-            threadPRECIO.run();
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
-        }
+
+        threadAutomatico.run();
+        txt_codigoBarra.setText("");
+        threadPRECIO.run();
     }//GEN-LAST:event_txt_codigoBarraActionPerformed
 
     private void pressF10_ESC(java.awt.event.KeyEvent evt){
         if(evt.getKeyCode() == KeyEvent.VK_F10){
-            Conexion conexion = new Conexion();
-            if(conexion.isNetworkOnline()){
+
                 if(!disabled_buttons){ 
                     ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
                     btn_confirmaVenta.setIcon(botonClick); 
@@ -927,10 +937,7 @@ public class NuevaVenta extends javax.swing.JFrame {
                         des_activar_botones();
                     }
                 }
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
-            }
+
         }
         else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/escsalir_click.png"));

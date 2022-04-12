@@ -356,8 +356,7 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarYOtroMouseExited
 
     private void btn_guardarYOtroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMousePressed
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
+
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
             btn_guardarYOtro.setIcon(botonClick);
             String codigo = txt_codigoProducto.getText();
@@ -392,10 +391,7 @@ public class IngresarProducto extends javax.swing.JFrame {
             catch(Exception e){
                 JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
             }
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Ingresar producto fallido", JOptionPane.WARNING_MESSAGE);   
-        }
+
     }//GEN-LAST:event_btn_guardarYOtroMousePressed
 
     private void btn_guardarYOtroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYOtroMouseReleased
@@ -414,8 +410,7 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarYCerrarMouseExited
 
     private void btn_guardarYCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMousePressed
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
+
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
             btn_guardarYCerrar.setIcon(botonClick);
             String codigo = txt_codigoProducto.getText();
@@ -449,10 +444,7 @@ public class IngresarProducto extends javax.swing.JFrame {
             catch(Exception e){
                 JOptionPane.showMessageDialog(this, e.getMessage(),"Error con datos de producto",JOptionPane.ERROR_MESSAGE);
             }
-        }
-        else{                
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Ingreso producto fallido", JOptionPane.WARNING_MESSAGE);           
-        }
+
     }//GEN-LAST:event_btn_guardarYCerrarMousePressed
 
     private void btn_guardarYCerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarYCerrarMouseReleased

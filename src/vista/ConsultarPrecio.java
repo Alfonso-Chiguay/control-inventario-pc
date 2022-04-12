@@ -9,6 +9,7 @@ import controlador.ConProducto;
 import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Producto;
 
@@ -18,9 +19,8 @@ import modelo.Producto;
  */
 public class ConsultarPrecio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IngresarProducto
-     */
+    ArrayList<Producto> productos;
+    
     public ConsultarPrecio() {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
@@ -28,6 +28,15 @@ public class ConsultarPrecio extends javax.swing.JFrame {
         this.setTitle("Pili's Coffee POS Software | Consulta de precio");
 
     }
+    
+    public ConsultarPrecio(ArrayList<Producto> listado) {
+        initComponents();
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
+        this.setIconImage(icon);
+        this.setTitle("Pili's Coffee POS Software | Consulta de precio");
+        productos = listado;
+
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,7 +83,7 @@ public class ConsultarPrecio extends javax.swing.JFrame {
 
         txt_nombreProducto.setEditable(false);
         txt_nombreProducto.setBackground(new java.awt.Color(230, 204, 178));
-        txt_nombreProducto.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        txt_nombreProducto.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
         txt_nombreProducto.setForeground(new java.awt.Color(127, 85, 57));
         txt_nombreProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nombreProducto.setBorder(null);
@@ -115,22 +124,23 @@ public class ConsultarPrecio extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_nombreProducto)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(85, 85, 85)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txt_nombreProducto, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(185, 185, 185)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_codigoProducto)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(186, 186, 186)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(85, 85, 85)))))
+                        .addGap(0, 193, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(185, 185, 185)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_codigoProducto)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,11 +150,11 @@ public class ConsultarPrecio extends javax.swing.JFrame {
                 .addComponent(txt_codigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(txt_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -166,8 +176,8 @@ public class ConsultarPrecio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,22 +196,30 @@ public class ConsultarPrecio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            ConProducto cProducto = new ConProducto();
-            Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
-            if(!p.getNombre().equals("")){
-                lbl_precio.setText(String.format("$%,d",Integer.valueOf(p.getPrecio())));
-                txt_nombreProducto.setText(p.getNombre());
+
+        //ConProducto cProducto = new ConProducto();
+        //Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
+        
+        Producto p = new Producto();
+        for(Producto producto: productos){
+            if(producto.getCodigo_barra().equals(txt_codigoProducto.getText())){
+                p = producto;
+                break;
             }
-            else {
-                lbl_precio.setText("");
-                txt_nombreProducto.setText("NO EXISTE PRODUCTO REGISTRADO");
-            }            
         }
-        else{
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Consultar precio fallido", JOptionPane.WARNING_MESSAGE);   
+        
+        if(!p.getNombre().equals("")){
+            lbl_precio.setText(String.format("$%,d",Integer.valueOf(p.getPrecio())));
+            txt_nombreProducto.setText(p.getNombre());
+            txt_codigoProducto.setText("");
+            
         }
+        else {
+            lbl_precio.setText("");
+            txt_nombreProducto.setText("NO EXISTE PRODUCTO REGISTRADO");
+
+            txt_codigoProducto.setText("");
+        }            
 
     }//GEN-LAST:event_txt_codigoProductoActionPerformed
     

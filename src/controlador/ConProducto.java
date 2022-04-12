@@ -23,14 +23,14 @@ import org.apache.commons.collections4.IteratorUtils;
  */
 public class ConProducto {
     
-    public final static Conexion CONEXION = new Conexion();
-    public final static Connection CONNECTION = CONEXION.getConnection();
+
     
     
     public boolean existeCodigo(String codigo){
         Logs log = new Logs();
-        try{
-            
+        try{     
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT * FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
             log.RegistrarLog("[Query][ConProducto|existeCodigo] "+query);
@@ -53,7 +53,9 @@ public class ConProducto {
     
     public Producto obtenerProducto(String codigo){
         Logs log = new Logs();
-        try{            
+        try{   
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT * FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
             log.RegistrarLog("[Query][ConProducto|obtenerProducto] "+query);
@@ -84,6 +86,8 @@ public class ConProducto {
     public boolean ingresarProducto(Producto producto){
         Logs log = new Logs();
         try{
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "INSERT INTO PRODUCTO VALUES("
                     + "'"+producto.getCodigo_barra()+"',"
@@ -105,6 +109,8 @@ public class ConProducto {
         Logs log = new Logs();
         ArrayList<Producto> lista = new ArrayList<>();
         try{            
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT * FROM PRODUCTO;";
             log.RegistrarLog("[Query][ConProducto|listarProductos] "+query);
@@ -305,6 +311,8 @@ public class ConProducto {
     public boolean actualizarProducto(Producto producto){
         Logs log = new Logs();
         try{
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "UPDATE PRODUCTO SET stock = "+producto.getStock()+
                     ", precio = "+producto.getPrecio()+" WHERE codigo_barra = '"+producto.getCodigo_barra()+"';";
@@ -322,8 +330,10 @@ public class ConProducto {
     public Producto consultaPrecio(String codigo){
         Logs log = new Logs();
         try{
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
+            String query = "SELECT precio, nombre, stock FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
             log.RegistrarLog("[Query][ConProducto|consultaPrecio] "+query);
             ResultSet rs = stmt.executeQuery(query);
             Producto p = new Producto();
@@ -331,6 +341,7 @@ public class ConProducto {
                 p.setPrecio(rs.getInt(1));
                 p.setNombre(rs.getString(2));
                 p.setCodigo_barra(codigo);
+                p.setStock(rs.getInt(3));
                 log.RegistrarLog("[ConProducto|consultaPrecio] Consulta exitosa");                  
                 return p;
             } 
@@ -352,6 +363,8 @@ public class ConProducto {
         Logs log = new Logs();
         ArrayList<Producto> lista = new ArrayList<>();
         try {
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT codigo_barra, nombre, stock FROM PRODUCTO WHERE stock < 0;";
             log.RegistrarLog("[Query][ConProducto|stockNegativo] "+query);

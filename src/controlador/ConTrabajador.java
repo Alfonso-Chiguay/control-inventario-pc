@@ -9,13 +9,13 @@ import modelo.Trabajador;
 
 
 public class ConTrabajador {        
-    public final static Conexion CONEXION = new Conexion();
-    public final static Connection CONNECTION = CONEXION.getConnection();
     
     public ArrayList<Trabajador> listarTrabajadores(){
         ArrayList<Trabajador> listado = new ArrayList<Trabajador>(); 
         Logs log = new Logs();        
-        try {            
+        try {  
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String consulta = "SELECT * FROM TRABAJADOR;";
             log.RegistrarLog("[Query][ConTrabajador|listarTrabajadores] "+consulta);
