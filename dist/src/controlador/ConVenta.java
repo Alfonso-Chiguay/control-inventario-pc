@@ -11,12 +11,12 @@ import modelo.Venta;
 import modelo.VentaProducto;
 
 public class ConVenta {
-    public final static Conexion CONEXION = new Conexion();
-    public final static Connection CONNECTION = CONEXION.getConnection();
     
     public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana){
         Logs log = new Logs();
         try{
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             
             String query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
@@ -60,6 +60,8 @@ public class ConVenta {
         Logs log = new Logs();
         ArrayList<Venta> lista = new ArrayList<>();
         try {
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59';";
             log.RegistrarLog("[Query][ConVenta|ventasDia] "+query);            
@@ -86,6 +88,8 @@ public class ConVenta {
         ArrayList<Object[]> detalle = new ArrayList<>();
         Logs log = new Logs();
         try {
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
             String query = "SELECT V.folio, V.tipo_venta, DATE_FORMAT(V.fecha, '%d/%m/%Y %H:%i:%s') as FECHA, SUM(VP.valor_total) " +
@@ -119,6 +123,8 @@ public class ConVenta {
         ArrayList<Object[]> detalle = new ArrayList<>();
         Logs log = new Logs();
         try {
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
             String query = "SELECT P.nombre, sum(VP.cantidad), sum(VP.valor_total) " +

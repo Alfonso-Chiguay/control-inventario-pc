@@ -54,7 +54,7 @@
                       <Component id="btn_limpiartodo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_salir" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="47" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="50" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
@@ -400,7 +400,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/add.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="STOCK A AGREGAR"/>
+                <Property name="text" type="java.lang.String" value="NUEVO STOCK"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbl_nuevoStockMouseEntered"/>

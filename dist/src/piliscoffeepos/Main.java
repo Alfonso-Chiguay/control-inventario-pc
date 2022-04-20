@@ -1,8 +1,7 @@
 package piliscoffeepos;
-import controlador.ConInformes;
-import controlador.Logs;
-import controlador.OfflineQueuesBD;
+
 import vista.Inicio;
+
 
 public class Main {
 
@@ -10,6 +9,5 @@ public class Main {
         Inicio ventana = new Inicio();
         ventana.setVisible(true);   
 
-        
     }    
 }

@@ -71,6 +71,7 @@ public class Inicio extends javax.swing.JFrame {
         btn_ventaPeriodo = new javax.swing.JLabel();
         btn_consultaStockU = new javax.swing.JLabel();
         btn_stockGral = new javax.swing.JLabel();
+        btn_actualizarStockMasivo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -246,6 +247,22 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        btn_actualizarStockMasivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/actualizarstockmasivo_solid.png"))); // NOI18N
+        btn_actualizarStockMasivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_actualizarStockMasivoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_actualizarStockMasivoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_actualizarStockMasivoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_actualizarStockMasivoMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -263,22 +280,10 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(btn_consultarPrecio)
                                 .addGap(249, 249, 249))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btn_nuevoProducto)
-                                    .addComponent(btn_cargaMasiva))
-                                .addGap(69, 69, 69)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btn_consultaStockU)
-                                    .addComponent(btn_actualizarStockPrecio))
-                                .addGap(244, 244, 244))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lbl_headerInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(177, 177, 177)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -287,7 +292,22 @@ public class Inicio extends javax.swing.JFrame {
                                 .addGap(72, 72, 72)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn_stockNegativo)
-                                    .addComponent(btn_stockGral))))
+                                    .addComponent(btn_stockGral)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(109, 109, 109)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btn_nuevoProducto)
+                                        .addComponent(btn_cargaMasiva))
+                                    .addGap(38, 38, 38)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btn_consultaStockU)
+                                        .addComponent(btn_actualizarStockPrecio))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_actualizarStockMasivo))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(61, 61, 61)
+                                    .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -310,15 +330,20 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(btn_consultarPrecio))
                         .addGap(52, 52, 52)
                         .addComponent(lbl_headerInventario)
-                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_nuevoProducto)
-                            .addComponent(btn_consultaStockU))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_actualizarStockPrecio)
-                            .addComponent(btn_cargaMasiva))
-                        .addGap(64, 64, 64)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_nuevoProducto)
+                                    .addComponent(btn_consultaStockU))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_actualizarStockPrecio)
+                                    .addComponent(btn_cargaMasiva)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(btn_actualizarStockMasivo)))
+                        .addGap(68, 68, 68)
                         .addComponent(lbl_headerReporte)
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -565,14 +590,36 @@ public class Inicio extends javax.swing.JFrame {
     private void btn_stockGralMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_stockGralMousePressed
         ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/stockgral_click.png"));
         btn_stockGral.setIcon(botonClick);
-        ConInformes cInforme = new ConInformes();
-        cInforme.listadoStockGeneral(this);
+        TipoReporteStock ventana = new TipoReporteStock();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btn_stockGralMousePressed
 
     private void btn_stockGralMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_stockGralMouseReleased
         ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/stockgral_solid.png"));
         btn_stockGral.setIcon(botonClick);
     }//GEN-LAST:event_btn_stockGralMouseReleased
+
+    private void btn_actualizarStockMasivoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarStockMasivoMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/actualizarstockmasivo_click.png"));
+        btn_actualizarStockMasivo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_actualizarStockMasivoMouseEntered
+
+    private void btn_actualizarStockMasivoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarStockMasivoMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/actualizarstockmasivo_solid.png"));
+        btn_actualizarStockMasivo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_actualizarStockMasivoMouseExited
+
+    private void btn_actualizarStockMasivoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarStockMasivoMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/actualizarstockmasivo_click.png"));
+        btn_actualizarStockMasivo.setIcon(botonClick);
+        ActualizarStockMasivo ventana = new ActualizarStockMasivo();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btn_actualizarStockMasivoMousePressed
+
+    private void btn_actualizarStockMasivoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarStockMasivoMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/actualizarstockmasivo_solid.png"));
+        btn_actualizarStockMasivo.setIcon(botonClick);
+    }//GEN-LAST:event_btn_actualizarStockMasivoMouseReleased
 
     /**
      * @param args the command line arguments
@@ -613,6 +660,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btn_actualizarStockMasivo;
     private javax.swing.JLabel btn_actualizarStockPrecio;
     private javax.swing.JLabel btn_cargaMasiva;
     private javax.swing.JLabel btn_consultaStockU;

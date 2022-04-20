@@ -1,5 +1,7 @@
 package piliscoffeepos;
+
 import vista.Inicio;
+
 
 public class Main {
 
@@ -7,6 +9,5 @@ public class Main {
         Inicio ventana = new Inicio();
         ventana.setVisible(true);   
 
-        
     }    
 }

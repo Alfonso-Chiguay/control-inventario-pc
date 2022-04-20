@@ -22,7 +22,7 @@ public class Logs {
             Date date = Calendar.getInstance().getTime();   
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             String today = formatter.format(date);
-            String rutaLogHoy = "src/Logs/Log "+today+".txt";
+            String rutaLogHoy = System.getProperty("user.home")+"/Documents/Logs PilisCoffeePOS/Log "+today+".txt";
             File file = new File(rutaLogHoy);
             if(!file.exists()){
                 file.getParentFile().mkdirs(); 

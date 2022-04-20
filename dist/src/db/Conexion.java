@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,6 +37,7 @@ public class Conexion {
         
         }
         catch(Exception err){
+            JOptionPane.showMessageDialog(null, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Problemas de conexion", JOptionPane.WARNING_MESSAGE);              
             log.RegistrarLog("[ERROR][Conexion|getConnection] "+err.getMessage());            
             return null;
         }
@@ -44,7 +46,7 @@ public class Conexion {
     }
     
     public boolean isNetworkOnline(){
-        try{
+        /*try{
             Process process = java.lang.Runtime.getRuntime().exec("ping www.piliscoffee.cl");
             int ping = process.waitFor();            
             if (ping == 0) return true;        
@@ -52,7 +54,8 @@ public class Conexion {
         }
         catch(Exception e){
             return false;
-        }                
+        } */
+        return true;
     }
 }
 

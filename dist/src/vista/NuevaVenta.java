@@ -38,6 +38,7 @@ import modelo.VentaProducto;
 public class NuevaVenta extends javax.swing.JFrame {
     ArrayList<Producto> productos;
     private boolean disabled_buttons;
+    private boolean actualizarListado;
 
     public NuevaVenta() {
         initComponents();
@@ -54,14 +55,13 @@ public class NuevaVenta extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
         this.setTitle("Pili's Coffee POS Software | Nueva venta");
+        productos = listado;
         DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
         table.setRowCount(0);
-        cb_productos.addItem("(Seleccione un producto)");
-        for(Producto p: listado){
-            cb_productos.addItem(p.getNombre()+" ("+p.getCodigo_barra()+")");
-        }
+        actualizarProductos();
+        actualizarListado = false;
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(100, 100, (int) dim.getWidth()+4, (int) dim.getHeight()-35);
+        setBounds(100, 100, (int) dim.getWidth(), (int) dim.getHeight()-35);
         
         setLocationRelativeTo(null);
         
@@ -111,6 +111,12 @@ public class NuevaVenta extends javax.swing.JFrame {
         
     }
     
+    private void actualizarProductos(){
+       cb_productos.addItem("(Seleccione un producto)");
+        for(Producto p: productos){
+            cb_productos.addItem(p.getNombre()+" ("+p.getCodigo_barra()+")");
+        }
+    }
 
     
     
@@ -118,8 +124,16 @@ public class NuevaVenta extends javax.swing.JFrame {
         @Override
         public void run() {
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-            ConProducto cProducto = new ConProducto();
-            Producto p = cProducto.obtenerProducto(txt_codigoBarra.getText());
+            //ConProducto cProducto = new ConProducto();
+            //Producto p = cProducto.obtenerProducto(txt_codigoBarra.getText());
+            Producto p = new Producto();
+            for(Producto producto: productos){
+                if(producto.getCodigo_barra().equals(txt_codigoBarra.getText())){
+                    p = producto;
+                    break;
+                }
+            }
+            
             if(!p.getNombre().equals("")){
                 int filas=table.getRowCount();
 
@@ -164,6 +178,7 @@ public class NuevaVenta extends javax.swing.JFrame {
                if(ingresar == 0){
                    IngresarProducto ventana = new IngresarProducto();
                    ventana.setVisible(true);
+                   actualizarListado = true;
                }
             }
 
@@ -177,9 +192,16 @@ public class NuevaVenta extends javax.swing.JFrame {
         public void run() {
             if(!cb_productos.getSelectedItem().toString().equals("(Seleccione un producto)")){
                 DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                ConProducto cProducto = new ConProducto();
+                //ConProducto cProducto = new ConProducto();
+                //Producto p = cProducto.obtenerProducto(codigo);
                 String codigo = cb_productos.getSelectedItem().toString().replace(")", "ñÑñ").replace("(","ñÑñ").split("ñÑñ")[1];
-                Producto p = cProducto.obtenerProducto(codigo);
+                Producto p = new Producto();
+                for(Producto producto: productos){
+                    if(producto.getCodigo_barra().equals(codigo)){
+                        p = producto;
+                        break;
+                    }
+                }
                 if(!p.getNombre().equals("")){
                     int filas=table.getRowCount();
 
@@ -288,7 +310,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(230, 204, 178));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 740));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1924, 1045));
         jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPanel1KeyPressed(evt);
@@ -372,8 +394,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_productos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(48, 48, 48)
+                    .addComponent(cb_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addComponent(btn_elegir_producto)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -538,8 +560,8 @@ public class NuevaVenta extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -673,22 +695,9 @@ public class NuevaVenta extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 103, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(txt_pagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(btn_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(txt_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56))
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -703,8 +712,20 @@ public class NuevaVenta extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(rb_efectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(txt_pagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btn_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(txt_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(30, 30, 30))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -725,14 +746,11 @@ public class NuevaVenta extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_vuelto)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(rb_debito, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
+                    .addComponent(rb_debito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rb_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -788,11 +806,11 @@ public class NuevaVenta extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_confirmaVenta)
-                            .addComponent(btn_salir))))
-                .addGap(20, 20, 20))
+                            .addComponent(btn_confirmaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -813,23 +831,23 @@ public class NuevaVenta extends javax.swing.JFrame {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(81, 81, 81))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(108, 108, 108)
+                                .addGap(68, 68, 68)
                                 .addComponent(btn_confirmaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1920, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -837,21 +855,20 @@ public class NuevaVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoBarraActionPerformed
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            threadAutomatico.run();
-            txt_codigoBarra.setText("");
-            threadPRECIO.run();
+        if(actualizarListado){
+            ConProducto cProducto = new ConProducto();
+            productos = cProducto.listarProductos();
+            actualizarProductos();
+            actualizarListado = false;
         }
-        else{
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
-        }
+        threadAutomatico.run();
+        txt_codigoBarra.setText("");
+        threadPRECIO.run();
     }//GEN-LAST:event_txt_codigoBarraActionPerformed
 
     private void pressF10_ESC(java.awt.event.KeyEvent evt){
         if(evt.getKeyCode() == KeyEvent.VK_F10){
-            Conexion conexion = new Conexion();
-            if(conexion.isNetworkOnline()){
+
                 if(!disabled_buttons){ 
                     ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
                     btn_confirmaVenta.setIcon(botonClick); 
@@ -927,10 +944,7 @@ public class NuevaVenta extends javax.swing.JFrame {
                         des_activar_botones();
                     }
                 }
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
-            }
+
         }
         else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/escsalir_click.png"));

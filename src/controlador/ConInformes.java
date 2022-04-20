@@ -114,6 +114,103 @@ public class ConInformes {
             log.RegistrarLog("[ERROR][ConInformes|listadoStockGeneral] "+e.getMessage());            
         }
     }
+
+    public void listadoStockFamilia(JFrame ventana, String filtro){
+        Document documento = new Document();
+        Logs log = new Logs();
+        try {
+            Date date = Calendar.getInstance().getTime();
+
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String today = formatter.format(date);
+                        
+            formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            
+            String fullDate = formatter.format(date);
+            formatter = new SimpleDateFormat("HHmmss");
+            String hora = formatter.format(date);
+            
+            
+            String ruta = System.getProperty("user.home")+"/Desktop/Reportes/Stock/Stock general/Listado stock "+filtro.toLowerCase()+" "+today+" "+hora+".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            log.RegistrarLog("[ConInformes|listadoStockGeneral] Creacion reporte en blanco: "+ruta);
+            documento.open();
+            Image header = Image.getInstance("src/img/Piliscoffee header.png");
+            header.scaleToFit(150, 150);
+            
+            header.setAlignment(Chunk.ALIGN_LEFT);
+            Paragraph titulo = new Paragraph();
+            titulo.setAlignment(Chunk.ALIGN_CENTER);
+
+            titulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 20, Font.BOLD, BaseColor.RED));
+            titulo.add("\nINVENTARIO - STOCK FILTRADO: '"+filtro.toUpperCase()+"'");
+            
+            Paragraph subtitulo = new Paragraph();
+            subtitulo.setAlignment(Chunk.ALIGN_CENTER);
+            subtitulo.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED));
+            subtitulo.add("Fecha de creacion del reporte: "+fullDate+"\n\n");
+            
+            documento.open();
+            documento.add(header);
+            documento.add(titulo);
+            documento.add(subtitulo);   
+            
+            ConProducto cProducto = new ConProducto();
+            ArrayList<Producto> listado = cProducto.listarProductosFiltrado(filtro);
+            PdfPTable reporte = new PdfPTable(new float[] { 25, 63, 12 });
+            PdfPCell cell = new PdfPCell();
+            cell.setBackgroundColor(BaseColor.GRAY);
+            Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
+            font.setColor(BaseColor.WHITE);
+            cell.setPhrase(new Phrase("CÓD. PRODUCTO", font));
+            reporte.addCell(cell);
+            cell.setPhrase(new Phrase("NOMBRE DEL PRODUCTO", font));
+            reporte.addCell(cell);
+            cell.setPhrase(new Phrase("STOCK", font));
+
+            reporte.addCell(cell);
+
+            for(Producto p: listado){       
+                if(p.getStock() <= 0){
+                    font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+                    font.setColor(BaseColor.RED);
+                    cell.setBackgroundColor(BaseColor.WHITE);
+                    cell.setPhrase(new Phrase(p.getCodigo_barra(),font));
+                    reporte.addCell(cell);
+                    cell.setPhrase(new Phrase(p.getNombre(),font));
+                    reporte.addCell(cell);
+                    PdfPCell cellStock = new PdfPCell();
+                    cellStock.setHorizontalAlignment(Chunk.ALIGN_RIGHT);
+                    cellStock.setBackgroundColor(BaseColor.WHITE);
+                    cellStock.setPhrase(new Phrase(String.valueOf(p.getStock()),font));
+                    reporte.addCell(cellStock);
+                }
+                else{
+                    reporte.addCell(p.getCodigo_barra());
+                    reporte.addCell(p.getNombre());
+                    PdfPCell cellStock = new PdfPCell();
+                    cellStock.setHorizontalAlignment(Chunk.ALIGN_RIGHT);
+                    cellStock.setPhrase(new Phrase(String.valueOf(p.getStock())));
+                    reporte.addCell(cellStock);                   
+                }
+
+            }
+            documento.add(reporte); 
+            
+            
+            documento.close();
+            JOptionPane.showMessageDialog(ventana, "Reporte generado con éxito", "Stock general", JOptionPane.INFORMATION_MESSAGE);
+            Desktop.getDesktop().open(new File(ruta));
+            log.RegistrarLog("[ConInformes|listadoStockGeneral] Creacion de reporte exitoso");            
+            
+            
+            
+        } 
+        catch (Exception e) {
+            log.RegistrarLog("[ERROR][ConInformes|listadoStockGeneral] "+e.getMessage());            
+        }
+    }
+
     
     public void informeStockNegativo(JFrame ventana){
         Document documento = new Document();

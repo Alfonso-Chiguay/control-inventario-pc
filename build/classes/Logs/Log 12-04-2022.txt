@@ -13,3 +13,24 @@
 <07:59:31> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
 <07:59:31> [ConProducto|listarProductos] Consulta exitosa
 <07:59:32> [ConInformes|listadoStockGeneral] Creacion de reporte exitoso
+<21:40:20> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:40:20> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:40:20> [ConProducto|listarProductos] Consulta exitosa
+<21:41:36> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:41:36> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:41:36> [ConProducto|listarProductos] Consulta exitosa
+<21:42:26> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:42:26> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:42:26> [ConProducto|listarProductos] Consulta exitosa
+<21:43:01> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:43:01> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:43:01> [ConProducto|listarProductos] Consulta exitosa
+<21:43:40> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:43:40> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:43:40> [ConProducto|listarProductos] Consulta exitosa
+<21:44:27> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:44:27> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:44:27> [ConProducto|listarProductos] Consulta exitosa
+<21:44:52> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:44:52> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:44:52> [ConProducto|listarProductos] Consulta exitosa

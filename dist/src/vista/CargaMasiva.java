@@ -211,12 +211,9 @@ public class CargaMasiva extends javax.swing.JFrame {
         if(archivo != null){
             if(archivo.toString().contains("Carga masiva productos.xlsx")){
                 int confirmar = JOptionPane.showConfirmDialog(this, "Este proceso puede tardar unos minutos, ¿desea continuar?", "Confirmar carga", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){  
-                    if(CONEXION.isNetworkOnline()){
-                        ConProducto cProducto = new ConProducto();
-                        cProducto.cargaMasiva(archivo, ProgressBar, this);
-                    }
-                    else JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Carga fallida", JOptionPane.WARNING_MESSAGE);  
+                if(confirmar == 0){                      
+                    ConProducto cProducto = new ConProducto();
+                    cProducto.cargaMasiva(archivo, ProgressBar, this);
                 }   
             }
             
