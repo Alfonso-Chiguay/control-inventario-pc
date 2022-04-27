@@ -16,7 +16,9 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,6 +41,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     ArrayList<Producto> productos;
     private boolean disabled_buttons;
     private boolean actualizarListado;
+    ArrayList<String> listaNoSeMuestra = new ArrayList<>();
 
     public NuevaVenta() {
         initComponents();
@@ -103,18 +106,50 @@ public class NuevaVenta extends javax.swing.JFrame {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
         tbl_detalleVenta.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+            
         
-
-        cb_productos.setFont(new Font("Times New Roman", Font.PLAIN, 20));       
+        //CODIGOS DE BARRA NO VENDIBLES
+        listaNoSeMuestra.add("VASOMARLEY1");
+        listaNoSeMuestra.add("VASOMARLEY2");
+        listaNoSeMuestra.add("VASOMARLEY3");
+        listaNoSeMuestra.add("VASONESCAFE1");
+        listaNoSeMuestra.add("VASONESCAFE2");
+        listaNoSeMuestra.add("614143407048");
+        listaNoSeMuestra.add("614143407062");
+        listaNoSeMuestra.add("614143407086");
+        listaNoSeMuestra.add("614143407215");
+        listaNoSeMuestra.add("7613034848550");
+        listaNoSeMuestra.add("7613036935944");
+        listaNoSeMuestra.add("7613036935975");
+        listaNoSeMuestra.add("7613036939171");
+        listaNoSeMuestra.add("7613036956895");
+        listaNoSeMuestra.add("859940002991");
+        
         
         seleccionEfectivo();
         
     }
     
-    private void actualizarProductos(){
-       cb_productos.addItem("(Seleccione un producto)");
-        for(Producto p: productos){
-            cb_productos.addItem(p.getNombre()+" ("+p.getCodigo_barra()+")");
+    public void actualizarProductos(){
+        String palabraClave = txt_nombreProducto.getText();
+        if(!palabraClave.equals("")){
+            DefaultListModel dl = new DefaultListModel();
+            dl.clear();
+            
+            for(Producto p: productos){
+                
+                String nombre = p.getNombre().toLowerCase().replace("á","a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
+                if(nombre.contains(palabraClave.toLowerCase()) &&
+                        !listaNoSeMuestra.contains(p.getCodigo_barra().toUpperCase())){
+                    dl.addElement(p.getNombre()+" ("+p.getCodigo_barra()+")");
+                }
+            }
+            listaFiltrada.setModel(dl);
+        }
+        else{
+            DefaultListModel dl = new DefaultListModel();
+            dl.clear();
+            listaFiltrada.setModel(dl);
         }
     }
 
@@ -128,7 +163,7 @@ public class NuevaVenta extends javax.swing.JFrame {
             //Producto p = cProducto.obtenerProducto(txt_codigoBarra.getText());
             Producto p = new Producto();
             for(Producto producto: productos){
-                if(producto.getCodigo_barra().equals(txt_codigoBarra.getText())){
+                if(producto.getCodigo_barra().toUpperCase().equals(txt_codigoBarra.getText().toUpperCase())){
                     p = producto;
                     break;
                 }
@@ -137,42 +172,81 @@ public class NuevaVenta extends javax.swing.JFrame {
             if(!p.getNombre().equals("")){
                 int filas=table.getRowCount();
 
-                if(filas == 0){
-                    Object fila[] = {
-                                    p.getCodigo_barra(),
-                                    p.getNombre(),
-                                    p.getPrecio(),
-                                    1,
-                                    String.format("$%,d",Integer.valueOf(p.getPrecio()))
-                                    };
-                    table.addRow(fila);     
-                }
-                else{
-                    boolean existe = false;
-                    for(int i = 0; i< table.getRowCount(); i ++){
-                        if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
-                            int cantidad = (int) table.getValueAt(i, 3)+1;
-                            table.setValueAt(cantidad, i, 3);
-                            String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
-                            table.setValueAt(valorTotal, i, 4);
-                            
-                            existe=true;
-                            break;
+                if(p.getCodigo_barra().equals("CODIGOPAN")){
+                        String precio = (String)JOptionPane.showInputDialog(
+                                    null,
+                                    "Ingrese el precio del pan",
+                                    "Precio del Pan",
+                                    JOptionPane.PLAIN_MESSAGE);
+                        
+                        int int_precio = 0;
+                        try {
+                           int_precio = Integer.valueOf(precio); 
+                        } 
+                        catch (Exception e) {
+                            int_precio = -1;
                         }
+                        
+                        if(int_precio > 0){
+                            Object fila[] = {
+                                            p.getCodigo_barra(),
+                                            p.getNombre(),
+                                            int_precio,
+                                            1,
+                                            String.format("$%,d",Integer.valueOf(precio))
+                                            };
+                            table.addRow(fila);     
+                        }
+                        
+                        else{
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
+                            
+                        } 
+                        
+                        
                     }
-                    if(!existe){
-                        Object fila[] = {
-                                        p.getCodigo_barra(),
-                                        p.getNombre(),
-                                        p.getPrecio(),
-                                        1,
-                                        String.format("$%,d",Integer.valueOf(p.getPrecio()))
-                                        };
-                        table.addRow(fila);    
-                    }
-
-                }   
+                        
+                    
+                    
+                    else{
+                        if(filas == 0){
+                            Object fila[] = {
+                                            p.getCodigo_barra(),
+                                            p.getNombre(),
+                                            p.getPrecio(),
+                                            1,
+                                            String.format("$%,d",Integer.valueOf(p.getPrecio()))
+                                            };
+                            table.addRow(fila);     
+                        }
+                        else{
+                            boolean existe = false;
+                            for(int i = 0; i< table.getRowCount(); i ++){
+                                if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
+                                    int cantidad = (int) table.getValueAt(i, 3)+1;
+                                    table.setValueAt(cantidad, i, 3);
+                                    String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
+                                    table.setValueAt(valorTotal, i, 4);                            
+                                    existe=true;
+                                    break;
+                                }
+                            }
+                            if(!existe){
+                                Object fila[] = {
+                                                p.getCodigo_barra(),
+                                                p.getNombre(),
+                                                p.getPrecio(),
+                                                1,
+                                                String.format("$%,d",Integer.valueOf(p.getPrecio()))
+                                                };
+                                table.addRow(fila);    
+                            }
+                        }
+                    }   
             }
+            
+            
+            
             else{
                int ingresar = JOptionPane.showConfirmDialog(null, "No hay un producto ingresado con este codigo, ¿Quiere registrarlo?", "Error buscando producto", JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION); 
                if(ingresar == 0){
@@ -186,15 +260,12 @@ public class NuevaVenta extends javax.swing.JFrame {
         }
      });
     
-    
     Thread threadManual = new Thread(new Runnable() {
         @Override
         public void run() {
-            if(!cb_productos.getSelectedItem().toString().equals("(Seleccione un producto)")){
+            if(listaFiltrada.getSelectedValue() != null){
                 DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                //ConProducto cProducto = new ConProducto();
-                //Producto p = cProducto.obtenerProducto(codigo);
-                String codigo = cb_productos.getSelectedItem().toString().replace(")", "ñÑñ").replace("(","ñÑñ").split("ñÑñ")[1];
+                String codigo = listaFiltrada.getSelectedValue().replace(")", "ñÑñ").replace("(","ñÑñ").split("ñÑñ")[1];
                 Producto p = new Producto();
                 for(Producto producto: productos){
                     if(producto.getCodigo_barra().equals(codigo)){
@@ -204,30 +275,44 @@ public class NuevaVenta extends javax.swing.JFrame {
                 }
                 if(!p.getNombre().equals("")){
                     int filas=table.getRowCount();
+                    
+                    if(p.getCodigo_barra().equals("CODIGOPAN")){
+                        String precio = (String)JOptionPane.showInputDialog(
+                                    null,
+                                    "Ingrese el precio del pan",
+                                    "Precio del Pan",
+                                    JOptionPane.PLAIN_MESSAGE);
+                        
 
-                    if(filas == 0){
-                        Object fila[] = {
-                                        p.getCodigo_barra(),
-                                        p.getNombre(),
-                                        p.getPrecio(),
-                                        1,
-                                        String.format("$%,d",Integer.valueOf(p.getPrecio()))
-                                        };
-                        table.addRow(fila);     
-                    }
-                    else{
-                        boolean existe = false;
-                        for(int i = 0; i< table.getRowCount(); i ++){
-                            if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
-                                int cantidad = (int) table.getValueAt(i, 3)+1;
-                                table.setValueAt(cantidad, i, 3);
-                                String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
-                                table.setValueAt(valorTotal, i, 4);                            
-                                existe=true;
-                                break;
-                            }
+                        int int_precio = 0;
+                        try {
+                           int_precio = Integer.valueOf(precio); 
+                        } 
+                        catch (Exception e) {
+                            int_precio = -1;
                         }
-                        if(!existe){
+                        
+                        if(int_precio > 0){
+                            Object fila[] = {
+                                            p.getCodigo_barra(),
+                                            p.getNombre(),
+                                            int_precio,
+                                            1,
+                                            String.format("$%,d",Integer.valueOf(precio))
+                                            };
+                            table.addRow(fila);     
+                        }
+                        
+                        else{
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
+                            
+                        }  
+                    }
+                        
+                    
+                    
+                    else{
+                        if(filas == 0){
                             Object fila[] = {
                                             p.getCodigo_barra(),
                                             p.getNombre(),
@@ -235,12 +320,40 @@ public class NuevaVenta extends javax.swing.JFrame {
                                             1,
                                             String.format("$%,d",Integer.valueOf(p.getPrecio()))
                                             };
-                            table.addRow(fila);    
+                            table.addRow(fila);     
                         }
-                    }   
+                        else{
+                            boolean existe = false;
+                            for(int i = 0; i< table.getRowCount(); i ++){
+                                if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
+                                    int cantidad = (int) table.getValueAt(i, 3)+1;
+                                    table.setValueAt(cantidad, i, 3);
+                                    String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
+                                    table.setValueAt(valorTotal, i, 4);                            
+                                    existe=true;
+                                    break;
+                                }
+                            }
+                            if(!existe){
+                                Object fila[] = {
+                                                p.getCodigo_barra(),
+                                                p.getNombre(),
+                                                p.getPrecio(),
+                                                1,
+                                                String.format("$%,d",Integer.valueOf(p.getPrecio()))
+                                                };
+                                table.addRow(fila);    
+                            }
+                        }
+                    }
+                }    
+                    
+                       
                 }
-            }    
-        }
+            }
+        
+        
+     
             
      });
     
@@ -280,9 +393,11 @@ public class NuevaVenta extends javax.swing.JFrame {
         txt_codigoBarra = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cb_productos = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         btn_elegir_producto = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaFiltrada = new javax.swing.JList<>();
+        txt_nombreProducto = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_detalleVenta = new javax.swing.JTable();
@@ -359,8 +474,6 @@ public class NuevaVenta extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(127, 85, 57));
         jLabel3.setText("BUSCAR PRODUCTO MANUALMENTE");
 
-        cb_productos.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-
         jSeparator1.setBackground(new java.awt.Color(127, 85, 57));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -380,6 +493,22 @@ public class NuevaVenta extends javax.swing.JFrame {
             }
         });
 
+        listaFiltrada.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jScrollPane2.setViewportView(listaFiltrada);
+
+        txt_nombreProducto.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        txt_nombreProducto.setPreferredSize(new java.awt.Dimension(6, 40));
+        txt_nombreProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nombreProductoActionPerformed(evt);
+            }
+        });
+        txt_nombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_nombreProductoKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -391,36 +520,41 @@ public class NuevaVenta extends javax.swing.JFrame {
                     .addComponent(txt_codigoBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(btn_elegir_producto)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_nombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_elegir_producto)
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_codigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_elegir_producto))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(22, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(cb_productos, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)))
-                .addGap(39, 39, 39))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_elegir_producto)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txt_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(230, 204, 178));
@@ -533,23 +667,23 @@ public class NuevaVenta extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btn_agregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_quitar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_eliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(btn_eliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(230, 204, 178));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "TOTAL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(127, 85, 57));
 
-        lbl_total.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        lbl_total.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
         lbl_total.setForeground(new java.awt.Color(127, 85, 57));
         lbl_total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_total.setText("$0");
@@ -818,25 +952,24 @@ public class NuevaVenta extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
                                 .addComponent(btn_confirmaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -902,7 +1035,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                             if(operacion){                         
 
                                 txt_codigoBarra.setEnabled(false);
-                                cb_productos.setEnabled(false);
+                                txt_nombreProducto.setEnabled(false);
+                                listaFiltrada.setEnabled(false);
                                 tbl_detalleVenta.setEnabled(false);
                                 txt_pagoEfectivo.setEnabled(false);                    
                                 disabled_buttons = true;   
@@ -934,7 +1068,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                         txt_pagoEfectivo.setText("$0");
                         txt_vuelto.setText("$0");
                         txt_codigoBarra.setEnabled(true);
-                        cb_productos.setEnabled(true);
+                        txt_nombreProducto.setEnabled(true);
+                        listaFiltrada.setEnabled(true);
                         tbl_detalleVenta.setEnabled(true);
                         txt_pagoEfectivo.setEnabled(true); 
                         rb_efectivo.setEnabled(true);
@@ -1044,7 +1179,8 @@ public class NuevaVenta extends javax.swing.JFrame {
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/seleccionarproducto_click.png"));
             btn_elegir_producto.setIcon(botonClick);
             threadManual.run();
-            cb_productos.setSelectedIndex(0);
+            txt_nombreProducto.setText("");
+            actualizarProductos();
             threadPRECIO.run();    
         }        
     }//GEN-LAST:event_btn_elegir_productoMousePressed
@@ -1077,13 +1213,16 @@ public class NuevaVenta extends javax.swing.JFrame {
             btn_agregar1.setIcon(botonClick);  
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
-            int cantidad = (int) table.getValueAt(row, 3);
-            table.setValueAt(cantidad+1, row, 3);
-            int precio = (int)table.getValueAt(row, 2);
-            String valorTotal = String.format("$%,d",Integer.valueOf((cantidad + 1)*precio));
-            table.setValueAt(valorTotal, row, 4); 
-            lostFocus(null, tbl_detalleVenta);
-            threadPRECIO.run();  
+            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN")){
+                int cantidad = (int) table.getValueAt(row, 3);
+                table.setValueAt(cantidad+1, row, 3);
+                int precio = (int)table.getValueAt(row, 2);
+                String valorTotal = String.format("$%,d",Integer.valueOf((cantidad + 1)*precio));
+                table.setValueAt(valorTotal, row, 4); 
+                lostFocus(null, tbl_detalleVenta);
+                threadPRECIO.run();                 
+            }
+ 
             botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/agregar1_solid.png"));
             btn_agregar1.setIcon(botonClick); 
             
@@ -1117,15 +1256,17 @@ public class NuevaVenta extends javax.swing.JFrame {
             btn_quitar1.setIcon(botonClick); 
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
-            int cantidad = (int) table.getValueAt(row, 3);
-            if(cantidad -1 > 0){
-                table.setValueAt(cantidad-1, row, 3);
-                int precio = (int)table.getValueAt(row, 2);
-                String valorTotal = String.format("$%,d",Integer.valueOf((cantidad -1) *precio));
-                table.setValueAt(valorTotal, row, 4); 
-                lostFocus(null, tbl_detalleVenta);
-                threadPRECIO.run();
-            }
+            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN")){
+                int cantidad = (int) table.getValueAt(row, 3);
+                if(cantidad -1 > 0){
+                    table.setValueAt(cantidad-1, row, 3);
+                    int precio = (int)table.getValueAt(row, 2);
+                    String valorTotal = String.format("$%,d",Integer.valueOf((cantidad -1) *precio));
+                    table.setValueAt(valorTotal, row, 4); 
+                    lostFocus(null, tbl_detalleVenta);
+                    threadPRECIO.run();
+                }
+            }    
             botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/quitar1_solid.png"));
             btn_quitar1.setIcon(botonClick);             
         }
@@ -1298,7 +1439,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                     if(operacion){                         
 
                         txt_codigoBarra.setEnabled(false);
-                        cb_productos.setEnabled(false);
+                        txt_nombreProducto.setEnabled(false);
+                        listaFiltrada.setEnabled(false);
                         tbl_detalleVenta.setEnabled(false);
                         txt_pagoEfectivo.setEnabled(false);                    
                         disabled_buttons = true;   
@@ -1330,7 +1472,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                 txt_pagoEfectivo.setText("$0");
                 txt_vuelto.setText("$0");
                 txt_codigoBarra.setEnabled(true);
-                cb_productos.setEnabled(true);
+                txt_nombreProducto.setEnabled(true);
+                listaFiltrada.setEnabled(true);
                 tbl_detalleVenta.setEnabled(true);
                 txt_pagoEfectivo.setEnabled(true);  
                 rb_efectivo.setEnabled(true);
@@ -1414,6 +1557,14 @@ public class NuevaVenta extends javax.swing.JFrame {
         btn_salir.setIcon(botonClick);           
 
     }//GEN-LAST:event_btn_salirMouseReleased
+
+    private void txt_nombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreProductoActionPerformed
+        actualizarProductos();
+    }//GEN-LAST:event_txt_nombreProductoActionPerformed
+
+    private void txt_nombreProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreProductoKeyReleased
+        actualizarProductos();
+    }//GEN-LAST:event_txt_nombreProductoKeyReleased
     
     private void seleccionEfectivo(){
         
@@ -1531,7 +1682,6 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JLabel btn_quitar1;
     private javax.swing.JLabel btn_salir;
     private javax.swing.JLabel btn_vuelto;
-    private javax.swing.JComboBox<String> cb_productos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1546,14 +1696,17 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_total;
+    private javax.swing.JList<String> listaFiltrada;
     private javax.swing.ButtonGroup rb_METODOPAGO;
     private javax.swing.JRadioButton rb_credito;
     private javax.swing.JRadioButton rb_debito;
     private javax.swing.JRadioButton rb_efectivo;
     private javax.swing.JTable tbl_detalleVenta;
     private javax.swing.JTextField txt_codigoBarra;
+    private javax.swing.JTextField txt_nombreProducto;
     private javax.swing.JTextField txt_pagoEfectivo;
     private javax.swing.JTextField txt_vuelto;
     // End of variables declaration//GEN-END:variables

@@ -646,7 +646,7 @@ public class ConProducto {
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "UPDATE PRODUCTO SET stock = "+producto.getStock()+
+            String query = "UPDATE PRODUCTO SET stock = stock + "+producto.getStock()+
                     ", precio = "+producto.getPrecio()+" WHERE codigo_barra = '"+producto.getCodigo_barra()+"';";
             log.RegistrarLog("[Query][ConProducto|actualizarProducto] "+query);
             stmt.executeUpdate(query);

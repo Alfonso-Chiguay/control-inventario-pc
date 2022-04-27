@@ -80,6 +80,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
                 ConLogStockPrecio cLog = new ConLogStockPrecio();
                 cLog.RegistrarLog(log);
+
                 
             }
             else{
@@ -217,7 +218,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         lbl_nuevoStock.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_nuevoStock.setForeground(new java.awt.Color(127, 85, 57));
         lbl_nuevoStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add.png"))); // NOI18N
-        lbl_nuevoStock.setText("NUEVO STOCK");
+        lbl_nuevoStock.setText("SUMAR STOCK");
         lbl_nuevoStock.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbl_nuevoStockMouseEntered(evt);
@@ -597,7 +598,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private void chk_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_stockActionPerformed
         if(chk_stock.isSelected()){
             txt_nuevoStock.setEditable(true);
-            txt_nuevoStock.setText(txt_stockActual.getText());
+            txt_nuevoStock.setText("1");
         }
         else{
             txt_nuevoStock.setEditable(false);
@@ -885,6 +886,8 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
                         limpiarCampos();                
                         habilitarCampos();
+                        txt_codigoProducto.setText("");
+                        
 
                     }
                     else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
