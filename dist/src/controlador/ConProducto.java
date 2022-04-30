@@ -127,8 +127,8 @@ public class ConProducto {
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "INSERT INTO PRODUCTO VALUES("
-                    + "'"+producto.getCodigo_barra()+"',"
-                    + "'"+producto.getNombre()+"',"
+                    + "UPPER('"+producto.getCodigo_barra()+"'),"
+                    + "UPPER('"+producto.getNombre()+"'),"
                     + producto.getPrecio()+","
                     + producto.getStock()+");";
             log.RegistrarLog("[Query][ConProducto|ingresarProducto] "+query);
@@ -148,8 +148,8 @@ public class ConProducto {
         try{
             Statement stmt = CONNECTION.createStatement();
             String query = "INSERT INTO PRODUCTO VALUES("
-                    + "'"+producto.getCodigo_barra()+"',"
-                    + "'"+producto.getNombre()+"',"
+                    + "UPPER('"+producto.getCodigo_barra()+"'),"
+                    + "UPPER('"+producto.getNombre()+"'),"
                     + producto.getPrecio()+","
                     + producto.getStock()+");";
             log.RegistrarLog("[Query][ConProducto|ingresarProducto] "+query);
@@ -191,7 +191,7 @@ public class ConProducto {
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO;";
+            String query = "SELECT * FROM PRODUCTO ORDER BY nombre;";
             log.RegistrarLog("[Query][ConProducto|listarProductos] "+query);
             ResultSet rs = stmt.executeQuery(query);
             
@@ -218,7 +218,7 @@ public class ConProducto {
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO WHERE LOWER(nombre) LIKE '%"+filtro.toLowerCase()+"%';";
+            String query = "SELECT * FROM PRODUCTO WHERE LOWER(nombre) LIKE '%"+filtro.toLowerCase()+"%' ORDER BY nombre;";
             log.RegistrarLog("[Query][ConProducto|listarProductosFiltrado] "+query);
             ResultSet rs = stmt.executeQuery(query);
             
@@ -647,7 +647,7 @@ public class ConProducto {
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
             String query = "UPDATE PRODUCTO SET stock = stock + "+producto.getStock()+
-                    ", precio = "+producto.getPrecio()+" WHERE codigo_barra = '"+producto.getCodigo_barra()+"';";
+                    ", precio = "+producto.getPrecio()+", nombre = '"+producto.getNombre()+"' WHERE codigo_barra = '"+producto.getCodigo_barra()+"';";
             log.RegistrarLog("[Query][ConProducto|actualizarProducto] "+query);
             stmt.executeUpdate(query);
             log.RegistrarLog("[ConProducto|actualizarProducto] Precio actualizado, consulta exitosa");

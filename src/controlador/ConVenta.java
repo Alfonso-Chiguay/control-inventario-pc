@@ -14,6 +14,8 @@ public class ConVenta {
     
     public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana){
         Logs log = new Logs();
+        ArrayList<String> stockDiferente = new ArrayList<>();        
+
         try{
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
@@ -34,9 +36,68 @@ public class ConVenta {
                         + vp.getTotal()+ " );";
                 stmt.executeUpdate(query);
                 
+                switch(vp.getCodigo_barra()){
+                    case "PCCROISSANTP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 2 WHERE codigo_barra = 'PCCROISSANTU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                    case "PCDONARELLP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 6 WHERE codigo_barra = 'PCDONARELLU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                    case "PCDONASRELLP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 6 WHERE codigo_barra = 'PCDONASRELLU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                    case "PCMACARONP2":
+                        query = "UPDATE PRODUCTO SET stock = stock - 12 WHERE codigo_barra = 'PCMACARONU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                    case "PCMACARONP1":
+                        query = "UPDATE PRODUCTO SET stock = stock - 6 WHERE codigo_barra = 'PCMACARONU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);    
+                        break;
+                    case "PCMEDLUNCRP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 3 WHERE codigo_barra = 'PCMEDLUNCRU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query); 
+                        break;
+                    case "PCMEDLUNCRP2":
+                        query = "UPDATE PRODUCTO SET stock = stock - 3 WHERE codigo_barra = 'PCMEDLUNCRU2';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);  
+                        break;
+                    case "PCMEDLUNSRP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 3 WHERE codigo_barra = 'PCMEDLUNSRU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);  
+                        break;
+                    case "PCMUFFINP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 6 WHERE codigo_barra = 'PCMUFFINU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query); 
+                        break;
+                    case "PCROLLOCANP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 2 WHERE codigo_barra = 'PCROLLOCANU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                    case "PCWAFFLEP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 6 WHERE codigo_barra = 'PCWAFFLEU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;
+                }
+                
                 query = "UPDATE PRODUCTO SET stock = stock - " + vp.getCantidad() + " WHERE codigo_barra = '" + vp.getCodigo_barra() + "';";
                 log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
                 stmt.executeUpdate(query);
+                
                 log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");                   
             }
             

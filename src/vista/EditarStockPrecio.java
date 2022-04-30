@@ -12,6 +12,8 @@ import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.LogStockPrecio;
@@ -29,6 +31,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     public Producto productoGlobal = new Producto();
     public String stockActual = "";
     public String precioAntiguo = "";
+    public String nombreProducto = "";
     private boolean disabled_buttons;
 
     
@@ -56,40 +59,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     
     
     
-    Thread t = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            ConProducto cProducto = new ConProducto();
-            boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
-            if(actualizacion){                    
-                int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
-                String codigo_barra = codigo;
-                int stock_antiguo = Integer.parseInt(stockActual);
 
-                int stock_agregado = 0;
-                if(!txt_nuevoStock.getText().equals("")){
-                    stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
-                }
-
-                int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
-                int precio_nuevo = precio_antiguo;
-                if(!txt_nuevoPrecio.getText().equals("")){
-                    precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
-                }
-
-                LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
-                ConLogStockPrecio cLog = new ConLogStockPrecio();
-                cLog.RegistrarLog(log);
-
-                
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
-                habilitarCampos();
-            }    
-            
-        }
-    });
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -503,10 +473,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         txt_codigoProducto.setEditable(true);
         chk_precio.setEnabled(true);
         chk_stock.setEnabled(true);
-        txt_nuevoPrecio.setEditable(true);
-        txt_nuevoStock.setEditable(true);
+        txt_nuevoPrecio.setEditable(false);
+        txt_nuevoStock.setEditable(false);
         cb_Trabajador.setEnabled(true);
-        
+        txt_nombreProducto.setEditable(true);
         disabled_buttons = false;
         des_habilitar_buttons();
         
@@ -629,9 +599,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 txt_nuevoStock.setText("");
                 cb_Trabajador.setEnabled(true);
 
+                txt_nombreProducto.setEditable(true);
 
                 txt_nombreProducto.setText(p.getNombre());
-
+                nombreProducto = p.getNombre();
                 txt_precioActual.setText(String.valueOf(p.getPrecio()));
                 if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
                 else{
@@ -695,8 +666,9 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         if(!disabled_buttons){    
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarinfo_click.png"));
             btn_confirmarInfo.setIcon(botonClick);
-            if(codigo.length()>0 && txt_nombreProducto.getText().length()>0 && txt_precioActual.getText().length()>0 && txt_stockActual.getText().length()>0){
+            if(codigo.length()>0 && txt_nombreProducto.getText().replace("'", "").length()>0 && txt_precioActual.getText().length()>0 && txt_stockActual.getText().length()>0){
                 txt_codigoProducto.setText(codigo);
+                txt_nombreProducto.setEditable(false);
                 txt_codigoProducto.setEditable(false);
                 chk_precio.setEnabled(false);
                 chk_stock.setEnabled(false);
@@ -765,25 +737,62 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                         continuar = false; 
                     }
                 }
-
-                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
+                
+                if(txt_nombreProducto.getText().replace("'","").length() > 0){
+                    try {
+                        p.setNombre(txt_nombreProducto.getText().replace("'",""));
+                    } catch (Exception e) {
+                        mensajeError = e.getMessage();
+                        continuar = false;
+                    }
+                }
+                
+                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.equals(nombreProducto)){
                     continuar = false;
                     mensajeError = "No hay datos modificados";
                 }
 
                 if(continuar){
-                    if(CONEXION.isNetworkOnline()){
-                       t.start();
-                       JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
-                       this.dispose();
-                    }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
+                    productoGlobal = p;
+                    ////////////////////////
+                    boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
+                    if(actualizacion){                    
+                        int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
+                        String codigo_barra = codigo;
+                        int stock_antiguo = Integer.parseInt(stockActual);
 
+                        int stock_agregado = 0;
+                        if(!txt_nuevoStock.getText().equals("")){
+                            stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
+                        }
+
+                        int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
+                        int precio_nuevo = precio_antiguo;
+                        if(!txt_nuevoPrecio.getText().equals("")){
+                            precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
+                        }
+
+                        LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
+                        ConLogStockPrecio cLog = new ConLogStockPrecio();
+                        cLog.RegistrarLog(log);
+                        JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
+                        this.dispose();
+
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
+                        habilitarCampos();
+                    }    
+                    /////////////////////////
+                    
+
+                   
 
                 }
                 else{
                     JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
                     habilitarCampos();
+                    
                 }
 
             }
@@ -873,25 +882,63 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                         continuar = false; 
                     }
                 }
-
-                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("")){
+                if(txt_nombreProducto.getText().replace("'","").length() > 0){
+                    try {
+                        p.setNombre(txt_nombreProducto.getText().replace("'",""));
+                    } catch (Exception e) {
+                        mensajeError = e.getMessage();
+                        continuar = false;
+                    }
+                }
+                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.getText().equals(nombreProducto)){
                     continuar = false;
                     mensajeError = "No hay datos modificados";
                 }
 
                 if(continuar){
-                    if(CONEXION.isNetworkOnline()){
-                        productoGlobal = p;
-                        t.start();
+                    
+                    productoGlobal = p;
+                    /////////////////
+                    
+                    boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
+                    if(actualizacion){                    
+                        int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
+                        String codigo_barra = codigo;
+                        int stock_antiguo = Integer.parseInt(stockActual);
+
+                        int stock_agregado = 0;
+                        if(!txt_nuevoStock.getText().equals("")){
+                            stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
+                        }
+
+                        int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
+                        int precio_nuevo = precio_antiguo;
+                        if(!txt_nuevoPrecio.getText().equals("")){
+                            precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
+                        }
+
+                        LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
+                        ConLogStockPrecio cLog = new ConLogStockPrecio();
+                        cLog.RegistrarLog(log);
+                        /////////////////
                         JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
                         limpiarCampos();                
                         habilitarCampos();
                         txt_codigoProducto.setText("");
-                        
+                        txt_nombreProducto.setEditable(false);
 
                     }
-                    else JOptionPane.showMessageDialog(this, "No hay acceso al servidor en estos momentos, no se puede comunicar con la base de datos, vuelva a intentarlo cuando tenga una conexion a internet", "Actualizacion fallida", JOptionPane.WARNING_MESSAGE);  
+                    else{
+                        JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
+                        habilitarCampos();
+                    }  
+                    
+                    
+                    
+                        
 
+                    
+                    
 
                 }
                 else{
@@ -975,10 +1022,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 txt_nuevoStock.setEditable(false);
                 txt_nuevoStock.setText("");
                 cb_Trabajador.setEnabled(true);
-
+                txt_nombreProducto.setEditable(true);
 
                 txt_nombreProducto.setText(p.getNombre());
-
+                nombreProducto = p.getNombre();
                 txt_precioActual.setText(String.valueOf(p.getPrecio()));
                 if(txt_precioActual.getText().equals("")) txt_precioActual.setText("$0");
                 else{
@@ -1024,7 +1071,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         chk_precio.setEnabled(false);
         chk_stock.setEnabled(false);
         cb_Trabajador.setEnabled(false);
-                
+        productoGlobal = new Producto();
     }
     
 
