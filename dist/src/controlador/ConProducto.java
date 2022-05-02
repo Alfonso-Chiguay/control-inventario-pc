@@ -45,7 +45,7 @@ public class ConProducto {
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
+            String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
             log.RegistrarLog("[Query][ConProducto|existeCodigo] "+query);
             ResultSet rs = stmt.executeQuery(query);
             if(rs.next()) {
@@ -68,7 +68,7 @@ public class ConProducto {
         Logs log = new Logs();
         try{   
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
+            String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
             log.RegistrarLog("[Query][ConProducto|existeCodigo] "+query);
             ResultSet rs = stmt.executeQuery(query);
             if(rs.next()) {
@@ -94,7 +94,7 @@ public class ConProducto {
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
+            String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
             log.RegistrarLog("[Query][ConProducto|obtenerProducto] "+query);
             ResultSet rs = stmt.executeQuery(query);
             Producto p = new Producto();
@@ -168,9 +168,9 @@ public class ConProducto {
         Logs log = new Logs();
         try{
             Statement stmt = CONNECTION.createStatement();
-            String query = "UPDATE PRODUCTO SET nombre = '"+producto.getNombre()+"', "
+            String query = "UPDATE PRODUCTO SET nombre = UPPER('"+producto.getNombre()+"'), "
                     + "stock = "+producto.getStock()+", precio = "+producto.getPrecio()
-                    + " WHERE codigo_barra = '"+producto.getCodigo_barra()+"'";
+                    + " WHERE codigo_barra = UPPER('"+producto.getCodigo_barra()+"')";
             log.RegistrarLog("[Query][ConProducto|actualizarProducto] "+query);
             stmt.executeUpdate(query);
             log.RegistrarLog("[ConProducto|actualizarProducto] Actualizado - "+producto.toString());  
@@ -285,7 +285,7 @@ public class ConProducto {
                     final Iterator<Row> itr = sheet.iterator(); 
                     double porcentajeIndividual = 100.00/totalFilas;
                     double progresoGeneral = 0.00;       
-                    System.out.println(porcentajeIndividual);
+                    
                     Conexion conexion = new Conexion();
                     Connection connection = conexion.getConnection();
                     

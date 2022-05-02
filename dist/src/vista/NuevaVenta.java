@@ -68,6 +68,8 @@ public class NuevaVenta extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
+        lbl_confirmandoVenta.setText("Venta en proceso ...");
+        lbl_confirmandoVenta.setForeground(Color.red);
         disabled_buttons = false;
         tbl_detalleVenta.getTableHeader().setReorderingAllowed(false);
         tbl_detalleVenta.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -153,7 +155,26 @@ public class NuevaVenta extends javax.swing.JFrame {
         }
     }
 
-    
+    public void reiniciarModulo(){
+
+        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+        table.setRowCount(0);
+        threadPRECIO.run();
+        txt_pagoEfectivo.setText("$0");
+        txt_vuelto.setText("$0");
+        txt_codigoBarra.setEnabled(true);
+        txt_nombreProducto.setEnabled(true);
+        listaFiltrada.setEnabled(true);
+        tbl_detalleVenta.setEnabled(true);
+        txt_pagoEfectivo.setEnabled(true); 
+        rb_efectivo.setEnabled(true);
+        rb_debito.setEnabled(true);
+        rb_credito.setEnabled(true);
+        disabled_buttons = false;
+        lbl_confirmandoVenta.setText("Venta en proceso ...");
+        lbl_confirmandoVenta.setForeground(Color.red);        
+        
+    }
     
     Thread threadAutomatico = new Thread(new Runnable() {
         @Override
@@ -420,6 +441,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         btn_vuelto = new javax.swing.JLabel();
         btn_confirmaVenta = new javax.swing.JLabel();
         btn_salir = new javax.swing.JLabel();
+        lbl_confirmandoVenta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -925,6 +947,9 @@ public class NuevaVenta extends javax.swing.JFrame {
             }
         });
 
+        lbl_confirmandoVenta.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_confirmandoVenta.setText("estado_venta");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -936,14 +961,15 @@ public class NuevaVenta extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_confirmaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbl_confirmandoVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(189, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -952,7 +978,7 @@ public class NuevaVenta extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -964,6 +990,8 @@ public class NuevaVenta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_confirmandoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1001,84 +1029,56 @@ public class NuevaVenta extends javax.swing.JFrame {
 
     private void pressF10_ESC(java.awt.event.KeyEvent evt){
         if(evt.getKeyCode() == KeyEvent.VK_F10){
+            if(!disabled_buttons){ 
+                
+                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
+                btn_confirmaVenta.setIcon(botonClick); 
 
-                if(!disabled_buttons){ 
-                    ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
-                    btn_confirmaVenta.setIcon(botonClick); 
+                if(tbl_detalleVenta.getRowCount() > 0){  
+                   
 
-                    if(tbl_detalleVenta.getRowCount() > 0){  
-                        int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                        if(confirmar == JOptionPane.YES_OPTION){
+                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                    btn_confirmaVenta.setIcon(botonClick);  
+                    
+                    DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                    Venta venta = new Venta();
+                    ArrayList<VentaProducto> lista = new ArrayList<>();
 
-                            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                            btn_confirmaVenta.setIcon(botonClick);  
-                            DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                            Venta venta = new Venta();
-                            ArrayList<VentaProducto> lista = new ArrayList<>();
-
-                            venta.setTipo_venta(seleccion());
-                            venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
-                            for(int i = 0; i< table.getRowCount(); i ++){                
-                                String codigo_barra = table.getValueAt(i, 0).toString();
-                                int cantidad = (int) table.getValueAt(i, 3);
-                                int precio = (int)table.getValueAt(i, 2);
-                                int valorTotal = cantidad*precio;
-                                VentaProducto vp = new VentaProducto();
-                                vp.setCodigo_barra(codigo_barra);
-                                vp.setCantidad(cantidad);
-                                vp.setTotal(valorTotal);
-                                lista.add(vp);
-                            }
-
-                            ConVenta cVenta = new ConVenta();
-                            boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                            if(operacion){                         
-
-                                txt_codigoBarra.setEnabled(false);
-                                txt_nombreProducto.setEnabled(false);
-                                listaFiltrada.setEnabled(false);
-                                tbl_detalleVenta.setEnabled(false);
-                                txt_pagoEfectivo.setEnabled(false);                    
-                                disabled_buttons = true;   
-                                rb_efectivo.setEnabled(false);
-                                rb_debito.setEnabled(false);
-                                rb_credito.setEnabled(false);
-                                des_activar_botones();
-                            }                   
-
-                        }
-                        else{
-                            botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                            btn_confirmaVenta.setIcon(botonClick);  
-                        }
-
+                    venta.setTipo_venta(seleccion());
+                    venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
+                    for(int i = 0; i< table.getRowCount(); i ++){                
+                        String codigo_barra = table.getValueAt(i, 0).toString();
+                        int cantidad = (int) table.getValueAt(i, 3);
+                        int precio = (int)table.getValueAt(i, 2);
+                        int valorTotal = cantidad*precio;
+                        VentaProducto vp = new VentaProducto();
+                        vp.setCodigo_barra(codigo_barra);
+                        vp.setCantidad(cantidad);
+                        vp.setTotal(valorTotal);
+                        lista.add(vp);
                     }
-                    else{
-                        JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
-                        botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                        btn_confirmaVenta.setIcon(botonClick);                      
-                    }
-                }    
-                else{
-                    int confirmar = JOptionPane.showConfirmDialog(this, "¿Ingresar nueva venta? Se borrarán los datos desplegados en la pantalla", "Nueva venta", JOptionPane.YES_NO_OPTION);
-                    if(confirmar == 0){
-                        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                        table.setRowCount(0);
-                        threadPRECIO.run();
-                        txt_pagoEfectivo.setText("$0");
-                        txt_vuelto.setText("$0");
-                        txt_codigoBarra.setEnabled(true);
-                        txt_nombreProducto.setEnabled(true);
-                        listaFiltrada.setEnabled(true);
-                        tbl_detalleVenta.setEnabled(true);
-                        txt_pagoEfectivo.setEnabled(true); 
-                        rb_efectivo.setEnabled(true);
-                        rb_debito.setEnabled(true);
-                        rb_credito.setEnabled(true);
-                        disabled_buttons = false;
-                        des_activar_botones();
-                    }
+
+                    ConVenta cVenta = new ConVenta();
+                    boolean operacion = cVenta.registrarVenta(venta, lista, this,lbl_confirmandoVenta);
+                    if(operacion){                         
+                        reiniciarModulo();
+                    }                   
+
+
+
                 }
+                else{
+                    JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);
+                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                    btn_confirmaVenta.setIcon(botonClick);                      
+                }
+            }    
+            else{
+                int confirmar = JOptionPane.showConfirmDialog(this, "¿Ingresar nueva venta? Se borrarán los datos desplegados en la pantalla", "Nueva venta", JOptionPane.YES_NO_OPTION);
+                if(confirmar == 0){
+                    reiniciarModulo();
+                }
+            }
 
         }
         else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
@@ -1408,53 +1408,40 @@ public class NuevaVenta extends javax.swing.JFrame {
 
     private void btn_confirmaVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_confirmaVentaMousePressed
         if(!disabled_buttons){ 
+            
             ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_click.png"));
             btn_confirmaVenta.setIcon(botonClick);  
             
             if(tbl_detalleVenta.getRowCount() > 0){
-                int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar ingreso de venta?", "Ingreso de venta", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if(confirmar == JOptionPane.YES_OPTION){
-                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                    btn_confirmaVenta.setIcon(botonClick);  
-                    DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                    Venta venta = new Venta();
-                    ArrayList<VentaProducto> lista = new ArrayList<>();
 
-                    venta.setTipo_venta(seleccion());
-                    venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
-                    for(int i = 0; i< table.getRowCount(); i ++){                
-                        String codigo_barra = table.getValueAt(i, 0).toString();
-                        int cantidad = (int) table.getValueAt(i, 3);
-                        int precio = (int)table.getValueAt(i, 2);
-                        int valorTotal = cantidad*precio;
-                        VentaProducto vp = new VentaProducto();
-                        vp.setCodigo_barra(codigo_barra);
-                        vp.setCantidad(cantidad);
-                        vp.setTotal(valorTotal);
-                        lista.add(vp);
-                    }
+                
+                botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
+                btn_confirmaVenta.setIcon(botonClick);  
+                lbl_confirmandoVenta.setVisible(true);
+                DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
+                Venta venta = new Venta();
+                ArrayList<VentaProducto> lista = new ArrayList<>();
 
-                    ConVenta cVenta = new ConVenta();
-                    boolean operacion = cVenta.registrarVenta(venta, lista, this);
-                    if(operacion){                         
-
-                        txt_codigoBarra.setEnabled(false);
-                        txt_nombreProducto.setEnabled(false);
-                        listaFiltrada.setEnabled(false);
-                        tbl_detalleVenta.setEnabled(false);
-                        txt_pagoEfectivo.setEnabled(false);                    
-                        disabled_buttons = true;   
-                        rb_efectivo.setEnabled(false);
-                        rb_debito.setEnabled(false);
-                        rb_credito.setEnabled(false);
-                        des_activar_botones();
-                    }                   
-
+                venta.setTipo_venta(seleccion());
+                venta.setTotal(Integer.parseInt(lbl_total.getText().replace(".", "").replace("$", "")));
+                for(int i = 0; i< table.getRowCount(); i ++){                
+                    String codigo_barra = table.getValueAt(i, 0).toString();
+                    int cantidad = (int) table.getValueAt(i, 3);
+                    int precio = (int)table.getValueAt(i, 2);
+                    int valorTotal = cantidad*precio;
+                    VentaProducto vp = new VentaProducto();
+                    vp.setCodigo_barra(codigo_barra);
+                    vp.setCantidad(cantidad);
+                    vp.setTotal(valorTotal);
+                    lista.add(vp);
                 }
-                else{
-                    botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"));
-                    btn_confirmaVenta.setIcon(botonClick);  
-                }
+
+                ConVenta cVenta = new ConVenta();
+                boolean operacion = cVenta.registrarVenta(venta, lista, this, lbl_confirmandoVenta);
+                if(operacion){    
+                    reiniciarModulo();
+                }                   
+
 
             }
             else{
@@ -1466,21 +1453,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         else{
             int confirmar = JOptionPane.showConfirmDialog(this, "¿Ingresar nueva venta? Se borrarán los datos desplegados en la pantalla", "Nueva venta", JOptionPane.YES_NO_OPTION);
             if(confirmar == 0){
-                DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-                table.setRowCount(0);
-                threadPRECIO.run();
-                txt_pagoEfectivo.setText("$0");
-                txt_vuelto.setText("$0");
-                txt_codigoBarra.setEnabled(true);
-                txt_nombreProducto.setEnabled(true);
-                listaFiltrada.setEnabled(true);
-                tbl_detalleVenta.setEnabled(true);
-                txt_pagoEfectivo.setEnabled(true);  
-                rb_efectivo.setEnabled(true);
-                rb_debito.setEnabled(true);
-                rb_credito.setEnabled(true);
-                disabled_buttons = false;
-                des_activar_botones();
+                reiniciarModulo();
             }
         }
     }//GEN-LAST:event_btn_confirmaVentaMousePressed
@@ -1698,6 +1671,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbl_confirmandoVenta;
     private javax.swing.JLabel lbl_total;
     private javax.swing.JList<String> listaFiltrada;
     private javax.swing.ButtonGroup rb_METODOPAGO;

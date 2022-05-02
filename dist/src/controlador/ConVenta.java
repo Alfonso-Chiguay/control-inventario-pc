@@ -1,22 +1,26 @@
 package controlador;
 
 import db.Conexion;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelo.Venta;
 import modelo.VentaProducto;
 
 public class ConVenta {
     
-    public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana){
+    public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana, JLabel texto){
         Logs log = new Logs();
         ArrayList<String> stockDiferente = new ArrayList<>();        
-
+        texto.setVisible(true);
         try{
+
+        
             Conexion conexion = new Conexion();
             Connection CONNECTION = conexion.getConnection();
             Statement stmt = CONNECTION.createStatement();
@@ -92,6 +96,36 @@ public class ConVenta {
                         log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
                         stmt.executeUpdate(query);
                         break;
+                    case "CAFEMARESP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 1 WHERE codigo_barra = 'VASOMARLEY1';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;      
+                    case "CAFEMARGRA":
+                        query = "UPDATE PRODUCTO SET stock = stock - 1 WHERE codigo_barra = 'VASOMARLEY3';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;       
+                    case "CAFEMARMED":
+                        query = "UPDATE PRODUCTO SET stock = stock - 1 WHERE codigo_barra = 'VASOMARLEY2';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;  
+                    case "CAFENESCMED":
+                        query = "UPDATE PRODUCTO SET stock = stock - 1 WHERE codigo_barra = 'VASONESCAFE2';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;   
+                    case "CAFENESCESP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 1 WHERE codigo_barra = 'VASONESCAFE1';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;        
+                    case "PCBROWNIEP":
+                        query = "UPDATE PRODUCTO SET stock = stock - 4 WHERE codigo_barra = 'PCBROWNIEU';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;                           
                 }
                 
                 query = "UPDATE PRODUCTO SET stock = stock - " + vp.getCantidad() + " WHERE codigo_barra = '" + vp.getCodigo_barra() + "';";
@@ -104,9 +138,12 @@ public class ConVenta {
             query = "UPDATE SEQ_FOLIO SET nuevo_folio = nuevo_folio + 1;";
             log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                
             stmt.executeUpdate(query);
-           log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");               
+            log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");               
             
+            texto.setText("¡Venta ingresada!");
+            texto.setForeground(new Color(16,125,67));            
             JOptionPane.showMessageDialog(ventana, "Venta registrada con éxito", "Venta ingresada", JOptionPane.INFORMATION_MESSAGE);
+
             return true;
         }
         catch(Exception e){
