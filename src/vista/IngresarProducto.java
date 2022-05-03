@@ -370,21 +370,16 @@ public class IngresarProducto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
             }
             else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){
-                    
-                    boolean ingreso = cProducto.ingresarProducto(p);
-                    if(ingreso){
-                        JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                        limpiarCampos();
-                        
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
-                    }   
-                    
+                
+                boolean ingreso = cProducto.ingresarProducto(p);
+                if(ingreso){
+                    JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
 
-                }  
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+                }     
             }
         }
         catch(Exception e){
@@ -423,19 +418,14 @@ public class IngresarProducto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "El codigo ya está registrado", "Error ingresando producto", JOptionPane.WARNING_MESSAGE);
             }
             else{
-                int confirmar = JOptionPane.showConfirmDialog(this, "Confirmar el ingreso del nuevo producto", "Ingresar producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirmar == 0){
-                    
-                    boolean ingreso = cProducto.ingresarProducto(p);
-                    if(ingreso){
-                        JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
-                    }       
-                    
-                }  
+                boolean ingreso = cProducto.ingresarProducto(p);
+                if(ingreso){
+                    JOptionPane.showMessageDialog(this, "Se ingreso el producto con exito", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "No se pudo ingresar el producto, contáctese con soporte", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+                }   
             }
         }
         catch(Exception e){

@@ -68,7 +68,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
-        lbl_confirmandoVenta.setText("Venta en proceso ...");
+        lbl_confirmandoVenta.setText("Ingrese un producto para iniciar una venta");
         lbl_confirmandoVenta.setForeground(Color.red);
         disabled_buttons = false;
         tbl_detalleVenta.getTableHeader().setReorderingAllowed(false);
@@ -171,7 +171,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         rb_debito.setEnabled(true);
         rb_credito.setEnabled(true);
         disabled_buttons = false;
-        lbl_confirmandoVenta.setText("Venta en proceso ...");
+        lbl_confirmandoVenta.setText("Ingrese un producto para iniciar una venta");
         lbl_confirmandoVenta.setForeground(Color.red);        
         
     }
@@ -193,44 +193,98 @@ public class NuevaVenta extends javax.swing.JFrame {
             if(!p.getNombre().equals("")){
                 int filas=table.getRowCount();
 
-                if(p.getCodigo_barra().equals("CODIGOPAN")){
-                        String precio = (String)JOptionPane.showInputDialog(
-                                    null,
-                                    "Ingrese el precio del pan",
-                                    "Precio del Pan",
-                                    JOptionPane.PLAIN_MESSAGE);
-                        
-                        int int_precio = 0;
-                        try {
-                           int_precio = Integer.valueOf(precio); 
-                        } 
-                        catch (Exception e) {
-                            int_precio = -1;
-                        }
-                        
-                        if(int_precio > 0){
-                            Object fila[] = {
-                                            p.getCodigo_barra(),
-                                            p.getNombre(),
-                                            int_precio,
-                                            1,
-                                            String.format("$%,d",Integer.valueOf(precio))
-                                            };
-                            table.addRow(fila);     
-                        }
-                        
-                        else{
-                            JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
-                            
-                        } 
-                        
-                        
+                if(p.getCodigo_barra().equals("CODIGOPAN") ){
+                    String precio = (String)JOptionPane.showInputDialog(
+                                null,
+                                "Ingrese el precio del pan",
+                                "Precio del Pan",
+                                JOptionPane.PLAIN_MESSAGE);
+
+                    int int_precio = 0;
+                    try {
+                       int_precio = Integer.valueOf(precio); 
+                    } 
+                    catch (Exception e) {
+                        int_precio = -1;
                     }
-                        
-                    
-                    
+
+                    if(int_precio > 0){
+                        Object fila[] = {
+                                        p.getCodigo_barra(),
+                                        p.getNombre(),
+                                        int_precio,
+                                        1,
+                                        String.format("$%,d",Integer.valueOf(precio))
+                                        };
+                        table.addRow(fila);     
+                    }
+
                     else{
-                        if(filas == 0){
+                        JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
+
+                    } 
+
+
+                }
+                        
+                else if(p.getCodigo_barra().equals("NN0000")){
+                    String precio = (String)JOptionPane.showInputDialog(
+                                null,
+                                "Ingrese el precio del producto",
+                                "Precio del NN",
+                                JOptionPane.PLAIN_MESSAGE);
+
+                    int int_precio = 0;
+                    try {
+                       int_precio = Integer.valueOf(precio); 
+                    } 
+                    catch (Exception e) {
+                        int_precio = -1;
+                    }
+
+                    if(int_precio > 0){
+                        Object fila[] = {
+                                        p.getCodigo_barra(),
+                                        p.getNombre(),
+                                        int_precio,
+                                        1,
+                                        String.format("$%,d",Integer.valueOf(precio))
+                                        };
+                        table.addRow(fila);     
+                    }
+
+                    else{
+                        JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
+
+                    } 
+
+
+                }    
+                    
+                else{
+                    if(filas == 0){
+                        Object fila[] = {
+                                        p.getCodigo_barra(),
+                                        p.getNombre(),
+                                        p.getPrecio(),
+                                        1,
+                                        String.format("$%,d",Integer.valueOf(p.getPrecio()))
+                                        };
+                        table.addRow(fila);     
+                    }
+                    else{
+                        boolean existe = false;
+                        for(int i = 0; i< table.getRowCount(); i ++){
+                            if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
+                                int cantidad = (int) table.getValueAt(i, 3)+1;
+                                table.setValueAt(cantidad, i, 3);
+                                String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
+                                table.setValueAt(valorTotal, i, 4);                            
+                                existe=true;
+                                break;
+                            }
+                        }
+                        if(!existe){
                             Object fila[] = {
                                             p.getCodigo_barra(),
                                             p.getNombre(),
@@ -238,32 +292,10 @@ public class NuevaVenta extends javax.swing.JFrame {
                                             1,
                                             String.format("$%,d",Integer.valueOf(p.getPrecio()))
                                             };
-                            table.addRow(fila);     
+                            table.addRow(fila);    
                         }
-                        else{
-                            boolean existe = false;
-                            for(int i = 0; i< table.getRowCount(); i ++){
-                                if(table.getValueAt(i, 0).toString().equals(p.getCodigo_barra())){
-                                    int cantidad = (int) table.getValueAt(i, 3)+1;
-                                    table.setValueAt(cantidad, i, 3);
-                                    String valorTotal = String.format("$%,d",Integer.valueOf(cantidad*(int)table.getValueAt(i, 2)));
-                                    table.setValueAt(valorTotal, i, 4);                            
-                                    existe=true;
-                                    break;
-                                }
-                            }
-                            if(!existe){
-                                Object fila[] = {
-                                                p.getCodigo_barra(),
-                                                p.getNombre(),
-                                                p.getPrecio(),
-                                                1,
-                                                String.format("$%,d",Integer.valueOf(p.getPrecio()))
-                                                };
-                                table.addRow(fila);    
-                            }
-                        }
-                    }   
+                    }
+                }   
             }
             
             
@@ -329,7 +361,38 @@ public class NuevaVenta extends javax.swing.JFrame {
                             
                         }  
                     }
+                    else if(p.getCodigo_barra().equals("NN0000")){
+                        String precio = (String)JOptionPane.showInputDialog(
+                                    null,
+                                    "Ingrese el precio del producto",
+                                    "Precio del codigo NN",
+                                    JOptionPane.PLAIN_MESSAGE);
                         
+
+                        int int_precio = 0;
+                        try {
+                           int_precio = Integer.valueOf(precio); 
+                        } 
+                        catch (Exception e) {
+                            int_precio = -1;
+                        }
+                        
+                        if(int_precio > 0){
+                            Object fila[] = {
+                                            p.getCodigo_barra(),
+                                            p.getNombre(),
+                                            int_precio,
+                                            1,
+                                            String.format("$%,d",Integer.valueOf(precio))
+                                            };
+                            table.addRow(fila);     
+                        }
+                        
+                        else{
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un monto valido", "Precio incorrecto",JOptionPane.INFORMATION_MESSAGE);
+                            
+                        }
+                    }   
                     
                     
                     else{
@@ -392,6 +455,13 @@ public class NuevaVenta extends javax.swing.JFrame {
             }
             lbl_total.setText(String.format("$%,d",totalgeneral));
             txt_pagoEfectivo.setText(String.format("$%,d",totalgeneral));
+            txt_codigoBarra.requestFocus();
+            if(table.getRowCount()>0){
+                lbl_confirmandoVenta.setText("Venta en progreso.");
+            }
+            else{
+                lbl_confirmandoVenta.setText("Ingrese un producto para iniciar una venta");
+            }
             
         }
     });
@@ -1213,7 +1283,7 @@ public class NuevaVenta extends javax.swing.JFrame {
             btn_agregar1.setIcon(botonClick);  
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
-            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN")){
+            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN") && !String.valueOf(table.getValueAt(row, 0)).equals("NN0000")){
                 int cantidad = (int) table.getValueAt(row, 3);
                 table.setValueAt(cantidad+1, row, 3);
                 int precio = (int)table.getValueAt(row, 2);
@@ -1256,7 +1326,7 @@ public class NuevaVenta extends javax.swing.JFrame {
             btn_quitar1.setIcon(botonClick); 
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             int row = tbl_detalleVenta.getSelectedRow();
-            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN")){
+            if(!String.valueOf(table.getValueAt(row, 0)).equals("CODIGOPAN") && !String.valueOf(table.getValueAt(row, 0)).equals("NN0000")){
                 int cantidad = (int) table.getValueAt(row, 3);
                 if(cantidad -1 > 0){
                     table.setValueAt(cantidad-1, row, 3);

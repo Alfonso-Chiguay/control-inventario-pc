@@ -125,7 +125,20 @@ public class ConVenta {
                         query = "UPDATE PRODUCTO SET stock = stock - 4 WHERE codigo_barra = 'PCBROWNIEU';";
                         log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
                         stmt.executeUpdate(query);
-                        break;                           
+                        break;     
+                    case "PCMINICANELA":
+                        query = "UPDATE PRODUCTO SET stock = stock - 5 WHERE codigo_barra = 'PCMINIDONAU1';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        query = "UPDATE PRODUCTO SET stock = stock - 5 WHERE codigo_barra = 'PCMINIDONAU2';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);                        
+                        break; 
+                    case "PCMINIDONAD":
+                        query = "UPDATE PRODUCTO SET stock = stock - 10 WHERE codigo_barra = 'PCMINIDONAU3';";
+                        log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                    
+                        stmt.executeUpdate(query);
+                        break;                          
                 }
                 
                 query = "UPDATE PRODUCTO SET stock = stock - " + vp.getCantidad() + " WHERE codigo_barra = '" + vp.getCodigo_barra() + "';";
