@@ -170,9 +170,13 @@ public class NuevaVenta extends javax.swing.JFrame {
         rb_efectivo.setEnabled(true);
         rb_debito.setEnabled(true);
         rb_credito.setEnabled(true);
+        rb_transferencia.setEnabled(true);
         disabled_buttons = false;
         lbl_confirmandoVenta.setText("Ingrese un producto para iniciar una venta");
-        lbl_confirmandoVenta.setForeground(Color.red);        
+        lbl_confirmandoVenta.setForeground(Color.red);  
+        rb_efectivo.setSelected(true);
+        seleccionEfectivo();
+        txt_codigoBarra.setText("");
         
     }
     
@@ -509,6 +513,8 @@ public class NuevaVenta extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btn_vuelto = new javax.swing.JLabel();
+        rb_transferencia = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
         btn_confirmaVenta = new javax.swing.JLabel();
         btn_salir = new javax.swing.JLabel();
         lbl_confirmandoVenta = new javax.swing.JLabel();
@@ -916,6 +922,24 @@ public class NuevaVenta extends javax.swing.JFrame {
             }
         });
 
+        rb_transferencia.setBackground(new java.awt.Color(230, 204, 178));
+        rb_METODOPAGO.add(rb_transferencia);
+        rb_transferencia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        rb_transferencia.setForeground(new java.awt.Color(127, 85, 57));
+        rb_transferencia.setText("TRANSFERENCIA");
+        rb_transferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_transferenciaActionPerformed(evt);
+            }
+        });
+        rb_transferencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rb_transferenciaKeyPressed(evt);
+            }
+        });
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/transferencia.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -925,16 +949,22 @@ public class NuevaVenta extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(rb_credito, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(24, 24, 24))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                    .addComponent(rb_debito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(rb_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(rb_debito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(41, 41, 41))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(rb_transferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(35, 35, 35)))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(159, 159, 159))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(rb_efectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -974,15 +1004,25 @@ public class NuevaVenta extends javax.swing.JFrame {
                         .addComponent(txt_vuelto)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rb_debito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rb_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rb_debito, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rb_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(59, 59, 59))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rb_transferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
         );
 
         btn_confirmaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/confirmarventa_solid.png"))); // NOI18N
@@ -1608,6 +1648,14 @@ public class NuevaVenta extends javax.swing.JFrame {
     private void txt_nombreProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreProductoKeyReleased
         actualizarProductos();
     }//GEN-LAST:event_txt_nombreProductoKeyReleased
+
+    private void rb_transferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_transferenciaActionPerformed
+        seleccionEfectivo();
+    }//GEN-LAST:event_rb_transferenciaActionPerformed
+
+    private void rb_transferenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rb_transferenciaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rb_transferenciaKeyPressed
     
     private void seleccionEfectivo(){
         
@@ -1636,6 +1684,9 @@ public class NuevaVenta extends javax.swing.JFrame {
         }
         else if(rb_credito.isSelected()){
             return "CREDITO";
+        }
+        else if(rb_transferencia.isSelected()){
+            return "TRANSFERENCIA";
         }
         else{
             return "NADA SELECCIONADO";
@@ -1733,6 +1784,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1748,6 +1800,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_credito;
     private javax.swing.JRadioButton rb_debito;
     private javax.swing.JRadioButton rb_efectivo;
+    private javax.swing.JRadioButton rb_transferencia;
     private javax.swing.JTable tbl_detalleVenta;
     private javax.swing.JTextField txt_codigoBarra;
     private javax.swing.JTextField txt_nombreProducto;
