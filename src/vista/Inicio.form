@@ -80,8 +80,8 @@
                                       <Component id="btn_stockGral" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="btn_nuevoProducto" min="-2" max="-2" attributes="0"/>
@@ -92,7 +92,7 @@
                                           <Component id="btn_consultaStockU" min="-2" max="-2" attributes="0"/>
                                           <Component id="btn_actualizarStockPrecio" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btn_actualizarStockMasivo" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -130,23 +130,16 @@
                           </Group>
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Component id="lbl_headerInventario" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btn_nuevoProducto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btn_consultaStockU" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btn_actualizarStockPrecio" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btn_cargaMasiva" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                                  <Component id="btn_actualizarStockMasivo" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btn_nuevoProducto" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_consultaStockU" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_actualizarStockMasivo" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btn_actualizarStockPrecio" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_cargaMasiva" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                           <Component id="lbl_headerReporte" min="-2" max="-2" attributes="0"/>

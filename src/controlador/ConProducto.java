@@ -30,15 +30,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 
-/**
- *
- * @author alfon
- */
 public class ConProducto {
-    
-
-    
-    
+        
     public boolean existeCodigo(String codigo){
         Logs log = new Logs();
         try{     
@@ -85,8 +78,7 @@ public class ConProducto {
             log.RegistrarLog("[ERROR][ConProducto|existeCodigo] "+e.getMessage());
             return false;
         }   
-    }
-    
+    }    
     
     public Producto obtenerProducto(String codigo){
         Logs log = new Logs();
@@ -181,8 +173,7 @@ public class ConProducto {
             log.RegistrarLog("[ERROR][ConProducto|actualizarProducto] "+e.getMessage());
             return false;
         }        
-    }
-    
+    }    
     
     public ArrayList<Producto> listarProductos(){
         Logs log = new Logs();
@@ -237,8 +228,6 @@ public class ConProducto {
         }   
         return lista;
     }   
-    
-    
     
     public void cargaMasiva(File archivoExcel, JProgressBar ProgressBar, JFrame Frame){
         Logs log = new Logs();
@@ -900,6 +889,64 @@ public class ConProducto {
             log.RegistrarLog("[ERROR][ConProducto|actualizacionMasiva] "+e.getMessage());   
         } 
 
+    }
+    
+    public boolean crearOferta(ArrayList<String[]> codigosProductos, int precioOferta, String codigoOferta, String nombreOferta){
+        
+        Logs log = new Logs();
+        
+        try {
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
+            Statement stmt = CONNECTION.createStatement();  
+            
+            codigoOferta = codigoOferta.trim().toUpperCase();
+            nombreOferta = nombreOferta.trim().toUpperCase();
+            
+            //CREACION DE TRIGGER
+            
+            String trigger = "CREATE TRIGGER trigger_oferta_"+codigoOferta+
+                             " BEFORE INSERT ON VENTA_PRODUCTO FOR EACH ROW"+
+                             " BEGIN IF NEW.codigo_barra = '"+codigoOferta+"' THEN ";           
+            
+            
+            for(String[] codigo_cantidad: codigosProductos){
+                String codigo_barra = codigo_cantidad[0];
+                String cantidad = String.valueOf(codigo_cantidad[1]);
+                
+                String updateTrigger = "UPDATE PRODUCTO SET stock = stock - (" + cantidad +"*NEW.cantidad) WHERE codigo_barra = '" + codigo_barra + "'; ";
+                trigger = trigger + updateTrigger;    
+            
+            }
+            
+            trigger = trigger + "END IF; END;";
+            System.out.println(trigger);
+            stmt.execute(trigger);
+            
+            log.RegistrarLog("[ConProducto][crearOferta] Trigger creado con exito");
+            log.RegistrarLog("[ConProducto][crearOferta] "+trigger);
+            
+            //CREACION DE OFERTA COMO PRODUCTO
+            
+            Producto oferta = new Producto();
+            oferta.setCodigo_barra(codigoOferta);
+            oferta.setNombre(nombreOferta);
+            oferta.setPrecio(precioOferta);
+            oferta.setStock(100);
+            
+            return ingresarProducto(oferta, CONNECTION);
+            
+            
+        } 
+        catch (Exception e) {
+            log.RegistrarLog("[ERROR][ConProducto|crearOferta] "+e.getMessage()); 
+            JOptionPane.showMessageDialog(null, "[ERROR][ConProducto|crearOferta] "+e.getMessage(), "Error creando oferta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        
+        
+        
     }
     
 }
