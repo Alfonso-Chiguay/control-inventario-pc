@@ -72,6 +72,7 @@ public class Inicio extends javax.swing.JFrame {
         btn_consultaStockU = new javax.swing.JLabel();
         btn_stockGral = new javax.swing.JLabel();
         btn_actualizarStockMasivo = new javax.swing.JLabel();
+        btn_ofertas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -263,6 +264,22 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        btn_ofertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/ofertas_solid.png"))); // NOI18N
+        btn_ofertas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_ofertasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_ofertasMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_ofertasMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_ofertasMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -293,21 +310,22 @@ public class Inicio extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn_stockNegativo)
                                     .addComponent(btn_stockGral)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(109, 109, 109)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btn_nuevoProducto)
-                                        .addComponent(btn_cargaMasiva))
-                                    .addGap(38, 38, 38)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btn_consultaStockU)
-                                        .addComponent(btn_actualizarStockPrecio))
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btn_actualizarStockMasivo))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(61, 61, 61)
-                                    .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(lbl_headerReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btn_nuevoProducto)
+                                    .addComponent(btn_cargaMasiva))
+                                .addGap(38, 38, 38)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btn_consultaStockU)
+                                    .addComponent(btn_actualizarStockPrecio))
+                                .addGap(35, 35, 35)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btn_actualizarStockMasivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_ofertas))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -336,9 +354,10 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(btn_consultaStockU)
                             .addComponent(btn_actualizarStockMasivo))
                         .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_actualizarStockPrecio)
-                            .addComponent(btn_cargaMasiva))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_actualizarStockPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_cargaMasiva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_ofertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(68, 68, 68)
                         .addComponent(lbl_headerReporte)
                         .addGap(27, 27, 27)
@@ -617,6 +636,38 @@ public class Inicio extends javax.swing.JFrame {
         btn_actualizarStockMasivo.setIcon(botonClick);
     }//GEN-LAST:event_btn_actualizarStockMasivoMouseReleased
 
+    private void btn_ofertasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ofertasMouseEntered
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ofertas_click.png"));
+        btn_ofertas.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ofertasMouseEntered
+
+    private void btn_ofertasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ofertasMousePressed
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ofertas_click.png"));
+        btn_ofertas.setIcon(botonClick);
+        String[] respuestas = {"Crear", "Modificar", "Eliminar"};                
+        int tipoPanel = JOptionPane.showOptionDialog(this, "Seleccione una accion", "Modulo Ofertas", 0, JOptionPane.QUESTION_MESSAGE, null, respuestas, "Eliminar");
+        if(tipoPanel == 0){
+            ConProducto cProducto = new ConProducto();
+            CrearOferta ventana = new CrearOferta(cProducto.listarProductos());
+            ventana.setVisible(true);
+        }
+        else if(tipoPanel > 0){
+            JOptionPane.showMessageDialog(this, "MODULO EN DESARROLLO...", "Modulo no existe aun", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_btn_ofertasMousePressed
+
+    private void btn_ofertasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ofertasMouseExited
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ofertas_solid.png"));
+        btn_ofertas.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ofertasMouseExited
+
+    private void btn_ofertasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ofertasMouseReleased
+        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/ofertas_solid.png"));
+        btn_ofertas.setIcon(botonClick);
+    }//GEN-LAST:event_btn_ofertasMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -663,6 +714,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel btn_consultarPrecio;
     private javax.swing.JLabel btn_nuevaVenta;
     private javax.swing.JLabel btn_nuevoProducto;
+    private javax.swing.JLabel btn_ofertas;
     private javax.swing.JLabel btn_stockGral;
     private javax.swing.JLabel btn_stockNegativo;
     private javax.swing.JLabel btn_ventaDiaria;
