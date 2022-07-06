@@ -380,12 +380,14 @@ public class ConInformes {
                 int ventaDebito = 0;
                 int ventaCredito = 0;
                 int ventaTransferencia = 0;
+                int ventaEdenRed = 0;
                 
                 for(Venta v: listado){
                     totalVenta += v.getTotal();
                     if(v.getTipo_venta().equals("EFECTIVO")) ventaEfectivo+=v.getTotal();
                     else if(v.getTipo_venta().equals("DEBITO")) ventaDebito+=v.getTotal();
                     else if(v.getTipo_venta().equals("TRANSFERENCIA")) ventaTransferencia+=v.getTotal();
+                    else if(v.getTipo_venta().equals("EDENRED")) ventaEdenRed+=v.getTotal();
                     else ventaCredito+=v.getTotal();
                 }
                 
@@ -394,6 +396,7 @@ public class ConInformes {
                 String str_debito = String.format("$%,d",Integer.valueOf(ventaDebito));
                 String str_transferencia = String.format("$%,d",Integer.valueOf(ventaTransferencia));
                 String str_credito = String.format("$%,d",Integer.valueOf(ventaCredito));
+                String str_edenred = String.format("$%,d",Integer.valueOf(ventaEdenRed));
                 
                 Paragraph venta = new Paragraph();
                 venta.setAlignment(Chunk.ALIGN_LEFT);
@@ -414,8 +417,12 @@ public class ConInformes {
                 documento.add(venta);
                 venta = new Paragraph();
                 venta.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
-                venta.add("TRANSFERENCIA:   "+str_transferencia+"\n\n");
+                venta.add("TRANSFERENCIA:   "+str_transferencia);
                 documento.add(venta);                
+                venta = new Paragraph();
+                venta.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK));
+                venta.add("EDENRED:   "+str_edenred+"\n\n");
+                documento.add(venta); 
                 
                 ArrayList<Object[]> resumenMetodoPago = cVenta.resumenVentaMetodoPago(fecha1, fecha2);
                 
@@ -426,6 +433,7 @@ public class ConInformes {
                 PdfPTable tablaDebito = new PdfPTable(new float[]{10,20, 30,20});
                 PdfPTable tablaCredito = new PdfPTable(new float[]{10,20, 30,20});
                 PdfPTable tablaTransferencia = new PdfPTable(new float[]{10,20, 30,20});
+                PdfPTable tablaEdenRed = new PdfPTable(new float[]{10,20, 30,20});
                 PdfPCell cell = new PdfPCell();
                 cell.setBackgroundColor(BaseColor.GRAY);
                 Font font = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
@@ -434,22 +442,26 @@ public class ConInformes {
                 tablaEfectivo.addCell(cell);
                 tablaDebito.addCell(cell);
                 tablaCredito.addCell(cell); 
-                tablaTransferencia.addCell(cell);                 
+                tablaTransferencia.addCell(cell);     
+                tablaEdenRed.addCell(cell);
                 cell.setPhrase(new Phrase("METODO PAGO", font));
                 tablaEfectivo.addCell(cell);
                 tablaDebito.addCell(cell);
                 tablaCredito.addCell(cell); 
-                tablaTransferencia.addCell(cell);                 
+                tablaTransferencia.addCell(cell);   
+                tablaEdenRed.addCell(cell);
                 cell.setPhrase(new Phrase("FECHA", font));
                 tablaEfectivo.addCell(cell);
                 tablaDebito.addCell(cell);
                 tablaCredito.addCell(cell); 
-                tablaTransferencia.addCell(cell);                 
+                tablaTransferencia.addCell(cell);  
+                tablaEdenRed.addCell(cell);
                 cell.setPhrase(new Phrase("TOTAL", font));
                 tablaEfectivo.addCell(cell);
                 tablaDebito.addCell(cell);
                 tablaCredito.addCell(cell); 
-                tablaTransferencia.addCell(cell);                 
+                tablaTransferencia.addCell(cell); 
+                tablaEdenRed.addCell(cell);                
                 
                 for(Object[] o: resumenMetodoPago){
                     int int_folio = (int) o[0];
@@ -486,6 +498,12 @@ public class ConInformes {
                         tablaCredito.addCell(fechaTransacction);
                         tablaCredito.addCell(cellTotal);                        
                     }
+                    else if(tipo_venta.equals("EDENRED")){
+                        tablaEdenRed.addCell(str_folio);
+                        tablaEdenRed.addCell(tipo_venta);
+                        tablaEdenRed.addCell(fechaTransacction);
+                        tablaEdenRed.addCell(cellTotal);                        
+                    }                    
                     
                 }
                 Paragraph tituloEfectivo = new Paragraph();
@@ -516,6 +534,13 @@ public class ConInformes {
                 tituloTransferencia.add("\n\nMETODO DE PAGO: TRANSFERENCIA\n\n");
                 documento.add(tituloTransferencia);
                 documento.add(tablaTransferencia); 
+                
+                Paragraph tituloEdenred = new Paragraph();
+                tituloEdenred.setAlignment(Chunk.ALIGN_CENTER);
+                tituloEdenred.setFont(FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLUE));
+                tituloEdenred.add("\n\nMETODO DE PAGO: EDENRED\n\n");
+                documento.add(tituloEdenred);
+                documento.add(tablaEdenRed);                 
                 
                 Paragraph tituloProducto = new Paragraph();
                 tituloProducto.setAlignment(Chunk.ALIGN_CENTER);
