@@ -70,8 +70,30 @@ public class ConColores {
         } catch (Exception e) {
             log.RegistrarLog("[ERROR][ConColores|cambiarPaletaActiva] "+e.getMessage());
             return new ArrayList<String>();
+        }        
+    }
+    
+    public PaletaColor buscarPorId(String id_paleta){
+        Logs log = new Logs();
+        try{   
+            Conexion conexion = new Conexion();
+            Connection CONNECTION = conexion.getConnection();
+            Statement stmt = CONNECTION.createStatement();
+            String query =  "SELECT id_paleta, background, panel, mouse_enter, mouse_click " +
+                            "FROM COLORES WHERE id_paleta = '"+id_paleta+"';";
+            log.RegistrarLog("[Query][ConColores|paletaActiva] "+query);
+            ResultSet rs = stmt.executeQuery(query);
+            PaletaColor pc = new PaletaColor();
+            if(rs.next()){       
+                pc = new PaletaColor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+            }         
+                      
+            return pc;
         }
-        
+        catch(Exception e){
+            log.RegistrarLog("[ERROR][ConColores|buscarPorId] "+e.getMessage());
+            return new PaletaColor();
+        } 
     }
     
 }

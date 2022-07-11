@@ -61,10 +61,15 @@ public class Home extends javax.swing.JFrame {
         MinPanel.setBackground(BackgroundColor);
         Background.setBackground(BackgroundColor);
         PanelVenta.setBackground(BackgroundColor);
+
         
     }
     
     String MODULO = "";
+
+    
+
+
     
     private void activarBotonesPorModulo(String Modulo){
         MODULO = Modulo;
@@ -194,24 +199,15 @@ public class Home extends javax.swing.JFrame {
             moduloInforme.setBackground(PanelColor);
         }
     }
-
-    //COLORES
+    
     ConColores cColor = new ConColores();
     PaletaColor paleta = cColor.paletaActiva();
-    /*Color BackgroundColor = new Color(230,204,178);
-    Color PanelColor = new Color(176,137,104);
-    Color mouseEnterPanelColor = new Color(127, 85, 57);
-    Color mouseExitPanelColor = PanelColor;
-    Color mouseClickPanelColor = new Color(237, 224, 212);*/
-    
+    //COLORES    
     Color BackgroundColor = paleta.getBackground();
     Color PanelColor = paleta.getPanel();
     Color mouseEnterPanelColor = paleta.getMouseEnter();
     Color mouseExitPanelColor = PanelColor;
-    Color mouseClickPanelColor = paleta.getMouseClick();
-
-    
-    
+    Color mouseClickPanelColor = paleta.getMouseClick();  
     //HOME
     Color ColorHome = new Color(85, 156, 173);
     //VENTA
@@ -229,7 +225,7 @@ public class Home extends javax.swing.JFrame {
     Color mouseEnterColorInforme = new Color(232, 95, 140);
     Color mouseExitColorInforme = ColorInforme;
     Color mouseClickColorInforme = new Color(232, 140, 190);      
-    //FIN DE COLORES
+    //FIN DE COLORES    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -846,11 +842,8 @@ public class Home extends javax.swing.JFrame {
                 ventana.setVisible(true);                
             }
             else if(MODULO.equals("HOME")){
-               ///////////////////////RESOLVER//////////////////////////
-                ConColores cColor = new ConColores();
-                JComboBox comboBox = new JComboBox((ComboBoxModel) cColor.listarPaletas());
-                JOptionPane.showMessageDialog(null, comboBox, "Fav Sports",
-                JOptionPane.QUESTION_MESSAGE);
+                CambiarPaleta ventana = new CambiarPaleta();
+                ventana.setVisible(true);
             }
         }
 
