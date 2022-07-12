@@ -282,13 +282,10 @@ public class ReporteDiario extends javax.swing.JFrame {
         }
         String fecha = txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
         
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            informe.informeVentaPeriodo(fecha, fecha);            
-        }
-        else{
-           JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Generar reporte fallido", JOptionPane.WARNING_MESSAGE);   
-        }
+        
+        informe.informeVentaPeriodo(fecha, fecha);            
+        
+        
         
     }//GEN-LAST:event_btn_generarReporteMousePressed
 

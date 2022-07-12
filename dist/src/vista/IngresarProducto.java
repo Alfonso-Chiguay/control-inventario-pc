@@ -10,8 +10,6 @@ import javax.swing.JOptionPane;
 import modelo.Producto;
 
 public class IngresarProducto extends javax.swing.JFrame {
-
-    public static final Conexion CONEXION = new Conexion();
     
     public IngresarProducto() {
         initComponents();

@@ -5,7 +5,6 @@
  */
 package vista;
 import controlador.ConProducto;
-import db.Conexion;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Image;
@@ -30,7 +29,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
  */
 public class CargaMasiva extends javax.swing.JFrame {
 
-    public static final Conexion CONEXION = new Conexion();
     
     public CargaMasiva() {
         initComponents();

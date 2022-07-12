@@ -386,13 +386,8 @@ public class ReportePeriodo extends javax.swing.JFrame {
         }
         String fecha2 = txt_anio2.getText()+"-"+mes +"-"+txt_dia2.getText();
         
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            informe.informeVentaPeriodo(fecha1, fecha2);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Buscar producto fallido", JOptionPane.WARNING_MESSAGE);   
-        }        
+
+        informe.informeVentaPeriodo(fecha1, fecha2);
     }//GEN-LAST:event_btn_generarReporteMousePressed
 
     private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered

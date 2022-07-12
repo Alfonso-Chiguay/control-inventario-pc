@@ -1,4 +1,3 @@
-
 package controlador;
 
 import db.Conexion;
@@ -34,10 +33,8 @@ public class ConProducto {
         
     public boolean existeCodigo(String codigo){
         Logs log = new Logs();
-        try{     
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+        try{
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
             log.RegistrarLog("[Query][ConProducto|existeCodigo] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -57,35 +54,12 @@ public class ConProducto {
         }   
     }
     
-    public boolean existeCodigo(String codigo, Connection CONNECTION){
-        Logs log = new Logs();
-        try{   
-            Statement stmt = CONNECTION.createStatement();
-            String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
-            log.RegistrarLog("[Query][ConProducto|existeCodigo] "+query);
-            ResultSet rs = stmt.executeQuery(query);
-            if(rs.next()) {
-                log.RegistrarLog("[ConProducto|existeCodigo] Consulta exitosa");
-                return true;
-            }
-            else {
-                log.RegistrarLog("[ConProducto|existeCodigo] Consulta exitosa");
-                return false;
-            }        
-            
-        }
-        catch(Exception e){
-            log.RegistrarLog("[ERROR][ConProducto|existeCodigo] "+e.getMessage());
-            return false;
-        }   
-    }    
+       
     
     public Producto obtenerProducto(String codigo){
         Logs log = new Logs();
-        try{   
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+        try{ 
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT * FROM PRODUCTO WHERE UPPER(codigo_barra) = UPPER('" + codigo + "');";
             log.RegistrarLog("[Query][ConProducto|obtenerProducto] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -115,9 +89,7 @@ public class ConProducto {
     public boolean ingresarProducto(Producto producto){
         Logs log = new Logs();
         try{
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "INSERT INTO PRODUCTO VALUES("
                     + "UPPER('"+producto.getCodigo_barra()+"'),"
                     + "UPPER('"+producto.getNombre()+"'),"
@@ -135,31 +107,11 @@ public class ConProducto {
         }
     }
     
-    public boolean ingresarProducto(Producto producto, Connection CONNECTION){
-        Logs log = new Logs();
-        try{
-            Statement stmt = CONNECTION.createStatement();
-            String query = "INSERT INTO PRODUCTO VALUES("
-                    + "UPPER('"+producto.getCodigo_barra()+"'),"
-                    + "UPPER('"+producto.getNombre()+"'),"
-                    + producto.getPrecio()+","
-                    + producto.getStock()+");";
-            log.RegistrarLog("[Query][ConProducto|ingresarProducto] "+query);
-            stmt.executeUpdate(query);
-            log.RegistrarLog("[ConProducto|ingresarProducto] Ingresado - "+producto.toString());  
-            return true;
-        }
-        catch(Exception e){
-            log.RegistrarLog("[ConProducto|ingresarProducto] NO Ingresado - "+producto.toString());
-            log.RegistrarLog("[ERROR][ConProducto|ingresarProducto] "+e.getMessage());
-            return false;
-        }
-    }
     
-    public boolean actualizarProducto(Producto producto, Connection CONNECTION){
+    public boolean actualizarProducto(Producto producto){
         Logs log = new Logs();
         try{
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "UPDATE PRODUCTO SET nombre = UPPER('"+producto.getNombre()+"'), "
                     + "stock = "+producto.getStock()+", precio = "+producto.getPrecio()
                     + " WHERE codigo_barra = UPPER('"+producto.getCodigo_barra()+"')";
@@ -178,10 +130,8 @@ public class ConProducto {
     public ArrayList<Producto> listarProductos(){
         Logs log = new Logs();
         ArrayList<Producto> lista = new ArrayList<>();
-        try{            
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+        try{      
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT * FROM PRODUCTO ORDER BY nombre;";
             log.RegistrarLog("[Query][ConProducto|listarProductos] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -205,10 +155,8 @@ public class ConProducto {
     public ArrayList<Producto> listarProductosFiltrado(String filtro){
         Logs log = new Logs();
         ArrayList<Producto> lista = new ArrayList<>();
-        try{            
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+        try{         
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT * FROM PRODUCTO WHERE LOWER(nombre) LIKE '%"+filtro.toLowerCase()+"%' ORDER BY nombre;";
             log.RegistrarLog("[Query][ConProducto|listarProductosFiltrado] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -275,8 +223,6 @@ public class ConProducto {
                     double porcentajeIndividual = 100.00/totalFilas;
                     double progresoGeneral = 0.00;       
                     
-                    Conexion conexion = new Conexion();
-                    Connection connection = conexion.getConnection();
                     
                     while (itr.hasNext()){
 
@@ -294,7 +240,7 @@ public class ConProducto {
                         }
 
                         if(!codigo_barra.equals("codigo") && !codigo_barra.equals("")){
-                            if(!existeCodigo(codigo_barra, connection)){
+                            if(!existeCodigo(codigo_barra)){
                                 try{
                                     cell = row.getCell(1);
                                     String nombre = cell.getStringCellValue();
@@ -318,7 +264,7 @@ public class ConProducto {
 
                                     Producto p = new Producto(codigo_barra,nombre,precio, stock);                             
 
-                                    boolean ingreso = ingresarProducto(p, connection);
+                                    boolean ingreso = ingresarProducto(p);
 
                                     if(ingreso){
                                         productosIngresados.add(p);
@@ -629,31 +575,11 @@ public class ConProducto {
         
     }
     
-    public boolean actualizarProducto(Producto producto){
-        Logs log = new Logs();
-        try{
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
-            String query = "UPDATE PRODUCTO SET stock = stock + "+producto.getStock()+
-                    ", precio = "+producto.getPrecio()+", nombre = '"+producto.getNombre()+"' WHERE codigo_barra = '"+producto.getCodigo_barra()+"';";
-            log.RegistrarLog("[Query][ConProducto|actualizarProducto] "+query);
-            stmt.executeUpdate(query);
-            log.RegistrarLog("[ConProducto|actualizarProducto] Precio actualizado, consulta exitosa");
-            return true;
-        }
-        catch(Exception e){
-            log.RegistrarLog("[ERROR][ConProducto|actualizarProducto] "+e.getMessage()); 
-            return false;
-        }
-    }
     
     public Producto consultaPrecio(String codigo){
         Logs log = new Logs();
         try{
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT precio, nombre, stock FROM PRODUCTO WHERE codigo_barra = '" + codigo + "';";
             log.RegistrarLog("[Query][ConProducto|consultaPrecio] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -684,9 +610,7 @@ public class ConProducto {
         Logs log = new Logs();
         ArrayList<Producto> lista = new ArrayList<>();
         try {
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT codigo_barra, nombre, stock FROM PRODUCTO WHERE stock < 0;";
             log.RegistrarLog("[Query][ConProducto|stockNegativo] "+query);
             ResultSet rs = stmt.executeQuery(query);
@@ -755,8 +679,6 @@ public class ConProducto {
                     double porcentajeIndividual = 100.00/totalFilas;
                     double progresoGeneral = 0.00;       
                     System.out.println(porcentajeIndividual);
-                    Conexion conexion = new Conexion();
-                    Connection connection = conexion.getConnection();
                     
                     while (itr.hasNext()){
 
@@ -774,7 +696,7 @@ public class ConProducto {
                         }
 
                         if(!codigo_barra.equals("codigo") && !codigo_barra.equals("")){
-                            if(existeCodigo(codigo_barra, connection)){
+                            if(existeCodigo(codigo_barra)){
                                 try{
                                     cell = row.getCell(1);
                                     String nombre = cell.getStringCellValue();
@@ -798,7 +720,7 @@ public class ConProducto {
 
                                     Producto p = new Producto(codigo_barra,nombre,precio, stock);                             
 
-                                    boolean ingreso = actualizarProducto(p, connection);
+                                    boolean ingreso = actualizarProducto(p);
 
                                     if(ingreso){
                                         productosIngresados.add(p);
@@ -896,9 +818,7 @@ public class ConProducto {
         Logs log = new Logs();
         
         try {
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();  
+            Statement stmt = Conexion.getConnection().createStatement();  
             
             codigoOferta = codigoOferta.trim().toUpperCase();
             nombreOferta = nombreOferta.trim().toUpperCase();
@@ -934,19 +854,14 @@ public class ConProducto {
             oferta.setPrecio(precioOferta);
             oferta.setStock(100);
             
-            return ingresarProducto(oferta, CONNECTION);
-            
+            return ingresarProducto(oferta);
             
         } 
         catch (Exception e) {
             log.RegistrarLog("[ERROR][ConProducto|crearOferta] "+e.getMessage()); 
             JOptionPane.showMessageDialog(null, "[ERROR][ConProducto|crearOferta] "+e.getMessage(), "Error creando oferta", JOptionPane.ERROR_MESSAGE);
             return false;
-        }
-        
-        
-        
-        
+        }        
     }
     
 }

@@ -6,7 +6,6 @@
 package vista;
 
 import controlador.ConProducto;
-import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;

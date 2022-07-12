@@ -20,10 +20,7 @@ public class ConVenta {
         texto.setVisible(true);
         try{
 
-        
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             
             String query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
                             + "(SELECT NOW() FROM DUAL), '"
@@ -171,9 +168,7 @@ public class ConVenta {
         Logs log = new Logs();
         ArrayList<Venta> lista = new ArrayList<>();
         try {
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "SELECT * FROM VENTA WHERE fecha BETWEEN '"+fecha1+" 00:00:00' AND '"+fecha2+" 23:59:59';";
             log.RegistrarLog("[Query][ConVenta|ventasDia] "+query);            
             ResultSet rs = stmt.executeQuery(query);
@@ -199,9 +194,7 @@ public class ConVenta {
         ArrayList<Object[]> detalle = new ArrayList<>();
         Logs log = new Logs();
         try {
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
             String query = "SELECT V.folio, V.tipo_venta, DATE_FORMAT(V.fecha, '%d/%m/%Y %H:%i:%s') as FECHA, SUM(VP.valor_total) " +
                             "FROM VENTA V JOIN VENTA_PRODUCTO VP ON V.folio = VP.folio " +
@@ -233,10 +226,8 @@ public class ConVenta {
     public ArrayList<Object[]> detalleProductoVendido(String fecha1, String fecha2){
         ArrayList<Object[]> detalle = new ArrayList<>();
         Logs log = new Logs();
-        try {
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+        try {;
+            Statement stmt = Conexion.getConnection().createStatement();
             //RESUMEN DE VENTAS SEGUN METODO DE PAGO
             String query = "SELECT P.nombre, sum(VP.cantidad), sum(VP.valor_total) " +
                             "FROM VENTA V JOIN VENTA_PRODUCTO VP ON V.folio = VP.folio " +

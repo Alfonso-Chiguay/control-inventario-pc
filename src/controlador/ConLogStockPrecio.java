@@ -1,7 +1,6 @@
 package controlador;
 
 import db.Conexion;
-import java.sql.Connection;
 import java.sql.Statement;
 import modelo.LogStockPrecio;
 
@@ -12,9 +11,7 @@ public class ConLogStockPrecio {
     public void RegistrarLog(LogStockPrecio logSP){
         Logs log = new Logs();
         try{
-            Conexion conexion = new Conexion();
-            Connection CONNECTION = conexion.getConnection();
-            Statement stmt = CONNECTION.createStatement();
+            Statement stmt = Conexion.getConnection().createStatement();
             String query = "INSERT INTO LOG_STOCK_PRECIO VALUES("
                     + ""+logSP.getId_trabajador()+","
                     + "'"+logSP.getCodigo_barra()+"',"

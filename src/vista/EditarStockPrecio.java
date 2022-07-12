@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import controlador.ConLogStockPrecio;
@@ -12,8 +7,6 @@ import db.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.LogStockPrecio;
@@ -27,7 +20,6 @@ import modelo.Trabajador;
 public class EditarStockPrecio extends javax.swing.JFrame {
 
     public String codigo = "";
-    public static final Conexion CONEXION = new Conexion();
     public Producto productoGlobal = new Producto();
     public String stockActual = "";
     public String precioAntiguo = "";
@@ -726,7 +718,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                     nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
                     if(nuevoStock > 0){
                         try {
-                            p.setStock(nuevoStock);
+                            p.setStock(nuevoStock+productoGlobal.getStock());
                         } catch (Exception e) {
                             mensajeError = e.getMessage();                    
                             continuar = false;
@@ -871,7 +863,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                     nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
                     if(nuevoStock > 0){
                         try {
-                            p.setStock(nuevoStock);
+                            p.setStock(nuevoStock+productoGlobal.getStock());
                         } catch (Exception e) {
                             mensajeError = e.getMessage();                    
                             continuar = false;
