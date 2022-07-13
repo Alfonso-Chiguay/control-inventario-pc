@@ -12,7 +12,7 @@ public class CambiarPaleta extends javax.swing.JFrame {
     
     private static final ConColores cColor = new ConColores();
     JFrame mainWindow;
-    
+    int xMouse, yMouse;
     public CambiarPaleta() {
         initComponents(); 
     }
@@ -25,14 +25,16 @@ public class CambiarPaleta extends javax.swing.JFrame {
         MinPanel.setBackground(paleta.getBackground());
         ClosePanel.setBackground(paleta.getBackground());
         btn_seleccionar.setBackground(paleta.getPanel());
-       
+       txt_tituloVentana.setForeground(mouseEnterPanelColor);
         ArrayList<String> listadoPaletas = cColor.listarPaletas();
         listadoPaletas.forEach((paletaString) -> {
             cbb_paletas.addItem(paletaString);
         });
+        cbb_paletas.setBackground(PanelColor);
         
         actualizarColoresDemo();
         mainWindow = ventanaPrincipal;
+        
     } 
     
     PaletaColor paleta = cColor.paletaActiva();
@@ -78,21 +80,25 @@ public class CambiarPaleta extends javax.swing.JFrame {
         cbb_paletas = new javax.swing.JComboBox<>();
         btn_seleccionar = new javax.swing.JPanel();
         txt_seleccionar = new javax.swing.JLabel();
+        txt_tituloVentana = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
         Background.setBackground(new java.awt.Color(102, 102, 102));
+        Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Background.setForeground(new java.awt.Color(102, 102, 102));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ClosePanel.setBackground(new java.awt.Color(255, 255, 153));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         txt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_close.setText("X");
+        txt_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_closeMouseEntered(evt);
@@ -120,14 +126,16 @@ public class CambiarPaleta extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 0, 40, 40));
+        Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 40, 40));
 
         MinPanel.setBackground(new java.awt.Color(255, 255, 153));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         txt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_minimize.setText("_");
+        txt_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_minimizeMouseEntered(evt);
@@ -147,16 +155,17 @@ public class CambiarPaleta extends javax.swing.JFrame {
         MinPanel.setLayout(MinPanelLayout);
         MinPanelLayout.setHorizontalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
         MinPanelLayout.setVerticalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
-        Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 0, 40, 40));
+        Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, 40, 40));
 
         PanelDemostracion.setBackground(new java.awt.Color(255, 204, 204));
+        PanelDemostracion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelDemostracion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanelIzqDemo.setBackground(new java.awt.Color(153, 0, 102));
@@ -186,7 +195,7 @@ public class CambiarPaleta extends javax.swing.JFrame {
                 .addContainerGap(232, Short.MAX_VALUE))
         );
 
-        PanelDemostracion.add(PanelIzqDemo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 150, 380));
+        PanelDemostracion.add(PanelIzqDemo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 150, 380));
 
         BackgroundDemo.setBackground(new java.awt.Color(0, 153, 102));
 
@@ -217,15 +226,15 @@ public class CambiarPaleta extends javax.swing.JFrame {
                 .addContainerGap(277, Short.MAX_VALUE))
         );
 
-        PanelDemostracion.add(BackgroundDemo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 330, 380));
+        PanelDemostracion.add(BackgroundDemo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 330, 380));
 
-        lbl_ejemplo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        lbl_ejemplo.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         lbl_ejemplo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_ejemplo.setText("Ejemplo de combinacion de colores");
-        PanelDemostracion.add(lbl_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 480, 30));
-        PanelDemostracion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 380, -1));
+        PanelDemostracion.add(lbl_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 530, 30));
+        PanelDemostracion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 530, -1));
 
-        Background.add(PanelDemostracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 830, 530));
+        Background.add(PanelDemostracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 530, 480));
 
         cbb_paletas.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         cbb_paletas.addActionListener(new java.awt.event.ActionListener() {
@@ -233,13 +242,14 @@ public class CambiarPaleta extends javax.swing.JFrame {
                 cbb_paletasActionPerformed(evt);
             }
         });
-        Background.add(cbb_paletas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 410, 40));
+        Background.add(cbb_paletas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 290, 40));
 
         txt_seleccionar.setBackground(new java.awt.Color(255, 255, 255));
         txt_seleccionar.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         txt_seleccionar.setForeground(new java.awt.Color(255, 255, 255));
         txt_seleccionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_seleccionar.setText("Seleccionar como predeterminado");
+        txt_seleccionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_seleccionar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_seleccionarMouseEntered(evt);
@@ -259,24 +269,42 @@ public class CambiarPaleta extends javax.swing.JFrame {
         btn_seleccionar.setLayout(btn_seleccionarLayout);
         btn_seleccionarLayout.setHorizontalGroup(
             btn_seleccionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_seleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_seleccionarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btn_seleccionarLayout.setVerticalGroup(
             btn_seleccionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_seleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_seleccionarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        Background.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 230, 40));
+        Background.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 230, 40));
+
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.setText("  CAMBIAR PALETA DE COLORES");
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        Background.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
         );
 
         pack();
@@ -352,6 +380,17 @@ public class CambiarPaleta extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txt_seleccionarMousePressed
 
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+            xMouse = evt.getX();
+            yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
+
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -403,5 +442,6 @@ public class CambiarPaleta extends javax.swing.JFrame {
     private javax.swing.JLabel txt_close;
     private javax.swing.JLabel txt_minimize;
     private javax.swing.JLabel txt_seleccionar;
+    private javax.swing.JLabel txt_tituloVentana;
     // End of variables declaration//GEN-END:variables
 }
