@@ -22,18 +22,19 @@ public class CambiarPaleta extends javax.swing.JFrame {
         initComponents();
         Background.setBackground(paleta.getBackground());
         PanelDemostracion.setBackground(Color.WHITE);
-        MinPanel.setBackground(paleta.getBackground());
-        ClosePanel.setBackground(paleta.getBackground());
-        btn_seleccionar.setBackground(paleta.getPanel());
-       txt_tituloVentana.setForeground(mouseEnterPanelColor);
+        MinPanel.setBackground(BackgroundColor);
+        ClosePanel.setBackground(BackgroundColor);
+        btn_seleccionar.setBackground(PanelColor);
+        txt_tituloVentana.setForeground(mouseEnterPanelColor);
         ArrayList<String> listadoPaletas = cColor.listarPaletas();
         listadoPaletas.forEach((paletaString) -> {
             cbb_paletas.addItem(paletaString);
         });
         cbb_paletas.setBackground(PanelColor);
-        
+
         actualizarColoresDemo();
         mainWindow = ventanaPrincipal;
+        txt_ejemplo.setForeground(textColor);
         
     } 
     
@@ -41,10 +42,11 @@ public class CambiarPaleta extends javax.swing.JFrame {
     
     //COLORES    
     Color BackgroundColor = paleta.getBackground();
-    Color PanelColor = paleta.getPanel();
+    Color PanelColor = paleta.getPanel();    
     Color mouseEnterPanelColor = paleta.getMouseEnter();
     Color mouseExitPanelColor = PanelColor;
     Color mouseClickPanelColor = paleta.getMouseClick(); 
+    Color textColor = mouseEnterPanelColor;
     
     private void actualizarColoresDemo(){
         String id_paleta = cbb_paletas.getSelectedItem().toString();
@@ -75,7 +77,7 @@ public class CambiarPaleta extends javax.swing.JFrame {
         btn1demo = new javax.swing.JPanel();
         BackgroundDemo = new javax.swing.JPanel();
         BannerDemo = new javax.swing.JPanel();
-        lbl_ejemplo = new javax.swing.JLabel();
+        txt_ejemplo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         cbb_paletas = new javax.swing.JComboBox<>();
         btn_seleccionar = new javax.swing.JPanel();
@@ -228,10 +230,10 @@ public class CambiarPaleta extends javax.swing.JFrame {
 
         PanelDemostracion.add(BackgroundDemo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 330, 380));
 
-        lbl_ejemplo.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        lbl_ejemplo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_ejemplo.setText("Ejemplo de combinacion de colores");
-        PanelDemostracion.add(lbl_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 530, 30));
+        txt_ejemplo.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        txt_ejemplo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_ejemplo.setText("EJEMPLO DE COMBINACION DE COLORES");
+        PanelDemostracion.add(txt_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 530, 30));
         PanelDemostracion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 530, -1));
 
         Background.add(PanelDemostracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 530, 480));
@@ -438,8 +440,8 @@ public class CambiarPaleta extends javax.swing.JFrame {
     private javax.swing.JPanel btn_seleccionar;
     private javax.swing.JComboBox<String> cbb_paletas;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lbl_ejemplo;
     private javax.swing.JLabel txt_close;
+    private javax.swing.JLabel txt_ejemplo;
     private javax.swing.JLabel txt_minimize;
     private javax.swing.JLabel txt_seleccionar;
     private javax.swing.JLabel txt_tituloVentana;
