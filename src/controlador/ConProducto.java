@@ -825,7 +825,7 @@ public class ConProducto {
             
             //CREACION DE TRIGGER
             
-            String trigger = "CREATE TRIGGER trigger_oferta_"+codigoOferta+
+            String trigger = "CREATE TRIGGER oferta_"+codigoOferta+
                              " BEFORE INSERT ON VENTA_PRODUCTO FOR EACH ROW"+
                              " BEGIN IF NEW.codigo_barra = '"+codigoOferta+"' THEN ";           
             

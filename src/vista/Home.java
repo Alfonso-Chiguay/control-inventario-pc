@@ -43,8 +43,7 @@ public class Home extends javax.swing.JFrame {
         ClosePanel.setBackground(BackgroundColor);
         MinPanel.setBackground(BackgroundColor);
         Background.setBackground(BackgroundColor);
-        header1.setBackground(BackgroundColor);
-        header2.setBackground(PanelColor);
+        
         
         moduloVenta_panelIzq.setBackground(PanelColor);
         moduloInforme_panelIzq.setBackground(PanelColor);
@@ -145,6 +144,7 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         Background = new javax.swing.JPanel();
+        txt_tituloVentana = new javax.swing.JLabel();
         LeftPanel = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
         Title = new javax.swing.JLabel();
@@ -199,8 +199,6 @@ public class Home extends javax.swing.JFrame {
         btn_consultarPrecio = new javax.swing.JPanel();
         txt_consultarPrecio = new javax.swing.JLabel();
         logoBackground1 = new javax.swing.JLabel();
-        header1 = new javax.swing.JPanel();
-        header2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -208,25 +206,41 @@ public class Home extends javax.swing.JFrame {
         setResizable(false);
 
         Background.setBackground(new java.awt.Color(230, 204, 178));
+        Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        Background.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 40));
+
         LeftPanel.setBackground(new java.awt.Color(176, 137, 104));
+        LeftPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         LeftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo-png-128.png"))); // NOI18N
-        LeftPanel.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+        LeftPanel.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         Title.setFont(new java.awt.Font("Great Vibes", 1, 36)); // NOI18N
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("Pili's Coffee");
-        LeftPanel.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 280, 42));
+        LeftPanel.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 280, 42));
 
         Subtitle.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         Subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Subtitle.setText("POS Software");
-        LeftPanel.add(Subtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 280, -1));
+        LeftPanel.add(Subtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 280, -1));
 
         moduloHome_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloHome_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_moduloInicio.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_moduloInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,22 +266,23 @@ public class Home extends javax.swing.JFrame {
         moduloHome_panelIzq.setLayout(moduloHome_panelIzqLayout);
         moduloHome_panelIzqLayout.setHorizontalGroup(
             moduloHome_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
         );
         moduloHome_panelIzqLayout.setVerticalGroup(
             moduloHome_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        LeftPanel.add(moduloHome_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 70));
+        LeftPanel.add(moduloHome_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 280, -1, 70));
 
         moduloVenta_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloVenta_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloVenta.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloVenta.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloVenta.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloVenta.setText("Módulo Ventas");
+        txt_ModuloVenta.setText("Ventas");
         txt_ModuloVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -299,16 +314,16 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(txt_ModuloVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        LeftPanel.add(moduloVenta_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 300, -1));
+        LeftPanel.add(moduloVenta_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 360, -1, -1));
 
         moduloInventario_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
-        moduloInventario_panelIzq.setPreferredSize(new java.awt.Dimension(310, 70));
+        moduloInventario_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloInventario.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloInventario.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloInventario.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloInventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloInventario.setText("Módulo Inventario");
+        txt_ModuloInventario.setText("Inventario");
         txt_ModuloInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -340,16 +355,16 @@ public class Home extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        LeftPanel.add(moduloInventario_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 300, -1));
+        LeftPanel.add(moduloInventario_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 440, -1, -1));
 
         moduloInforme_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
-        moduloInforme_panelIzq.setPreferredSize(new java.awt.Dimension(310, 70));
+        moduloInforme_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloInforme.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloInforme.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloInforme.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloInforme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloInforme.setText("Módulo Informe");
+        txt_ModuloInforme.setText("Informe");
         txt_ModuloInforme.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloInforme.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -381,9 +396,9 @@ public class Home extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        LeftPanel.add(moduloInforme_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 300, -1));
+        LeftPanel.add(moduloInforme_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 520, -1, -1));
 
-        Background.add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 300, 970));
+        Background.add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 1010));
 
         ModuloSeleccionadoTitulo.setBackground(new java.awt.Color(230, 204, 178));
 
@@ -400,7 +415,7 @@ public class Home extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        txt_ModuloSeleccionado.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        txt_ModuloSeleccionado.setFont(new java.awt.Font("Roboto Medium", 1, 36)); // NOI18N
         txt_ModuloSeleccionado.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout ModuloSeleccionadoTituloLayout = new javax.swing.GroupLayout(ModuloSeleccionadoTitulo);
@@ -424,9 +439,10 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Background.add(ModuloSeleccionadoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 800, 100));
+        Background.add(ModuloSeleccionadoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 60, 800, 100));
 
         ClosePanel.setBackground(new java.awt.Color(230, 204, 178));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
@@ -463,6 +479,7 @@ public class Home extends javax.swing.JFrame {
         Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, 40, 40));
 
         MinPanel.setBackground(new java.awt.Color(230, 204, 178));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
@@ -488,11 +505,11 @@ public class Home extends javax.swing.JFrame {
         MinPanel.setLayout(MinPanelLayout);
         MinPanelLayout.setHorizontalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
         MinPanelLayout.setVerticalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 0, 40, 40));
@@ -992,55 +1009,6 @@ public class Home extends javax.swing.JFrame {
 
         Background.add(PanelesPorModulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 750, 580));
 
-        header1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                header1MouseDragged(evt);
-            }
-        });
-        header1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                header1MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout header1Layout = new javax.swing.GroupLayout(header1);
-        header1.setLayout(header1Layout);
-        header1Layout.setHorizontalGroup(
-            header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 820, Short.MAX_VALUE)
-        );
-        header1Layout.setVerticalGroup(
-            header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        Background.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 820, 40));
-
-        header2.setPreferredSize(new java.awt.Dimension(100, 40));
-        header2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                header2MouseDragged(evt);
-            }
-        });
-        header2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                header2MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout header2Layout = new javax.swing.GroupLayout(header2);
-        header2.setLayout(header2Layout);
-        header2Layout.setHorizontalGroup(
-            header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-        header2Layout.setVerticalGroup(
-            header2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        Background.add(header2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1086,7 +1054,7 @@ public class Home extends javax.swing.JFrame {
             txt_ModuloVenta.setForeground(Color.BLACK);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);            
             TipoModuloColor.setBackground(ColorVenta);
-            txt_ModuloSeleccionado.setText("MÓDULO DE VENTAS");
+            txt_ModuloSeleccionado.setText("VENTAS");
             seleccionarModulo("VENTA");            
         }
     }//GEN-LAST:event_txt_ModuloVentaMousePressed
@@ -1103,7 +1071,7 @@ public class Home extends javax.swing.JFrame {
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             TipoModuloColor.setBackground(ColorInventario);
-            txt_ModuloSeleccionado.setText("MÓDULO DE INVENTARIO");
+            txt_ModuloSeleccionado.setText("INVENTARIO");
             seleccionarModulo("INVENTARIO");
         }
     }//GEN-LAST:event_txt_ModuloInventarioMousePressed
@@ -1120,7 +1088,7 @@ public class Home extends javax.swing.JFrame {
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             TipoModuloColor.setBackground(ColorInforme);
-            txt_ModuloSeleccionado.setText("MÓDULO DE INFORMES");   
+            txt_ModuloSeleccionado.setText("INFORMES");   
             seleccionarModulo("INFORMES");
             
         }
@@ -1453,27 +1421,16 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_stockGeneralMousePressed
 
-    private void header1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_header1MousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
-    }//GEN-LAST:event_header1MousePressed
-
-    private void header1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_header1MouseDragged
-        int x = evt.getXOnScreen() - 300;
-        int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
-    }//GEN-LAST:event_header1MouseDragged
-
-    private void header2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_header2MousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
-    }//GEN-LAST:event_header2MousePressed
-
-    private void header2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_header2MouseDragged
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-    }//GEN-LAST:event_header2MouseDragged
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
+
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
 
     /**
      * @param args the command line arguments
@@ -1538,8 +1495,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel btn_stockNegativo;
     private javax.swing.JPanel btn_ventaDiaria;
     private javax.swing.JPanel btn_ventaPeriodo;
-    private javax.swing.JPanel header1;
-    private javax.swing.JPanel header2;
     private javax.swing.JLabel logoBackground;
     private javax.swing.JLabel logoBackground1;
     private javax.swing.JLabel logoBackground2;
@@ -1566,6 +1521,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel txt_paletaColor;
     private javax.swing.JLabel txt_stockGeneral;
     private javax.swing.JLabel txt_stockNegativo;
+    private javax.swing.JLabel txt_tituloVentana;
     private javax.swing.JLabel txt_ventaDiaria;
     private javax.swing.JLabel txt_ventaPeriodo;
     // End of variables declaration//GEN-END:variables
