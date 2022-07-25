@@ -1,19 +1,23 @@
 package vista;
 
+import controlador.ConColores;
 import controlador.ConProducto;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import modelo.PaletaColor;
 import modelo.Producto;
 
 public class CrearOferta extends javax.swing.JFrame {
@@ -22,6 +26,20 @@ public class CrearOferta extends javax.swing.JFrame {
     private boolean actualizarListado;
     ArrayList<String> listaNoSeMuestra = new ArrayList<>();
     ConProducto CON_PRODUCTO = new ConProducto();
+    private static final ConColores cColor = new ConColores();  
+    JFrame mainWindow;
+    int xMouse, yMouse; 
+    PaletaColor paleta = cColor.paletaActiva();
+    //COLORES    
+    Color BackgroundColor = paleta.getBackground();
+    Color PanelColor = paleta.getPanel();
+    Color mouseEnterPanelColor = paleta.getMouseEnter();
+    Color mouseExitPanelColor = PanelColor;
+    Color mouseClickPanelColor = paleta.getMouseClick();
+    Color textColor = mouseEnterPanelColor;      
+    
+    
+    
     
     public void actualizarProductos(){
         String palabraClave = txt_nombreProducto.getText();
@@ -54,12 +72,28 @@ public class CrearOferta extends javax.swing.JFrame {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Crear oferta");
+        this.setTitle("Crear oferta");
         productos = listado;
         DefaultTableModel table = (DefaultTableModel) tbl_listadoProductos.getModel();
         table.setRowCount(0);
         actualizarProductos();
         actualizarListado = false;
+        
+        //COLORES
+        PanelPrincipal.setBackground(BackgroundColor);
+        panelIzqCodigoOferta.setBackground(PanelColor);
+        txt_tituloVentana.setForeground(textColor);
+        lbl_codigoOferta.setForeground(textColor);
+        txt_codigoOferta.setForeground(textColor);
+        PanelCodigoOferta.setBackground(BackgroundColor);
+        lbl_1.setForeground(mouseEnterPanelColor);
+        PanelIdentificaProd.setBackground(BackgroundColor);
+        PanelDetalleOferta.setBackground(BackgroundColor);
+        panelIzqIdentifica.setBackground(PanelColor);
+        lbl_2.setForeground(mouseEnterPanelColor);   
+        MinPanel.setBackground(BackgroundColor);
+        ClosePanel.setBackground(BackgroundColor);      
+        
         
         //CODIGOS DE BARRA NO VENDIBLES
         listaNoSeMuestra.add("VASOMARLEY1");
@@ -230,11 +264,15 @@ public class CrearOferta extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelPrincipal = new javax.swing.JPanel();
-        lbl_Titulo = new javax.swing.JLabel();
         PanelCodigoOferta = new javax.swing.JPanel();
         txt_codigoOferta = new javax.swing.JTextField();
         lbl_existeCodigoOferta = new javax.swing.JLabel();
+        panelIzqCodigoOferta = new javax.swing.JPanel();
+        lbl_1 = new javax.swing.JLabel();
+        lbl_codigoOferta = new javax.swing.JLabel();
         PanelIdentificaProd = new javax.swing.JPanel();
+        panelIzqIdentifica = new javax.swing.JPanel();
+        lbl_2 = new javax.swing.JLabel();
         txt_codigoBarra = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -242,7 +280,6 @@ public class CrearOferta extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaFiltrada = new javax.swing.JList<>();
         txt_nombreProducto = new javax.swing.JTextField();
-        PanelGrupoProducto = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_listadoProductos = new javax.swing.JTable();
         btn_agregar1 = new javax.swing.JLabel();
@@ -254,66 +291,96 @@ public class CrearOferta extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txt_nombreOferta = new javax.swing.JTextField();
         btn_crearOferta = new javax.swing.JLabel();
+        txt_tituloVentana = new javax.swing.JLabel();
+        ClosePanel = new javax.swing.JPanel();
+        txt_close = new javax.swing.JLabel();
+        MinPanel = new javax.swing.JPanel();
+        txt_minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1700, 980));
         setResizable(false);
 
         PanelPrincipal.setBackground(new java.awt.Color(230, 204, 178));
-
-        lbl_Titulo.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        lbl_Titulo.setForeground(new java.awt.Color(127, 85, 57));
-        lbl_Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Titulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sale.png"))); // NOI18N
-        lbl_Titulo.setText("  CREAR NUEVA OFERTA");
+        PanelPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelPrincipal.setPreferredSize(new java.awt.Dimension(1700, 980));
+        PanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanelCodigoOferta.setBackground(new java.awt.Color(230, 204, 178));
-        PanelCodigoOferta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "CODIGO DE OFERTA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 24), new java.awt.Color(127, 85, 57))); // NOI18N
+        PanelCodigoOferta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelCodigoOferta.setForeground(new java.awt.Color(127, 85, 57));
+        PanelCodigoOferta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_codigoOferta.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        txt_codigoOferta.setFont(new java.awt.Font("Roboto Thin", 0, 24)); // NOI18N
         txt_codigoOferta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_codigoOferta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_codigoOfertaFocusLost(evt);
             }
         });
+        PanelCodigoOferta.add(txt_codigoOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 410, 40));
 
-        lbl_existeCodigoOferta.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_existeCodigoOferta.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         lbl_existeCodigoOferta.setForeground(new java.awt.Color(255, 0, 0));
         lbl_existeCodigoOferta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_existeCodigoOferta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        PanelCodigoOferta.add(lbl_existeCodigoOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 97, 670, 40));
 
-        javax.swing.GroupLayout PanelCodigoOfertaLayout = new javax.swing.GroupLayout(PanelCodigoOferta);
-        PanelCodigoOferta.setLayout(PanelCodigoOfertaLayout);
-        PanelCodigoOfertaLayout.setHorizontalGroup(
-            PanelCodigoOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCodigoOfertaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PanelCodigoOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_codigoOferta)
-                    .addComponent(lbl_existeCodigoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(224, 224, 224))
+        lbl_1.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        lbl_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_1.setText("1");
+
+        javax.swing.GroupLayout panelIzqCodigoOfertaLayout = new javax.swing.GroupLayout(panelIzqCodigoOferta);
+        panelIzqCodigoOferta.setLayout(panelIzqCodigoOfertaLayout);
+        panelIzqCodigoOfertaLayout.setHorizontalGroup(
+            panelIzqCodigoOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
-        PanelCodigoOfertaLayout.setVerticalGroup(
-            PanelCodigoOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelCodigoOfertaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txt_codigoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_existeCodigoOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addContainerGap())
+        panelIzqCodigoOfertaLayout.setVerticalGroup(
+            panelIzqCodigoOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
+
+        PanelCodigoOferta.add(panelIzqCodigoOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 150));
+
+        lbl_codigoOferta.setFont(new java.awt.Font("Roboto", 0, 22)); // NOI18N
+        lbl_codigoOferta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_codigoOferta.setText("CÓDIGO DE OFERTA");
+        PanelCodigoOferta.add(lbl_codigoOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 410, 40));
+
+        PanelPrincipal.add(PanelCodigoOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 740, 150));
 
         PanelIdentificaProd.setBackground(new java.awt.Color(230, 204, 178));
-        PanelIdentificaProd.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "IDENTIFICAR PRODUCTO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
+        PanelIdentificaProd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelIdentificaProd.setForeground(new java.awt.Color(127, 85, 57));
         PanelIdentificaProd.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 PanelIdentificaProdKeyPressed(evt);
             }
         });
+        PanelIdentificaProd.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_codigoBarra.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        panelIzqIdentifica.setPreferredSize(new java.awt.Dimension(50, 100));
+
+        lbl_2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        lbl_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_2.setText("2");
+
+        javax.swing.GroupLayout panelIzqIdentificaLayout = new javax.swing.GroupLayout(panelIzqIdentifica);
+        panelIzqIdentifica.setLayout(panelIzqIdentificaLayout);
+        panelIzqIdentificaLayout.setHorizontalGroup(
+            panelIzqIdentificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        );
+        panelIzqIdentificaLayout.setVerticalGroup(
+            panelIzqIdentificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_2, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+        );
+
+        PanelIdentificaProd.add(panelIzqIdentifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 360));
+
+        txt_codigoBarra.setFont(new java.awt.Font("Roboto Thin", 0, 22)); // NOI18N
         txt_codigoBarra.setPreferredSize(new java.awt.Dimension(6, 40));
         txt_codigoBarra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,18 +392,22 @@ public class CrearOferta extends javax.swing.JFrame {
                 txt_codigoBarraKeyPressed(evt);
             }
         });
+        PanelIdentificaProd.add(txt_codigoBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 330, -1));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 22)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(127, 85, 57));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/barcode.png"))); // NOI18N
         jLabel2.setText("ESCANEAR CÓDIGO DE BARRA");
+        PanelIdentificaProd.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, 40));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 22)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(127, 85, 57));
         jLabel3.setText("BUSCAR PRODUCTO MANUALMENTE");
+        PanelIdentificaProd.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 370, 40));
 
         jSeparator1.setBackground(new java.awt.Color(127, 85, 57));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        PanelIdentificaProd.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 18, 360));
 
         listaFiltrada.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         listaFiltrada.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -351,7 +422,9 @@ public class CrearOferta extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaFiltrada);
 
-        txt_nombreProducto.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        PanelIdentificaProd.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 415, 167));
+
+        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 22)); // NOI18N
         txt_nombreProducto.setPreferredSize(new java.awt.Dimension(6, 40));
         txt_nombreProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,51 +436,7 @@ public class CrearOferta extends javax.swing.JFrame {
                 txt_nombreProductoKeyReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout PanelIdentificaProdLayout = new javax.swing.GroupLayout(PanelIdentificaProd);
-        PanelIdentificaProd.setLayout(PanelIdentificaProdLayout);
-        PanelIdentificaProdLayout.setHorizontalGroup(
-            PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelIdentificaProdLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_codigoBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addGroup(PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txt_nombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
-        );
-        PanelIdentificaProdLayout.setVerticalGroup(
-            PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelIdentificaProdLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_codigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelIdentificaProdLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelIdentificaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                    .addGroup(PanelIdentificaProdLayout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(txt_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-
-        PanelGrupoProducto.setBackground(new java.awt.Color(230, 204, 178));
-        PanelGrupoProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(127, 85, 57)), "GRUPO DE PRODUCTOS EN OFERTA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
-        PanelGrupoProducto.setForeground(new java.awt.Color(127, 85, 57));
+        PanelIdentificaProd.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 415, -1));
 
         tbl_listadoProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tbl_listadoProductos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -445,6 +474,8 @@ public class CrearOferta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_listadoProductos);
 
+        PanelIdentificaProd.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 677, 340));
+
         btn_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/agregar1_solid.png"))); // NOI18N
         btn_agregar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -460,6 +491,7 @@ public class CrearOferta extends javax.swing.JFrame {
                 btn_agregar1MouseReleased(evt);
             }
         });
+        PanelIdentificaProd.add(btn_agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 20, 272, 75));
 
         btn_quitar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/quitar1_solid.png"))); // NOI18N
         btn_quitar1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -476,6 +508,7 @@ public class CrearOferta extends javax.swing.JFrame {
                 btn_quitar1MouseReleased(evt);
             }
         });
+        PanelIdentificaProd.add(btn_quitar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 110, 272, 75));
 
         btn_eliminarSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/eliminarseleccion_solid.png"))); // NOI18N
         btn_eliminarSeleccion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -492,40 +525,9 @@ public class CrearOferta extends javax.swing.JFrame {
                 btn_eliminarSeleccionMouseReleased(evt);
             }
         });
+        PanelIdentificaProd.add(btn_eliminarSeleccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 190, 272, 75));
 
-        javax.swing.GroupLayout PanelGrupoProductoLayout = new javax.swing.GroupLayout(PanelGrupoProducto);
-        PanelGrupoProducto.setLayout(PanelGrupoProductoLayout);
-        PanelGrupoProductoLayout.setHorizontalGroup(
-            PanelGrupoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelGrupoProductoLayout.createSequentialGroup()
-                .addGap(694, 694, 694)
-                .addGroup(PanelGrupoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_eliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_quitar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btn_agregar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
-            .addGroup(PanelGrupoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelGrupoProductoLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(289, Short.MAX_VALUE)))
-        );
-        PanelGrupoProductoLayout.setVerticalGroup(
-            PanelGrupoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelGrupoProductoLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btn_agregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_quitar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_eliminarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-            .addGroup(PanelGrupoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelGrupoProductoLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(21, Short.MAX_VALUE)))
-        );
+        PanelPrincipal.add(PanelIdentificaProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 237, 1640, 360));
 
         PanelDetalleOferta.setBackground(new java.awt.Color(230, 204, 178));
         PanelDetalleOferta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(127, 85, 57)), "DETALLE DE LA OFERTA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
@@ -590,6 +592,8 @@ public class CrearOferta extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        PanelPrincipal.add(PanelDetalleOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, -1, -1));
+
         btn_crearOferta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/crearoferta_solid.png"))); // NOI18N
         btn_crearOferta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -605,58 +609,94 @@ public class CrearOferta extends javax.swing.JFrame {
                 btn_crearOfertaMouseReleased(evt);
             }
         });
+        PanelPrincipal.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 700, -1, -1));
 
-        javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
-        PanelPrincipal.setLayout(PanelPrincipalLayout);
-        PanelPrincipalLayout.setHorizontalGroup(
-            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(lbl_Titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(87, 87, 87))
-            .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PanelGrupoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelCodigoOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(PanelDetalleOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(2, 2, 2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_crearOferta)
-                        .addGap(140, 140, 140))))
-            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(PanelIdentificaProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(612, Short.MAX_VALUE)))
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.setText("  CREAR OFERTA");
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        PanelPrincipal.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1530, 40));
+
+        ClosePanel.setBackground(new java.awt.Color(255, 255, 153));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_close.setText("X");
+        txt_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_closeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_closeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_closeMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ClosePanelLayout = new javax.swing.GroupLayout(ClosePanel);
+        ClosePanel.setLayout(ClosePanelLayout);
+        ClosePanelLayout.setHorizontalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClosePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        PanelPrincipalLayout.setVerticalGroup(
-            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(PanelCodigoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
-                .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(PanelGrupoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(PanelDetalleOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_crearOferta)
-                        .addGap(34, 34, 34))))
-            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                    .addGap(237, 237, 237)
-                    .addComponent(PanelIdentificaProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(400, Short.MAX_VALUE)))
+        ClosePanelLayout.setVerticalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ClosePanelLayout.createSequentialGroup()
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        PanelPrincipal.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1660, 0, 40, 40));
+
+        MinPanel.setBackground(new java.awt.Color(255, 255, 153));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_minimize.setText("_");
+        txt_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_minimizeMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MinPanelLayout = new javax.swing.GroupLayout(MinPanel);
+        MinPanel.setLayout(MinPanelLayout);
+        MinPanelLayout.setHorizontalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+        MinPanelLayout.setVerticalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+
+        PanelPrincipal.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1620, 0, 40, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -704,14 +744,17 @@ public class CrearOferta extends javax.swing.JFrame {
     private void txt_codigoOfertaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_codigoOfertaFocusLost
         String codigo = txt_codigoOferta.getText();
         if(codigo.equals("")){
+            lbl_existeCodigoOferta.setText("");
             return;
         }
         if(CON_PRODUCTO.existeCodigo(codigo)){
+            lbl_existeCodigoOferta.setForeground(new Color(142, 0, 25));
             lbl_existeCodigoOferta.setText("¡Código ya registrado!, intente con otro.");
             txt_codigoOferta.requestFocus();
         }
         else{
-            lbl_existeCodigoOferta.setText("");
+            lbl_existeCodigoOferta.setForeground(new Color(34, 147, 39));
+            lbl_existeCodigoOferta.setText("¡Código disponible!");
         }
     }//GEN-LAST:event_txt_codigoOfertaFocusLost
 
@@ -911,6 +954,55 @@ public class CrearOferta extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btn_crearOfertaMousePressed
+
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
+
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
+
+    private void txt_closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseEntered
+        ClosePanel.setBackground(Color.RED);
+        txt_close.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_closeMouseEntered
+
+    private void txt_closeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseExited
+        ClosePanel.setBackground(BackgroundColor);
+        txt_close.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_closeMouseExited
+
+    private void txt_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMousePressed
+        Color DarkRed = new Color(146, 55, 77);
+        ClosePanel.setBackground(DarkRed);
+        txt_close.setForeground(Color.WHITE);
+        this.dispose();
+    }//GEN-LAST:event_txt_closeMousePressed
+
+    private void txt_minimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseEntered
+        MinPanel.setBackground(mouseEnterPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_minimizeMouseEntered
+
+    private void txt_minimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseExited
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseExited
+
+    private void txt_minimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMousePressed
+        MinPanel.setBackground(mouseClickPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_txt_minimizeMousePressed
+
+    private void txt_minimizeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseReleased
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseReleased
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
@@ -987,9 +1079,10 @@ public class CrearOferta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ClosePanel;
+    private javax.swing.JPanel MinPanel;
     private javax.swing.JPanel PanelCodigoOferta;
     private javax.swing.JPanel PanelDetalleOferta;
-    private javax.swing.JPanel PanelGrupoProducto;
     private javax.swing.JPanel PanelIdentificaProd;
     private javax.swing.JPanel PanelPrincipal;
     private javax.swing.JLabel btn_agregar1;
@@ -1003,14 +1096,21 @@ public class CrearOferta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lbl_Titulo;
+    private javax.swing.JLabel lbl_1;
+    private javax.swing.JLabel lbl_2;
+    private javax.swing.JLabel lbl_codigoOferta;
     private javax.swing.JLabel lbl_existeCodigoOferta;
     private javax.swing.JList<String> listaFiltrada;
+    private javax.swing.JPanel panelIzqCodigoOferta;
+    private javax.swing.JPanel panelIzqIdentifica;
     private javax.swing.JTable tbl_listadoProductos;
+    private javax.swing.JLabel txt_close;
     private javax.swing.JTextField txt_codigoBarra;
     private javax.swing.JTextField txt_codigoOferta;
+    private javax.swing.JLabel txt_minimize;
     private javax.swing.JTextField txt_nombreOferta;
     private javax.swing.JTextField txt_nombreProducto;
     private javax.swing.JTextField txt_precioOferta;
+    private javax.swing.JLabel txt_tituloVentana;
     // End of variables declaration//GEN-END:variables
 }

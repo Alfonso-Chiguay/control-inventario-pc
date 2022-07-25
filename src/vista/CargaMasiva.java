@@ -4,11 +4,12 @@ import controlador.ConProducto;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;  
 import java.nio.file.Files;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.plaf.basic.BasicProgressBarUI;
@@ -20,10 +21,20 @@ public class CargaMasiva extends javax.swing.JFrame {
     private static final ConColores cColor = new ConColores();  
     JFrame mainWindow;
     int xMouse, yMouse; 
+    PaletaColor paleta = cColor.paletaActiva();
+    //COLORES    
+    Color BackgroundColor = paleta.getBackground();
+    Color PanelColor = paleta.getPanel();
+    Color mouseEnterPanelColor = paleta.getMouseEnter();
+    Color mouseExitPanelColor = PanelColor;
+    Color mouseClickPanelColor = paleta.getMouseClick();
+    Color textColor = mouseEnterPanelColor;    
     
     public CargaMasiva() {
         initComponents();
-
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
+        this.setIconImage(icon);
+        this.setTitle("Carga masiva");    
         ProgressBar.setUI(new BasicProgressBarUI() {
             protected Color getSelectionBackground() { return Color.black; };
             protected Color getSelectionForeground() { return Color.white; };
@@ -36,16 +47,10 @@ public class CargaMasiva extends javax.swing.JFrame {
         ClosePanel.setBackground(BackgroundColor); 
         btn_descargarPlantilla.setBackground(PanelColor);
         btn_cargarExcel.setBackground(PanelColor);
+        
     }
 
-    PaletaColor paleta = cColor.paletaActiva();
-    //COLORES    
-    Color BackgroundColor = paleta.getBackground();
-    Color PanelColor = paleta.getPanel();
-    Color mouseEnterPanelColor = paleta.getMouseEnter();
-    Color mouseExitPanelColor = PanelColor;
-    Color mouseClickPanelColor = paleta.getMouseClick();
-    Color textColor = mouseEnterPanelColor;
+
     
     
     @SuppressWarnings("unchecked")
@@ -172,6 +177,7 @@ public class CargaMasiva extends javax.swing.JFrame {
         txt_descargarPlantilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_descargarPlantilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/excel.png"))); // NOI18N
         txt_descargarPlantilla.setText("Descargar plantilla");
+        txt_descargarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_descargarPlantilla.setPreferredSize(new java.awt.Dimension(270, 70));
         txt_descargarPlantilla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -207,6 +213,7 @@ public class CargaMasiva extends javax.swing.JFrame {
         txt_cargarExcel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_cargarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/upload_file.png"))); // NOI18N
         txt_cargarExcel.setText("Subir archivo de carga");
+        txt_cargarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_cargarExcel.setPreferredSize(new java.awt.Dimension(270, 70));
         txt_cargarExcel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

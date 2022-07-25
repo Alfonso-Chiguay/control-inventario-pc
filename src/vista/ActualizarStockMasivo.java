@@ -3,6 +3,8 @@ import controlador.ConColores;
 import controlador.ConProducto;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,6 +22,9 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
     public ActualizarStockMasivo() {
    
         initComponents();
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
+        this.setIconImage(icon);
+        this.setTitle("Actualizar Stock Masivo");          
         txt_filtro.setEnabled(false);
         BackGround.setBackground(BackgroundColor);
         ProgressBar.setForeground(PanelColor);
@@ -73,7 +78,6 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(510, 730));
         setResizable(false);
 
         BackGround.setBackground(new java.awt.Color(230, 204, 178));
@@ -220,6 +224,7 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         txt_generarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/excel.png"))); // NOI18N
         txt_generarExcel.setLabelFor(btn_generarExcel);
         txt_generarExcel.setText("Generar Excel");
+        txt_generarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_generarExcel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_generarExcelMouseEntered(evt);
@@ -252,6 +257,7 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         txt_subirExcel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_subirExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/upload_file.png"))); // NOI18N
         txt_subirExcel.setText("Subir Excel de carga");
+        txt_subirExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_subirExcel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_subirExcelMouseEntered(evt);

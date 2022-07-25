@@ -23,7 +23,7 @@ public class Home extends javax.swing.JFrame {
         
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Inicio");  
+        this.setTitle("Inicio");  
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
@@ -119,10 +119,10 @@ public class Home extends javax.swing.JFrame {
     Color mouseExitPanelColor = PanelColor;
     Color mouseClickPanelColor = paleta.getMouseClick();  
     //HOME
-    Color ColorHome = new Color(35, 121, 121);
-    Color mouseEnterColorHome = new Color(85, 155, 155);
+    Color ColorHome = new Color(100, 58, 113);
+    Color mouseEnterColorHome = new Color(139, 95, 191);
     Color mouseExitColorHome = ColorHome;
-    Color mouseClickColorHome = new Color(85, 177, 177);
+    Color mouseClickColorHome = new Color(209, 131, 201);
     //VENTA
     Color ColorVenta = new Color(0, 117, 67);
     Color mouseEnterColorVenta = new Color(0, 173, 73);

@@ -3,6 +3,8 @@ package vista;
 import controlador.ConColores;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import modelo.PaletaColor;
 import javax.swing.JFrame;
@@ -20,6 +22,9 @@ public class CambiarPaleta extends javax.swing.JFrame {
     public CambiarPaleta(JFrame ventanaPrincipal) {
         
         initComponents();
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
+        this.setIconImage(icon);
+        this.setTitle("Cambiar paleta");    
         Background.setBackground(paleta.getBackground());
         PanelDemostracion.setBackground(Color.WHITE);
         MinPanel.setBackground(BackgroundColor);
