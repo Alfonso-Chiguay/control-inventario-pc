@@ -157,6 +157,7 @@ public class CrearOferta extends javax.swing.JFrame {
         tbl_listadoProductos.setSelectionBackground(mouseEnterPanelColor);
         tbl_listadoProductos.setSelectionForeground(Color.WHITE);
         
+        
         DefaultTableCellRenderer positionRenderer = new DefaultTableCellRenderer();
         positionRenderer.setHorizontalAlignment(JLabel.CENTER);
         tbl_listadoProductos.getColumnModel().getColumn(2).setCellRenderer(positionRenderer);
@@ -769,14 +770,18 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_crearOferta.setLayout(btn_crearOfertaLayout);
         btn_crearOfertaLayout.setHorizontalGroup(
             btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_crearOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_crearOfertaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_crearOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btn_crearOfertaLayout.setVerticalGroup(
             btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_crearOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_crearOfertaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_crearOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        PanelPrincipal.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 650, 290, -1));
+        PanelPrincipal.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 655, 290, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
