@@ -4,13 +4,12 @@ import controlador.ConColores;
 import controlador.ConLogStockPrecio;
 import controlador.ConProducto;
 import controlador.ConTrabajador;
-import db.Conexion;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.LogStockPrecio;
@@ -81,11 +80,22 @@ public class EditarStockPrecio extends javax.swing.JFrame {
             ClosePanel.setBackground(BackgroundColor);
             MinPanel.setBackground(BackgroundColor);        
             btn_buscarProducto.setBackground(PanelColor);
+            btn_guardarCerrar.setBackground(PanelColor);
+            PanelDerecha.setBackground(PanelColor);
+            btn_guardarOtro.setBackground(PanelColor);
+            btn_limpiarCampos.setBackground(PanelColor);
+            btn_exit.setBackground(PanelColor);
+            btn_guardarCerrar.setEnabled(false);
+            btn_guardarOtro.setEnabled(false);  
+            txt_guardarCerrar.setEnabled(false);
+            txt_guardarOtro.setEnabled(false);
             
+            txt_exit.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
+            txt_limpiarCampos.setBorder(BorderFactory.createEmptyBorder(0,5,0,0));
     }
     
     
-    
+
 
 
     /**
@@ -119,15 +129,20 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         txt_confirmarInformacion = new javax.swing.JLabel();
         btn_buscarProducto = new javax.swing.JPanel();
         txt_buscarProducto = new javax.swing.JLabel();
-        btn_guardar_Cerrar = new javax.swing.JLabel();
-        btn_guardar_continuar = new javax.swing.JLabel();
-        btn_limpiartodo = new javax.swing.JLabel();
-        btn_salir = new javax.swing.JLabel();
         txt_titulo = new javax.swing.JLabel();
         ClosePanel = new javax.swing.JPanel();
         txt_close = new javax.swing.JLabel();
         MinPanel = new javax.swing.JPanel();
         txt_minimize = new javax.swing.JLabel();
+        PanelDerecha = new javax.swing.JPanel();
+        btn_guardarCerrar = new javax.swing.JPanel();
+        txt_guardarCerrar = new javax.swing.JLabel();
+        btn_guardarOtro = new javax.swing.JPanel();
+        txt_guardarOtro = new javax.swing.JLabel();
+        btn_limpiarCampos = new javax.swing.JPanel();
+        txt_limpiarCampos = new javax.swing.JLabel();
+        btn_exit = new javax.swing.JPanel();
+        txt_exit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -338,74 +353,6 @@ public class EditarStockPrecio extends javax.swing.JFrame {
 
         BackGround.add(PanelDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 480, 610));
 
-        btn_guardar_Cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"))); // NOI18N
-        btn_guardar_Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_guardar_CerrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_guardar_CerrarMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_guardar_CerrarMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_guardar_CerrarMouseReleased(evt);
-            }
-        });
-        BackGround.add(btn_guardar_Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 96, -1, -1));
-
-        btn_guardar_continuar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"))); // NOI18N
-        btn_guardar_continuar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_guardar_continuarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_guardar_continuarMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_guardar_continuarMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_guardar_continuarMouseReleased(evt);
-            }
-        });
-        BackGround.add(btn_guardar_continuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 174, -1, -1));
-
-        btn_limpiartodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"))); // NOI18N
-        btn_limpiartodo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_limpiartodoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_limpiartodoMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_limpiartodoMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_limpiartodoMouseReleased(evt);
-            }
-        });
-        BackGround.add(btn_limpiartodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 252, -1, -1));
-
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"))); // NOI18N
-        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_salirMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_salirMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_salirMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_salirMouseReleased(evt);
-            }
-        });
-        BackGround.add(btn_salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 330, -1, -1));
-
         txt_titulo.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
         txt_titulo.setText("  EDITAR STOCK Y/O PRECIO");
         txt_titulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -418,7 +365,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                 txt_tituloMousePressed(evt);
             }
         });
-        BackGround.add(txt_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 40));
+        BackGround.add(txt_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 40));
 
         ClosePanel.setBackground(new java.awt.Color(255, 255, 153));
         ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -493,6 +440,163 @@ public class EditarStockPrecio extends javax.swing.JFrame {
 
         BackGround.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 40, 40));
 
+        PanelDerecha.setPreferredSize(new java.awt.Dimension(134, 100));
+        PanelDerecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_guardarCerrar.setPreferredSize(new java.awt.Dimension(250, 88));
+
+        txt_guardarCerrar.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        txt_guardarCerrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txt_guardarCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
+        txt_guardarCerrar.setText("GUARDAR Y CERRAR");
+        txt_guardarCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_guardarCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_guardarCerrarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_guardarCerrarMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_guardarCerrarMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_guardarCerrarLayout = new javax.swing.GroupLayout(btn_guardarCerrar);
+        btn_guardarCerrar.setLayout(btn_guardarCerrarLayout);
+        btn_guardarCerrarLayout.setHorizontalGroup(
+            btn_guardarCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_guardarCerrarLayout.createSequentialGroup()
+                .addComponent(txt_guardarCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_guardarCerrarLayout.setVerticalGroup(
+            btn_guardarCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_guardarCerrarLayout.createSequentialGroup()
+                .addComponent(txt_guardarCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        PanelDerecha.add(btn_guardarCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
+
+        btn_guardarOtro.setPreferredSize(new java.awt.Dimension(250, 88));
+
+        txt_guardarOtro.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txt_guardarOtro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txt_guardarOtro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
+        txt_guardarOtro.setText("GUARDAR E INGRESAR OTRO");
+        txt_guardarOtro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_guardarOtroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_guardarOtroMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_guardarOtroMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_guardarOtroMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_guardarOtroLayout = new javax.swing.GroupLayout(btn_guardarOtro);
+        btn_guardarOtro.setLayout(btn_guardarOtroLayout);
+        btn_guardarOtroLayout.setHorizontalGroup(
+            btn_guardarOtroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_guardarOtroLayout.createSequentialGroup()
+                .addComponent(txt_guardarOtro, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_guardarOtroLayout.setVerticalGroup(
+            btn_guardarOtroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_guardarOtroLayout.createSequentialGroup()
+                .addComponent(txt_guardarOtro, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        PanelDerecha.add(btn_guardarOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, -1, -1));
+
+        btn_limpiarCampos.setPreferredSize(new java.awt.Dimension(250, 88));
+
+        txt_limpiarCampos.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        txt_limpiarCampos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txt_limpiarCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clearText.png"))); // NOI18N
+        txt_limpiarCampos.setText("LIMPIAR CAMPOS");
+        txt_limpiarCampos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_limpiarCamposMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_limpiarCamposMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_limpiarCamposMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_limpiarCamposMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_limpiarCamposLayout = new javax.swing.GroupLayout(btn_limpiarCampos);
+        btn_limpiarCampos.setLayout(btn_limpiarCamposLayout);
+        btn_limpiarCamposLayout.setHorizontalGroup(
+            btn_limpiarCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_limpiarCamposLayout.createSequentialGroup()
+                .addComponent(txt_limpiarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_limpiarCamposLayout.setVerticalGroup(
+            btn_limpiarCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_limpiarCamposLayout.createSequentialGroup()
+                .addComponent(txt_limpiarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        PanelDerecha.add(btn_limpiarCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, -1, -1));
+
+        btn_exit.setPreferredSize(new java.awt.Dimension(250, 88));
+
+        txt_exit.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        txt_exit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txt_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit.png"))); // NOI18N
+        txt_exit.setText("SALIR");
+        txt_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_exitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_exitMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_exitMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_exitMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_exitLayout = new javax.swing.GroupLayout(btn_exit);
+        btn_exit.setLayout(btn_exitLayout);
+        btn_exitLayout.setHorizontalGroup(
+            btn_exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_exitLayout.createSequentialGroup()
+                .addComponent(txt_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_exitLayout.setVerticalGroup(
+            btn_exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_exitLayout.createSequentialGroup()
+                .addComponent(txt_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        PanelDerecha.add(btn_exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, -1, -1));
+
+        BackGround.add(PanelDerecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(559, 40, 250, 639));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -511,14 +615,23 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private void habilitarCampos(){
         txt_codigoProducto.setText(codigo);
         txt_codigoProducto.setEditable(true);
-        chk_precio.setEnabled(true);
-        chk_stock.setEnabled(true);
+        chk_precio.setEnabled(false);
+        chk_stock.setEnabled(false);
         txt_nuevoPrecio.setEditable(false);
         txt_nuevoStock.setEditable(false);
-        cb_Trabajador.setEnabled(true);
+        cb_Trabajador.setEnabled(false);
         txt_nombreProducto.setEditable(true);
         btn_buscarProducto.setEnabled(true);
-        txt_buscarProducto.setEnabled(true);         
+        txt_buscarProducto.setEnabled(true);      
+        btn_confirmarInformacion.setEnabled(true);
+        txt_confirmarInformacion.setEnabled(true);
+        btn_buscarProducto.setBackground(PanelColor);
+        btn_guardarCerrar.setEnabled(false);
+        btn_guardarOtro.setEnabled(false);  
+        txt_guardarCerrar.setEnabled(false);
+        txt_guardarOtro.setEnabled(false);
+        
+        btn_confirmarInformacion.setBackground(PanelColor);
     }
     
 
@@ -592,322 +705,6 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private void lbl_nuevoStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_nuevoStockMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_lbl_nuevoStockMouseEntered
-
-    private void btn_guardar_CerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_CerrarMousePressed
-
-            if(disabled_buttons){    
-                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
-                btn_guardar_Cerrar.setIcon(botonClick);
-                ConProducto cProducto = new ConProducto();
-                Producto p = productoGlobal;
-                stockActual = txt_stockActual.getText();
-                precioAntiguo = txt_precioActual.getText();
-                codigo = txt_codigoProducto.getText();
-                int nuevoPrecio,nuevoStock;
-                boolean continuar = true;
-                String mensajeError = "";
-                //validar precios
-                if(!txt_nuevoPrecio.getText().equals("")){
-                    nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
-                    if(nuevoPrecio>0){
-                        try {
-                            p.setPrecio(nuevoPrecio);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            mensajeError = e.getMessage();                     
-                            continuar = false;
-                        }
-                    }  
-                    else{
-                        mensajeError = "El precio no puede ser menor o igual a 0";
-                        continuar = false;
-                    }
-                }
-
-                if(!txt_nuevoStock.getText().equals("")){
-                    nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
-                    if(nuevoStock > 0){
-                        try {
-                            p.setStock(nuevoStock+productoGlobal.getStock());
-                        } catch (Exception e) {
-                            mensajeError = e.getMessage();                    
-                            continuar = false;
-                        }
-                    }
-                    else{
-                        mensajeError = "El stock a agregar debe ser mayor a 0";
-                        continuar = false; 
-                    }
-                }
-                
-                if(txt_nombreProducto.getText().replace("'","").length() > 0){
-                    try {
-                        p.setNombre(txt_nombreProducto.getText().replace("'",""));
-                    } catch (Exception e) {
-                        mensajeError = e.getMessage();
-                        continuar = false;
-                    }
-                }
-                
-                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.equals(nombreProducto)){
-                    continuar = false;
-                    mensajeError = "No hay datos modificados";
-                }
-
-                if(continuar){
-                    productoGlobal = p;
-                    ////////////////////////
-                    boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
-                    if(actualizacion){                    
-                        int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
-                        String codigo_barra = codigo;
-                        int stock_antiguo = Integer.parseInt(stockActual);
-
-                        int stock_agregado = 0;
-                        if(!txt_nuevoStock.getText().equals("")){
-                            stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
-                        }
-
-                        int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
-                        int precio_nuevo = precio_antiguo;
-                        if(!txt_nuevoPrecio.getText().equals("")){
-                            precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
-                        }
-
-                        LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
-                        ConLogStockPrecio cLog = new ConLogStockPrecio();
-                        cLog.RegistrarLog(log);
-                        JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
-                        this.dispose();
-
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
-                        habilitarCampos();
-                    }    
-                    /////////////////////////
-                    
-
-                   
-
-                }
-                else{
-                    JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
-                    habilitarCampos();
-                    
-                }
-
-            }
-            
-
-    }//GEN-LAST:event_btn_guardar_CerrarMousePressed
-
-    private void btn_guardar_CerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_CerrarMouseReleased
-        if(disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"));
-            btn_guardar_Cerrar.setIcon(botonClick);
-        }
-    }//GEN-LAST:event_btn_guardar_CerrarMouseReleased
-
-    private void btn_guardar_CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_CerrarMouseEntered
-        if(disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_click.png"));
-            btn_guardar_Cerrar.setIcon(botonClick);
-        }
-    }//GEN-LAST:event_btn_guardar_CerrarMouseEntered
-
-    private void btn_guardar_CerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_CerrarMouseExited
-        if(disabled_buttons){    
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardarycerrar_solid.png"));
-            btn_guardar_Cerrar.setIcon(botonClick);
-        }
-    }//GEN-LAST:event_btn_guardar_CerrarMouseExited
-
-    private void btn_guardar_continuarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMouseEntered
-        if(disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
-            btn_guardar_continuar.setIcon(botonClick); 
-        }
-    }//GEN-LAST:event_btn_guardar_continuarMouseEntered
-
-    private void btn_guardar_continuarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMouseExited
-        if(disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"));
-            btn_guardar_continuar.setIcon(botonClick); 
-        }
-    }//GEN-LAST:event_btn_guardar_continuarMouseExited
-
-    private void btn_guardar_continuarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMousePressed
-        
-        
-            if(disabled_buttons){    
-                ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_click.png"));
-                btn_guardar_continuar.setIcon(botonClick);            
-                ConProducto cProducto = new ConProducto();
-                Producto p = productoGlobal;
-                stockActual = txt_stockActual.getText();
-                precioAntiguo = txt_precioActual.getText();
-                codigo = txt_codigoProducto.getText();
-                int nuevoPrecio,nuevoStock;
-                boolean continuar = true;
-                String mensajeError = "";
-                //validar precios
-                if(!txt_nuevoPrecio.getText().equals("")){
-                    nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
-                    if(nuevoPrecio>0){
-                        try {
-                            p.setPrecio(nuevoPrecio);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            mensajeError = e.getMessage();                     
-                            continuar = false;
-                        }
-                    }  
-                    else{
-                        mensajeError = "El precio no puede ser menor o igual a 0";
-                        continuar = false;
-                    }
-                }
-
-                if(!txt_nuevoStock.getText().equals("")){
-                    nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
-                    if(nuevoStock > 0){
-                        try {
-                            p.setStock(nuevoStock+productoGlobal.getStock());
-                        } catch (Exception e) {
-                            mensajeError = e.getMessage();                    
-                            continuar = false;
-                        }
-                    }
-                    else{
-                        mensajeError = "El stock a agregar debe ser mayor a 0";
-                        continuar = false; 
-                    }
-                }
-                if(txt_nombreProducto.getText().replace("'","").length() > 0){
-                    try {
-                        p.setNombre(txt_nombreProducto.getText().replace("'",""));
-                    } catch (Exception e) {
-                        mensajeError = e.getMessage();
-                        continuar = false;
-                    }
-                }
-                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.getText().equals(nombreProducto)){
-                    continuar = false;
-                    mensajeError = "No hay datos modificados";
-                }
-
-                if(continuar){
-                    
-                    productoGlobal = p;
-                    /////////////////
-                    
-                    boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
-                    if(actualizacion){                    
-                        int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
-                        String codigo_barra = codigo;
-                        int stock_antiguo = Integer.parseInt(stockActual);
-
-                        int stock_agregado = 0;
-                        if(!txt_nuevoStock.getText().equals("")){
-                            stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
-                        }
-
-                        int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
-                        int precio_nuevo = precio_antiguo;
-                        if(!txt_nuevoPrecio.getText().equals("")){
-                            precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
-                        }
-
-                        LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
-                        ConLogStockPrecio cLog = new ConLogStockPrecio();
-                        cLog.RegistrarLog(log);
-                        /////////////////
-                        JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
-                        limpiarCampos();                
-                        habilitarCampos();
-                        txt_codigoProducto.setText("");
-                        txt_nombreProducto.setEditable(false);
-
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
-                        habilitarCampos();
-                    }  
-                    
-                    
-                    
-                        
-
-                    
-                    
-
-                }
-                else{
-                    JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
-                    habilitarCampos();
-                }
-            }
-
-                
-    }//GEN-LAST:event_btn_guardar_continuarMousePressed
-
-    private void btn_guardar_continuarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardar_continuarMouseReleased
-        if(disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/guardaryotro_solid.png"));
-            btn_guardar_continuar.setIcon(botonClick); 
-        }
-    }//GEN-LAST:event_btn_guardar_continuarMouseReleased
-
-    private void btn_limpiartodoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiartodoMouseEntered
-    if(!disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_click.png"));
-            btn_limpiartodo.setIcon(botonClick);    
-    }
-    }//GEN-LAST:event_btn_limpiartodoMouseEntered
-
-    private void btn_limpiartodoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiartodoMouseExited
-    if(!disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"));
-            btn_limpiartodo.setIcon(botonClick);    
-    }
-    }//GEN-LAST:event_btn_limpiartodoMouseExited
-
-    private void btn_limpiartodoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiartodoMousePressed
-    if(!disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_click.png"));
-            btn_limpiartodo.setIcon(botonClick);    
-            limpiarCampos();
-    }
-    }//GEN-LAST:event_btn_limpiartodoMousePressed
-
-    private void btn_limpiartodoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiartodoMouseReleased
-    if(!disabled_buttons){
-            ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/limpiar_solid.png"));
-            btn_limpiartodo.setIcon(botonClick);    
-    }
-    }//GEN-LAST:event_btn_limpiartodoMouseReleased
-
-    private void btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseEntered
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_click.png"));
-        btn_salir.setIcon(botonClick);
-    }//GEN-LAST:event_btn_salirMouseEntered
-
-    private void btn_salirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseExited
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"));
-        btn_salir.setIcon(botonClick);
-    }//GEN-LAST:event_btn_salirMouseExited
-
-    private void btn_salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMousePressed
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_click.png"));
-        btn_salir.setIcon(botonClick);
-        this.dispose();
-    }//GEN-LAST:event_btn_salirMousePressed
-
-    private void btn_salirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseReleased
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/salir_solid.png"));
-        btn_salir.setIcon(botonClick);
-    }//GEN-LAST:event_btn_salirMouseReleased
 
     private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
 
@@ -1032,6 +829,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
                                     txt_buscarProducto.setEnabled(false);
                                     btn_buscarProducto.setBackground(Color.LIGHT_GRAY);
                                     btn_confirmarInformacion.setBackground(Color.LIGHT_GRAY);
+                                    btn_guardarCerrar.setEnabled(true);
+                                    btn_guardarOtro.setEnabled(true);
+                                    txt_guardarCerrar.setEnabled(true);
+                                    txt_guardarOtro.setEnabled(true);
                                 }
                     else{
                         JOptionPane.showMessageDialog(this, "No hay un producto cargado para editar","Error con datos de producto",JOptionPane.ERROR_MESSAGE);
@@ -1094,6 +895,266 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_txt_buscarProductoMousePressed
+
+    private void txt_guardarCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMouseEntered
+        if(btn_guardarCerrar.isEnabled()) btn_guardarCerrar.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_guardarCerrarMouseEntered
+
+    private void txt_guardarCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMouseExited
+        if(btn_guardarCerrar.isEnabled()) btn_guardarCerrar.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_guardarCerrarMouseExited
+
+    private void txt_guardarCerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMouseReleased
+        if(btn_guardarCerrar.isEnabled()) btn_guardarCerrar.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_guardarCerrarMouseReleased
+
+    private void txt_guardarCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMousePressed
+        if(btn_guardarCerrar.isEnabled()){
+            if(evt.getButton() == 1){
+               ConProducto cProducto = new ConProducto();
+               Producto p = productoGlobal;
+               stockActual = txt_stockActual.getText();
+               precioAntiguo = txt_precioActual.getText();
+               codigo = txt_codigoProducto.getText();
+               int nuevoPrecio,nuevoStock;
+               boolean continuar = true;
+               String mensajeError = "";
+               //validar precios
+               if(!txt_nuevoPrecio.getText().equals("")){
+                   nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
+                   if(nuevoPrecio>0){
+                       try {
+                           p.setPrecio(nuevoPrecio);
+                       } catch (Exception e) {
+                           System.out.println(e.getMessage());
+                           mensajeError = e.getMessage();                     
+                           continuar = false;
+                       }
+                   }  
+                   else{
+                       mensajeError = "El precio no puede ser menor o igual a 0";
+                       continuar = false;
+                   }
+               }
+
+               if(!txt_nuevoStock.getText().equals("")){
+                   nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
+                   if(nuevoStock > 0){
+                       try {
+                           p.setStock(nuevoStock+productoGlobal.getStock());
+                       } catch (Exception e) {
+                           mensajeError = e.getMessage();                    
+                           continuar = false;
+                       }
+                   }
+                   else{
+                       mensajeError = "El stock a agregar debe ser mayor a 0";
+                       continuar = false; 
+                   }
+               }
+
+               if(txt_nombreProducto.getText().replace("'","").length() > 0){
+                   try {
+                       p.setNombre(txt_nombreProducto.getText().replace("'",""));
+                   } catch (Exception e) {
+                       mensajeError = e.getMessage();
+                       continuar = false;
+                   }
+               }
+
+               if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.equals(nombreProducto)){
+                   continuar = false;
+                   mensajeError = "No hay datos modificados";
+               }
+
+               if(continuar){
+                   productoGlobal = p;
+                   boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
+                   if(actualizacion){                    
+                       int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
+                       String codigo_barra = codigo;
+                       int stock_antiguo = Integer.parseInt(stockActual);
+
+                       int stock_agregado = 0;
+                       if(!txt_nuevoStock.getText().equals("")){
+                           stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
+                       }
+
+                       int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
+                       int precio_nuevo = precio_antiguo;
+                       if(!txt_nuevoPrecio.getText().equals("")){
+                           precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
+                       }
+
+                       LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
+                       ConLogStockPrecio cLog = new ConLogStockPrecio();
+                       cLog.RegistrarLog(log);
+                       JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE);  
+                       this.dispose();
+
+                   }
+                   else{
+                       JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
+                       habilitarCampos();
+                   } 
+               }
+               else{
+                   JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
+                   habilitarCampos();
+               }
+           }   
+        }
+        
+    }//GEN-LAST:event_txt_guardarCerrarMousePressed
+
+    private void txt_guardarOtroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarOtroMouseEntered
+        if(btn_guardarOtro.isEnabled()) btn_guardarOtro.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_guardarOtroMouseEntered
+
+    private void txt_guardarOtroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarOtroMouseExited
+        if(btn_guardarOtro.isEnabled()) btn_guardarOtro.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_guardarOtroMouseExited
+
+    private void txt_guardarOtroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarOtroMousePressed
+        if(btn_guardarOtro.isEnabled()){
+            if(evt.getButton() == 1){
+                btn_guardarOtro.setBackground(PanelColor);
+                ConProducto cProducto = new ConProducto();
+                Producto p = productoGlobal;
+                stockActual = txt_stockActual.getText();
+                precioAntiguo = txt_precioActual.getText();
+                codigo = txt_codigoProducto.getText();
+                int nuevoPrecio,nuevoStock;
+                boolean continuar = true;
+                String mensajeError = "";
+                //validar precios
+                if(!txt_nuevoPrecio.getText().equals("")){
+                    nuevoPrecio = Integer.parseInt(txt_nuevoPrecio.getText().replace(".", "").replace("$", ""));
+                    if(nuevoPrecio>0){
+                        try {
+                            p.setPrecio(nuevoPrecio);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            mensajeError = e.getMessage();                     
+                            continuar = false;
+                        }
+                    }  
+                    else{
+                        mensajeError = "El precio no puede ser menor o igual a 0";
+                        continuar = false;
+                    }
+                }
+
+                if(!txt_nuevoStock.getText().equals("")){
+                    nuevoStock = Integer.parseInt(txt_nuevoStock.getText());
+                    if(nuevoStock > 0){
+                        try {
+                            p.setStock(nuevoStock+productoGlobal.getStock());
+                        } catch (Exception e) {
+                            mensajeError = e.getMessage();                    
+                            continuar = false;
+                        }
+                    }
+                    else{
+                        mensajeError = "El stock a agregar debe ser mayor a 0";
+                        continuar = false; 
+                    }
+                }
+                if(txt_nombreProducto.getText().replace("'","").length() > 0){
+                    try {
+                        p.setNombre(txt_nombreProducto.getText().replace("'",""));
+                    } catch (Exception e) {
+                        mensajeError = e.getMessage();
+                        continuar = false;
+                    }
+                }
+                if(txt_nuevoStock.getText().equals("") && txt_nuevoPrecio.getText().equals("") && txt_nombreProducto.getText().equals(nombreProducto)){
+                    continuar = false;
+                    mensajeError = "No hay datos modificados";
+                }
+
+                if(continuar){
+
+                    productoGlobal = p;
+
+                    boolean actualizacion = cProducto.actualizarProducto(productoGlobal);    
+                    if(actualizacion){                    
+                        int id_trabajador = Integer.parseInt(cb_Trabajador.getSelectedItem().toString().split(" - ")[0]);
+                        String codigo_barra = codigo;
+                        int stock_antiguo = Integer.parseInt(stockActual);
+
+                        int stock_agregado = 0;
+                        if(!txt_nuevoStock.getText().equals("")){
+                            stock_agregado = Integer.parseInt(txt_nuevoStock.getText());
+                        }
+
+                        int precio_antiguo = Integer.parseInt(precioAntiguo.replace("$", "").replace(".", ""));
+                        int precio_nuevo = precio_antiguo;
+                        if(!txt_nuevoPrecio.getText().equals("")){
+                            precio_nuevo = Integer.parseInt(txt_nuevoPrecio.getText().replace("$", "").replace(".", ""));
+                        }
+
+                        LogStockPrecio log = new LogStockPrecio(id_trabajador, codigo_barra, stock_antiguo, stock_agregado, precio_antiguo, precio_nuevo);
+                        ConLogStockPrecio cLog = new ConLogStockPrecio();
+                        cLog.RegistrarLog(log);
+                        JOptionPane.showMessageDialog(this, "Datos actualizados", "Actualizacion exitosa", JOptionPane.INFORMATION_MESSAGE); 
+                        limpiarCampos();                
+                        habilitarCampos();
+                        txt_codigoProducto.setText("");
+                        txt_nombreProducto.setEditable(false);
+
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Hubo un problema y no se pudo realizar la actualizacion","Operacion fallida",JOptionPane.ERROR_MESSAGE);
+                        habilitarCampos();
+                    }  
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, mensajeError,"Operacion fallida", JOptionPane.ERROR_MESSAGE);
+                    habilitarCampos();
+                }
+        }
+        }
+    }//GEN-LAST:event_txt_guardarOtroMousePressed
+
+    private void txt_guardarOtroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarOtroMouseReleased
+        if(btn_guardarOtro.isEnabled()) btn_guardarOtro.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_guardarOtroMouseReleased
+
+    private void txt_limpiarCamposMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMouseEntered
+        btn_limpiarCampos.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_limpiarCamposMouseEntered
+
+    private void txt_limpiarCamposMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMouseExited
+         btn_limpiarCampos.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_limpiarCamposMouseExited
+
+    private void txt_limpiarCamposMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMousePressed
+        if(evt.getButton() == 1){
+            limpiarCampos();
+            btn_limpiarCampos.setBackground(mouseEnterPanelColor);
+        }
+    }//GEN-LAST:event_txt_limpiarCamposMousePressed
+
+    private void txt_limpiarCamposMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMouseReleased
+        btn_limpiarCampos.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_limpiarCamposMouseReleased
+
+    private void txt_exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMouseEntered
+        btn_exit.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_exitMouseEntered
+
+    private void txt_exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMouseExited
+        btn_exit.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_exitMouseExited
+
+    private void txt_exitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMousePressed
+        if(evt.getButton() == 1) this.dispose();
+    }//GEN-LAST:event_txt_exitMousePressed
+
+    private void txt_exitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMouseReleased
+        btn_exit.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_exitMouseReleased
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
@@ -1119,6 +1180,7 @@ public class EditarStockPrecio extends javax.swing.JFrame {
         chk_stock.setEnabled(false);
         cb_Trabajador.setEnabled(false);
         productoGlobal = new Producto();
+        txt_codigoProducto.requestFocus();
     }
     
 
@@ -1165,13 +1227,14 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private javax.swing.JPanel BackGround;
     private javax.swing.JPanel ClosePanel;
     private javax.swing.JPanel MinPanel;
+    private javax.swing.JPanel PanelDerecha;
     private javax.swing.JPanel PanelDetalle;
     private javax.swing.JPanel btn_buscarProducto;
     private javax.swing.JPanel btn_confirmarInformacion;
-    private javax.swing.JLabel btn_guardar_Cerrar;
-    private javax.swing.JLabel btn_guardar_continuar;
-    private javax.swing.JLabel btn_limpiartodo;
-    private javax.swing.JLabel btn_salir;
+    private javax.swing.JPanel btn_exit;
+    private javax.swing.JPanel btn_guardarCerrar;
+    private javax.swing.JPanel btn_guardarOtro;
+    private javax.swing.JPanel btn_limpiarCampos;
     private javax.swing.JComboBox<String> cb_Trabajador;
     private javax.swing.JCheckBox chk_precio;
     private javax.swing.JCheckBox chk_stock;
@@ -1186,6 +1249,10 @@ public class EditarStockPrecio extends javax.swing.JFrame {
     private javax.swing.JLabel txt_close;
     private javax.swing.JTextField txt_codigoProducto;
     private javax.swing.JLabel txt_confirmarInformacion;
+    private javax.swing.JLabel txt_exit;
+    private javax.swing.JLabel txt_guardarCerrar;
+    private javax.swing.JLabel txt_guardarOtro;
+    private javax.swing.JLabel txt_limpiarCampos;
     private javax.swing.JLabel txt_minimize;
     private javax.swing.JTextField txt_nombreProducto;
     private javax.swing.JTextField txt_nuevoPrecio;
