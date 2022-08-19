@@ -5,11 +5,15 @@
  */
 package vista;
 
+import controlador.ConColores;
 import controlador.ConInformes;
+import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import modelo.PaletaColor;
 
 /**
  *
@@ -17,15 +21,33 @@ import javax.swing.JOptionPane;
  */
 public class TipoReporteStock extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TipoReporteStock
-     */
+    private static final ConColores cColor = new ConColores();  
+    JFrame mainWindow;
+    int xMouse, yMouse; 
+    PaletaColor paleta = cColor.paletaActiva();
+    //COLORES    
+    Color BackgroundColor = paleta.getBackground();
+    Color PanelColor = paleta.getPanel();
+    Color mouseEnterPanelColor = paleta.getMouseEnter();
+    Color mouseExitPanelColor = PanelColor;
+    Color mouseClickPanelColor = paleta.getMouseClick();
+    Color textColor = mouseEnterPanelColor;  
+    
     public TipoReporteStock() {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Tipo de reporte de Stock");        
+        this.setTitle("Reporte de Stock");        
         initComponents();
         txt_filtro.setEnabled(false);
+        Background.setBackground(BackgroundColor);
+        rb_filtrado.setForeground(textColor);
+        rb_total.setForeground(textColor);
+        MinPanel.setBackground(BackgroundColor);
+        ClosePanel.setBackground(BackgroundColor);
+        rb_filtrado.setBackground(BackgroundColor);
+        rb_total.setBackground(BackgroundColor);
+        btn_crearReporte.setBackground(PanelColor);
+        txt_tituloVentana.setForeground(textColor);
     }
 
     /**
@@ -38,26 +60,31 @@ public class TipoReporteStock extends javax.swing.JFrame {
     private void initComponents() {
 
         groupRB = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        Background = new javax.swing.JPanel();
         rb_total = new javax.swing.JRadioButton();
         rb_filtrado = new javax.swing.JRadioButton();
         txt_filtro = new javax.swing.JTextField();
-        btn_generarReporte = new javax.swing.JLabel();
+        btn_crearReporte = new javax.swing.JPanel();
+        txt_crearReporte = new javax.swing.JLabel();
+        txt_tituloVentana = new javax.swing.JLabel();
+        ClosePanel = new javax.swing.JPanel();
+        txt_close = new javax.swing.JLabel();
+        MinPanel = new javax.swing.JPanel();
+        txt_minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(500, 450));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(230, 204, 178));
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TIPO DE REPORTE DE STOCK");
+        Background.setBackground(new java.awt.Color(230, 204, 178));
+        Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Background.setPreferredSize(new java.awt.Dimension(500, 450));
+        Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rb_total.setBackground(new java.awt.Color(230, 204, 178));
         groupRB.add(rb_total);
-        rb_total.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        rb_total.setFont(new java.awt.Font("Roboto Thin", 1, 30)); // NOI18N
         rb_total.setForeground(new java.awt.Color(127, 85, 57));
         rb_total.setSelected(true);
         rb_total.setText("Reporte general");
@@ -66,10 +93,11 @@ public class TipoReporteStock extends javax.swing.JFrame {
                 rb_totalActionPerformed(evt);
             }
         });
+        Background.add(rb_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         rb_filtrado.setBackground(new java.awt.Color(230, 204, 178));
         groupRB.add(rb_filtrado);
-        rb_filtrado.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
+        rb_filtrado.setFont(new java.awt.Font("Roboto Thin", 1, 30)); // NOI18N
         rb_filtrado.setForeground(new java.awt.Color(127, 85, 57));
         rb_filtrado.setText("Filtrar por palabra clave");
         rb_filtrado.addActionListener(new java.awt.event.ActionListener() {
@@ -77,114 +105,150 @@ public class TipoReporteStock extends javax.swing.JFrame {
                 rb_filtradoActionPerformed(evt);
             }
         });
+        Background.add(rb_filtrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
-        txt_filtro.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        txt_filtro.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        txt_filtro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        Background.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 340, 43));
 
-        btn_generarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"))); // NOI18N
-        btn_generarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_crearReporte.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_crearReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        txt_crearReporte.setFont(new java.awt.Font("Roboto", 0, 21)); // NOI18N
+        txt_crearReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_crearReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/createPdf.png"))); // NOI18N
+        txt_crearReporte.setText("GENERAR REPORTE");
+        txt_crearReporte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseEntered(evt);
+                txt_crearReporteMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseExited(evt);
+                txt_crearReporteMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMousePressed(evt);
+                txt_crearReporteMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseReleased(evt);
+                txt_crearReporteMouseReleased(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_generarReporte)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(33, 33, 33)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(rb_filtrado)
-                                        .addComponent(rb_total)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(54, 54, 54)
-                                    .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+        javax.swing.GroupLayout btn_crearReporteLayout = new javax.swing.GroupLayout(btn_crearReporte);
+        btn_crearReporte.setLayout(btn_crearReporteLayout);
+        btn_crearReporteLayout.setHorizontalGroup(
+            btn_crearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(rb_total)
-                .addGap(37, 37, 37)
-                .addComponent(rb_filtrado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(btn_generarReporte)
-                .addContainerGap(47, Short.MAX_VALUE))
+        btn_crearReporteLayout.setVerticalGroup(
+            btn_crearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
+
+        Background.add(btn_crearReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 240, 70));
+
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.setText("  REPORTE DE STOCK");
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        Background.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 40));
+
+        ClosePanel.setBackground(new java.awt.Color(255, 255, 153));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_close.setText("X");
+        txt_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_closeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_closeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_closeMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ClosePanelLayout = new javax.swing.GroupLayout(ClosePanel);
+        ClosePanel.setLayout(ClosePanelLayout);
+        ClosePanelLayout.setHorizontalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClosePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        ClosePanelLayout.setVerticalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ClosePanelLayout.createSequentialGroup()
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 40, 40));
+
+        MinPanel.setBackground(new java.awt.Color(255, 255, 153));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_minimize.setText("_");
+        txt_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_minimizeMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MinPanelLayout = new javax.swing.GroupLayout(MinPanel);
+        MinPanel.setLayout(MinPanelLayout);
+        MinPanelLayout.setHorizontalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+        MinPanelLayout.setVerticalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+
+        Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 40, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseEntered
-
-    private void btn_generarReporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMousePressed
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
-        btn_generarReporte.setIcon(botonClick);
-        if(rb_total.isSelected()){
-            ConInformes cInforme = new ConInformes();
-            cInforme.listadoStockGeneral(this);
-        }
-        else if(rb_filtrado.isSelected()){
-            String filtro = txt_filtro.getText();
-            if(filtro.equals("")){
-                JOptionPane.showMessageDialog(this, "Debe llenar el campo de texto para aplicar un filtro", "No hay filtro", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
-                ConInformes cInforme = new ConInformes();
-                cInforme.listadoStockFamilia(this, filtro);
-            }
-        }
-
-    }//GEN-LAST:event_btn_generarReporteMousePressed
-
-    private void btn_generarReporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseExited
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseExited
-
-    private void btn_generarReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseReleased
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseReleased
 
     private void rb_filtradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_filtradoActionPerformed
         filtroEditable();
@@ -193,6 +257,87 @@ public class TipoReporteStock extends javax.swing.JFrame {
     private void rb_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_totalActionPerformed
         filtroEditable();
     }//GEN-LAST:event_rb_totalActionPerformed
+
+    private void txt_crearReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseEntered
+        btn_crearReporte.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseEntered
+
+    private void txt_crearReporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseExited
+        btn_crearReporte.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseExited
+
+    private void txt_crearReporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMousePressed
+        if(evt.getButton() == 1){
+            if(rb_total.isSelected()){
+                ConInformes cInforme = new ConInformes();
+                cInforme.listadoStockGeneral(this);
+            }
+            else if(rb_filtrado.isSelected()){
+                String filtro = txt_filtro.getText();
+                if(filtro.equals("")){
+                    JOptionPane.showMessageDialog(this, "Debe llenar el campo de texto para aplicar un filtro", "No hay filtro", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    ConInformes cInforme = new ConInformes();
+                    cInforme.listadoStockFamilia(this, filtro);
+                }
+            }  
+        }
+    }//GEN-LAST:event_txt_crearReporteMousePressed
+
+    private void txt_crearReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseReleased
+        if(btn_crearReporte.contains(evt.getPoint())) btn_crearReporte.setBackground(mouseEnterPanelColor);
+        else btn_crearReporte.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseReleased
+
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
+
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
+
+    private void txt_closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseEntered
+        ClosePanel.setBackground(Color.RED);
+        txt_close.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_closeMouseEntered
+
+    private void txt_closeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseExited
+        ClosePanel.setBackground(BackgroundColor);
+        txt_close.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_closeMouseExited
+
+    private void txt_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMousePressed
+        Color DarkRed = new Color(146, 55, 77);
+        ClosePanel.setBackground(DarkRed);
+        txt_close.setForeground(Color.WHITE);
+        this.dispose();
+    }//GEN-LAST:event_txt_closeMousePressed
+
+    private void txt_minimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseEntered
+        MinPanel.setBackground(mouseEnterPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_minimizeMouseEntered
+
+    private void txt_minimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseExited
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseExited
+
+    private void txt_minimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMousePressed
+        MinPanel.setBackground(mouseClickPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_txt_minimizeMousePressed
+
+    private void txt_minimizeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseReleased
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseReleased
 
     private void filtroEditable(){
         if(rb_filtrado.isSelected()){
@@ -240,12 +385,17 @@ public class TipoReporteStock extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btn_generarReporte;
+    private javax.swing.JPanel Background;
+    private javax.swing.JPanel ClosePanel;
+    private javax.swing.JPanel MinPanel;
+    private javax.swing.JPanel btn_crearReporte;
     private javax.swing.ButtonGroup groupRB;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton rb_filtrado;
     private javax.swing.JRadioButton rb_total;
+    private javax.swing.JLabel txt_close;
+    private javax.swing.JLabel txt_crearReporte;
     private javax.swing.JTextField txt_filtro;
+    private javax.swing.JLabel txt_minimize;
+    private javax.swing.JLabel txt_tituloVentana;
     // End of variables declaration//GEN-END:variables
 }

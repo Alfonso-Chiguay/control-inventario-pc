@@ -3,16 +3,14 @@ package controlador;
 import db.Conexion;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.PaletaColor;
 
 
 public class ConColores {
  
     public PaletaColor paletaActiva(){
-        Instant start = Instant.now();
         Logs log = new Logs();
         try{   
             Statement stmt = Conexion.getConnection().createStatement();
@@ -25,8 +23,7 @@ public class ConColores {
             if(rs.next()){       
                 pc = new PaletaColor(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             }   
-            Instant end = Instant.now();        
-            System.out.println("paletaActiva: "+Duration.between(start, end).toMillis());
+            
             return pc;
         }
         catch(Exception e){
@@ -39,12 +36,17 @@ public class ConColores {
         Logs log = new Logs();
         try{   
             Statement stmt = Conexion.getConnection().createStatement();
-            String query =  "UPDATE PALETA SET is_active = 1 WHERE id_paleta = '"+id_paleta+"'; UPDATE PALETA SET is_active = 0 WHERE id_paleta != '"+id_paleta+"'";
+            String query =  "UPDATE PALETA SET is_active = 1 WHERE id_paleta = '"+id_paleta+"';";
+            log.RegistrarLog("[Query][ConColores|cambiarPaletaActiva] "+query);
+            
+            stmt.execute(query);
+            query =  "UPDATE PALETA SET is_active = 0 WHERE id_paleta != '"+id_paleta+"';";
             log.RegistrarLog("[Query][ConColores|cambiarPaletaActiva] "+query);
             stmt.execute(query);
         }
         catch(Exception e){
             log.RegistrarLog("[ERROR][ConColores|cambiarPaletaActiva] "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se pudo cambiar la paleta activa","Error cambiando paleta",JOptionPane.ERROR_MESSAGE);
             
         } 
     }
@@ -88,6 +90,28 @@ public class ConColores {
             log.RegistrarLog("[ERROR][ConColores|buscarPorId] "+e.getMessage());
             return new PaletaColor();
         } 
+    }
+    
+    public boolean crearPaleta(String bg, String panel, String mouseEnter, String mouseClick, String idPaleta, String nombrePaleta){
+        Logs log = new Logs();
+        try {
+
+            Statement stmt = Conexion.getConnection().createStatement();
+            String query = "INSERT INTO PALETA VALUES ('"+idPaleta+"','"+nombrePaleta+"',0);";
+            log.RegistrarLog("[Query][ConColores|crearPaleta] "+query);    
+            stmt.execute(query);
+            
+            query = "INSERT INTO COLORES VALUES ('"+bg+"','"+panel+"','"+mouseEnter+"','"+mouseClick+"','"+idPaleta+"');";
+            log.RegistrarLog("[Query][ConColores|crearPaleta] "+query);  
+            stmt.execute(query); 
+            
+            return true;
+        } 
+        catch (Exception e) {
+            log.RegistrarLog("[ERROR][ConColores|buscarPorId] "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERROR: "+e.getMessage(), "No se pudo guardar la paleta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
     
 }

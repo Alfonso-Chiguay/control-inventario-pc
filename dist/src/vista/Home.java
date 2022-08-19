@@ -1,44 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vista;
 
-import com.sun.glass.events.MouseEvent;
 import controlador.ConColores;
+import controlador.ConInformes;
 import controlador.ConProducto;
-import db.Conexion;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.PaletaColor;
-import modelo.Producto;
 
 
 public class Home extends javax.swing.JFrame {
-
-    private static final Conexion CONEXION = new Conexion();
-    private static final Connection CONNECTION = CONEXION.getConnection();
+    int xMouse, yMouse;
+    
     public Home() {
         initComponents();
         
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Inicio");  
+        this.setTitle("Inicio");  
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
@@ -50,13 +35,7 @@ public class Home extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CargaMasiva.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        txt_opcion1.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0));
-        txt_opcion2.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0));
-        txt_opcion3.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0));
-        txt_opcion4.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0));
-        txt_opcion5.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0));
-        txt_opcion6.setBorder(BorderFactory.createEmptyBorder(5, 13, 5, 0)); 
-        activarBotonesPorModulo("HOME");
+
         ModuloSeleccionadoTitulo.setBackground(PanelColor);
         TipoModuloColor.setBackground(ColorHome);
         txt_ModuloSeleccionado.setText("INICIO"); 
@@ -64,145 +43,73 @@ public class Home extends javax.swing.JFrame {
         ClosePanel.setBackground(BackgroundColor);
         MinPanel.setBackground(BackgroundColor);
         Background.setBackground(BackgroundColor);
-        PanelVenta.setBackground(BackgroundColor);
-
         
+        
+        moduloVenta_panelIzq.setBackground(PanelColor);
+        moduloInforme_panelIzq.setBackground(PanelColor);
+        moduloInventario_panelIzq.setBackground(PanelColor);
+        moduloHome_panelIzq.setBackground(PanelColor);
+        
+        seleccionarModulo(MODULO);
+        //COLORES PANELES CENTRAL
+        ModuloInicio.setBackground(BackgroundColor);
+        ModuloVentas.setBackground(BackgroundColor);
+        ModuloInventario.setBackground(BackgroundColor);
+        ModuloInforme.setBackground(BackgroundColor);
+        //COLORES BOTONES DE PANEL CENTRAL
+        btn_paletaColor.setBackground(ColorHome);
+        btn_crearPaleta.setBackground(ColorHome);
+        btn_nuevaVenta.setBackground(ColorVenta);
+        btn_consultarPrecio.setBackground(ColorVenta);
+        btn_descartarProd.setBackground(ColorVenta);
+        btn_nuevoProducto.setBackground(ColorInventario);
+        btn_consultarStock.setBackground(ColorInventario);
+        btn_actualizarProducto.setBackground(ColorInventario);
+        btn_crearOferta.setBackground(ColorInventario);
+        btn_cargaMasivaProd.setBackground(ColorInventario);
+        btn_actualizacionMasiva.setBackground(ColorInventario);
+        btn_ventaDiaria.setBackground(ColorInforme);
+        btn_ventaPeriodo.setBackground(ColorInforme);
+        btn_stockNegativo.setBackground(ColorInforme);
+        btn_stockGeneral.setBackground(ColorInforme);
     }
     
-    String MODULO = "";
-
-    
-
-
-    
-    private void activarBotonesPorModulo(String Modulo){
-        MODULO = Modulo;
+    private void seleccionarModulo(String modulo){
+        MODULO = modulo;
         
-        if(Modulo.equals("VENTA")){
-            btn_opcion1.setVisible(true);
-            btn_opcion2.setVisible(false);
-            btn_opcion3.setVisible(false);
-            btn_opcion4.setVisible(true);
-            btn_opcion5.setVisible(false);
-            btn_opcion6.setVisible(false);
-            txt_opcion1.setText("NUEVA VENTA");
-            txt_opcion2.setText("");
-            txt_opcion3.setText("");
-            txt_opcion4.setText("CONSULTAR PRECIOS");
-            txt_opcion5.setText("");
-            txt_opcion6.setText("");   
-            
-            ImageIcon img = new ImageIcon("src/img/nueva_venta.png");
-            txt_opcion1.setIcon(img);
-            
-            img = new ImageIcon("src/img/consultar_precio.png");
-            txt_opcion4.setIcon(img);            
-            
-            btn_opcion1.setBackground(ColorVenta);
-            btn_opcion4.setBackground(ColorVenta);
-            
-            moduloHome.setBackground(PanelColor);
-            moduloVenta.setBackground(mouseEnterPanelColor);
-            moduloInventario.setBackground(PanelColor);
-            moduloInforme.setBackground(PanelColor);
-            
-        }
-        else if(Modulo.equals("INVENTARIO")){
-            btn_opcion1.setVisible(true);
-            btn_opcion2.setVisible(true);
-            btn_opcion3.setVisible(true);
-            btn_opcion4.setVisible(true);
-            btn_opcion5.setVisible(true);
-            btn_opcion6.setVisible(true);
-            
-            txt_opcion1.setText("NUEVO PRODUCTO");
-            txt_opcion2.setText("CARGA MASIVA");
-            txt_opcion3.setText("ACTUALIZACION MASIVA");
-            txt_opcion4.setText("CONSULTA DE STOCK");
-            txt_opcion5.setText("OFERTAS"); 
-            txt_opcion6.setText("ACTUALIZAR STOCK/PRECIO");
-            
-            
-            ImageIcon img = new ImageIcon("src/img/add_product.png");
-            txt_opcion1.setIcon(img);
-            
-            img = new ImageIcon("src/img/carga_masiva.png");
-            txt_opcion2.setIcon(img);
-            
-            img = new ImageIcon("src/img/update_products.png");
-            txt_opcion3.setIcon(img);
-            
-            img = new ImageIcon("src/img/consultar_stock.png");
-            txt_opcion4.setIcon(img);
-
-            img = new ImageIcon("src/img/sales.png");
-            txt_opcion5.setIcon(img);  
-            
-            img = new ImageIcon("src/img/update_stock.png");
-            txt_opcion6.setIcon(img);            
-            
-              
-            
-            btn_opcion1.setBackground(ColorInventario);
-            btn_opcion2.setBackground(ColorInventario);
-            btn_opcion3.setBackground(ColorInventario);
-            btn_opcion4.setBackground(ColorInventario);
-            btn_opcion5.setBackground(ColorInventario);
-            btn_opcion6.setBackground(ColorInventario);
-            
-            moduloHome.setBackground(PanelColor);
-            moduloVenta.setBackground(PanelColor);
-            moduloInventario.setBackground(mouseEnterPanelColor);
-            moduloInforme.setBackground(PanelColor);
-        }
-        else if(Modulo.equals("INFORMES")){
-            btn_opcion1.setVisible(true);
-            btn_opcion2.setVisible(true);
-            btn_opcion3.setVisible(false);
-            btn_opcion4.setVisible(true);
-            btn_opcion5.setVisible(true);
-            btn_opcion6.setVisible(false);
-            txt_opcion1.setText("VENTA DIARIA");
-            txt_opcion2.setText("VENTA POR PERIODO");
-            txt_opcion3.setText("");
-            txt_opcion4.setText("STOCK NEGATIVO");
-            txt_opcion5.setText("STOCK GENERAL");
-            txt_opcion6.setText("");  
-            
-            ImageIcon img = new ImageIcon("src/img/pdf.png");
-            txt_opcion1.setIcon(img);
-            txt_opcion2.setIcon(img);
-            txt_opcion4.setIcon(img);
-            txt_opcion5.setIcon(img);
-            
-            btn_opcion1.setBackground(ColorInforme);
-            btn_opcion2.setBackground(ColorInforme);
-            btn_opcion4.setBackground(ColorInforme);
-            btn_opcion5.setBackground(ColorInforme);   
-            
-            moduloHome.setBackground(PanelColor);
-            moduloVenta.setBackground(PanelColor);
-            moduloInventario.setBackground(PanelColor);
-            moduloInforme.setBackground(mouseEnterPanelColor);
-        }  
-        else if(Modulo.equals("HOME")){
-            btn_opcion1.setVisible(true);
-            btn_opcion2.setVisible(false);
-            btn_opcion3.setVisible(false);
-            btn_opcion4.setVisible(false);
-            btn_opcion5.setVisible(false);
-            btn_opcion6.setVisible(false);
-            
-            txt_opcion1.setText("CAMBIAR PALETA DE COLOR");
-            btn_opcion1.setBackground(PanelColor);
-            ImageIcon img = new ImageIcon("src/img/color_palette.png");
-            txt_opcion1.setIcon(img);
-            moduloHome.setBackground(mouseEnterPanelColor);
-            moduloVenta.setBackground(PanelColor);
-            moduloInventario.setBackground(PanelColor);
-            moduloInforme.setBackground(PanelColor);
+        moduloHome_panelIzq.setBackground(PanelColor);  
+        moduloVenta_panelIzq.setBackground(PanelColor);
+        moduloInventario_panelIzq.setBackground(PanelColor);
+        moduloInforme_panelIzq.setBackground(PanelColor);
+        ModuloInicio.setVisible(false);
+        ModuloInventario.setVisible(false);
+        ModuloInforme.setVisible(false);
+        ModuloVentas.setVisible(false);
+                
+        
+        switch (modulo) {
+            case "HOME":
+                moduloHome_panelIzq.setBackground(mouseEnterPanelColor);
+                ModuloInicio.setVisible(true);
+                break;
+            case "VENTA":
+                moduloVenta_panelIzq.setBackground(mouseEnterPanelColor);
+                ModuloVentas.setVisible(true);
+                break;
+            case "INVENTARIO":
+                moduloInventario_panelIzq.setBackground(mouseEnterPanelColor);
+                ModuloInventario.setVisible(true);
+                break;
+            case "INFORMES":
+                moduloInforme_panelIzq.setBackground(mouseEnterPanelColor);
+                ModuloInforme.setVisible(true);
+                break;
+            default:
+                break;
         }
     }
+    
+    String MODULO = "HOME";
     
     ConColores cColor = new ConColores();
     PaletaColor paleta = cColor.paletaActiva();
@@ -213,12 +120,15 @@ public class Home extends javax.swing.JFrame {
     Color mouseExitPanelColor = PanelColor;
     Color mouseClickPanelColor = paleta.getMouseClick();  
     //HOME
-    Color ColorHome = new Color(85, 156, 173);
+    Color ColorHome = new Color(100, 58, 113);
+    Color mouseEnterColorHome = new Color(139, 95, 191);
+    Color mouseExitColorHome = ColorHome;
+    Color mouseClickColorHome = new Color(209, 131, 201);
     //VENTA
     Color ColorVenta = new Color(0, 117, 67);
-    Color mouseEnterColorVenta = new Color(13, 173, 73);
+    Color mouseEnterColorVenta = new Color(0, 173, 73);
     Color mouseExitColorVenta = ColorVenta;
-    Color mouseClickColorVenta = new Color(24, 216, 77);
+    Color mouseClickColorVenta = new Color(0, 216, 77);
     //INVENTARIO
     Color ColorInventario = new Color(0, 78, 137);
     Color mouseEnterColorInventario = new Color(0, 110, 177);
@@ -236,69 +146,113 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         Background = new javax.swing.JPanel();
+        txt_tituloVentana = new javax.swing.JLabel();
         LeftPanel = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
         Title = new javax.swing.JLabel();
         Subtitle = new javax.swing.JLabel();
-        moduloHome = new javax.swing.JPanel();
+        moduloHome_panelIzq = new javax.swing.JPanel();
         txt_moduloInicio = new javax.swing.JLabel();
-        moduloVenta = new javax.swing.JPanel();
+        moduloVenta_panelIzq = new javax.swing.JPanel();
         txt_ModuloVenta = new javax.swing.JLabel();
-        moduloInventario = new javax.swing.JPanel();
+        moduloInventario_panelIzq = new javax.swing.JPanel();
         txt_ModuloInventario = new javax.swing.JLabel();
-        moduloInforme = new javax.swing.JPanel();
+        moduloInforme_panelIzq = new javax.swing.JPanel();
         txt_ModuloInforme = new javax.swing.JLabel();
         ModuloSeleccionadoTitulo = new javax.swing.JPanel();
         TipoModuloColor = new javax.swing.JPanel();
         txt_ModuloSeleccionado = new javax.swing.JLabel();
-        PanelVenta = new javax.swing.JPanel();
-        btn_opcion1 = new javax.swing.JPanel();
-        txt_opcion1 = new javax.swing.JLabel();
-        btn_opcion2 = new javax.swing.JPanel();
-        txt_opcion2 = new javax.swing.JLabel();
-        btn_opcion3 = new javax.swing.JPanel();
-        txt_opcion3 = new javax.swing.JLabel();
-        btn_opcion4 = new javax.swing.JPanel();
-        txt_opcion4 = new javax.swing.JLabel();
-        btn_opcion5 = new javax.swing.JPanel();
-        txt_opcion5 = new javax.swing.JLabel();
-        btn_opcion6 = new javax.swing.JPanel();
-        txt_opcion6 = new javax.swing.JLabel();
-        logoBackground = new javax.swing.JLabel();
         ClosePanel = new javax.swing.JPanel();
         txt_close = new javax.swing.JLabel();
         MinPanel = new javax.swing.JPanel();
         txt_minimize = new javax.swing.JLabel();
+        PanelesPorModulo = new javax.swing.JPanel();
+        ModuloInicio = new javax.swing.JPanel();
+        btn_crearPaleta = new javax.swing.JPanel();
+        txt_crearPaleta = new javax.swing.JLabel();
+        btn_paletaColor = new javax.swing.JPanel();
+        txt_paletaColor = new javax.swing.JLabel();
+        logoBackground = new javax.swing.JLabel();
+        ModuloVentas = new javax.swing.JPanel();
+        btn_nuevaVenta = new javax.swing.JPanel();
+        txt_nuevaVenta = new javax.swing.JLabel();
+        btn_descartarProd = new javax.swing.JPanel();
+        txt_descartarProd = new javax.swing.JLabel();
+        btn_consultarPrecio = new javax.swing.JPanel();
+        txt_consultarPrecio = new javax.swing.JLabel();
+        logoBackground1 = new javax.swing.JLabel();
+        ModuloInforme = new javax.swing.JPanel();
+        btn_stockNegativo = new javax.swing.JPanel();
+        txt_stockNegativo = new javax.swing.JLabel();
+        btn_ventaPeriodo = new javax.swing.JPanel();
+        txt_ventaPeriodo = new javax.swing.JLabel();
+        btn_ventaDiaria = new javax.swing.JPanel();
+        txt_ventaDiaria = new javax.swing.JLabel();
+        btn_stockGeneral = new javax.swing.JPanel();
+        txt_stockGeneral = new javax.swing.JLabel();
+        logoBackground3 = new javax.swing.JLabel();
+        ModuloInventario = new javax.swing.JPanel();
+        btn_actualizacionMasiva = new javax.swing.JPanel();
+        txt_actualizacionMasiva = new javax.swing.JLabel();
+        btn_nuevoProducto = new javax.swing.JPanel();
+        txt_nuevoProducto = new javax.swing.JLabel();
+        btn_consultarStock = new javax.swing.JPanel();
+        txt_consultarStock = new javax.swing.JLabel();
+        btn_actualizarProducto = new javax.swing.JPanel();
+        txt_actualizarProducto = new javax.swing.JLabel();
+        btn_crearOferta = new javax.swing.JPanel();
+        txt_crearOferta = new javax.swing.JLabel();
+        btn_cargaMasivaProd = new javax.swing.JPanel();
+        txt_cargaMasivaProd = new javax.swing.JLabel();
+        logoBackground2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationByPlatform(true);
         setUndecorated(true);
         setResizable(false);
 
         Background.setBackground(new java.awt.Color(230, 204, 178));
+        Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        Background.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 40));
+
         LeftPanel.setBackground(new java.awt.Color(176, 137, 104));
+        LeftPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         LeftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo-png-128.png"))); // NOI18N
-        LeftPanel.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+        LeftPanel.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         Title.setFont(new java.awt.Font("Great Vibes", 1, 36)); // NOI18N
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("Pili's Coffee");
-        LeftPanel.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 280, 42));
+        LeftPanel.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 280, 42));
 
         Subtitle.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         Subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Subtitle.setText("POS Software");
-        LeftPanel.add(Subtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 280, -1));
+        LeftPanel.add(Subtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 280, -1));
 
-        moduloHome.setBackground(new java.awt.Color(176, 137, 104));
+        moduloHome_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloHome_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_moduloInicio.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_moduloInicio.setForeground(new java.awt.Color(255, 255, 255));
         txt_moduloInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_moduloInicio.setText("Inicio");
+        txt_moduloInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_moduloInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_moduloInicioMouseEntered(evt);
@@ -314,26 +268,28 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout moduloHomeLayout = new javax.swing.GroupLayout(moduloHome);
-        moduloHome.setLayout(moduloHomeLayout);
-        moduloHomeLayout.setHorizontalGroup(
-            moduloHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        javax.swing.GroupLayout moduloHome_panelIzqLayout = new javax.swing.GroupLayout(moduloHome_panelIzq);
+        moduloHome_panelIzq.setLayout(moduloHome_panelIzqLayout);
+        moduloHome_panelIzqLayout.setHorizontalGroup(
+            moduloHome_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
         );
-        moduloHomeLayout.setVerticalGroup(
-            moduloHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        moduloHome_panelIzqLayout.setVerticalGroup(
+            moduloHome_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txt_moduloInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        LeftPanel.add(moduloHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 300, 70));
+        LeftPanel.add(moduloHome_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 280, -1, 70));
 
-        moduloVenta.setBackground(new java.awt.Color(176, 137, 104));
+        moduloVenta_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloVenta_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloVenta.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloVenta.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloVenta.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloVenta.setText("Módulo Ventas");
+        txt_ModuloVenta.setText("Ventas");
+        txt_ModuloVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_ModuloVentaMouseEntered(evt);
@@ -349,31 +305,32 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout moduloVentaLayout = new javax.swing.GroupLayout(moduloVenta);
-        moduloVenta.setLayout(moduloVentaLayout);
-        moduloVentaLayout.setHorizontalGroup(
-            moduloVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloVentaLayout.createSequentialGroup()
+        javax.swing.GroupLayout moduloVenta_panelIzqLayout = new javax.swing.GroupLayout(moduloVenta_panelIzq);
+        moduloVenta_panelIzq.setLayout(moduloVenta_panelIzqLayout);
+        moduloVenta_panelIzqLayout.setHorizontalGroup(
+            moduloVenta_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloVenta_panelIzqLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(txt_ModuloVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        moduloVentaLayout.setVerticalGroup(
-            moduloVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloVentaLayout.createSequentialGroup()
+        moduloVenta_panelIzqLayout.setVerticalGroup(
+            moduloVenta_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloVenta_panelIzqLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(txt_ModuloVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        LeftPanel.add(moduloVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 300, -1));
+        LeftPanel.add(moduloVenta_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 360, -1, -1));
 
-        moduloInventario.setBackground(new java.awt.Color(176, 137, 104));
-        moduloInventario.setPreferredSize(new java.awt.Dimension(310, 70));
+        moduloInventario_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloInventario_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloInventario.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloInventario.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloInventario.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloInventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloInventario.setText("Módulo Inventario");
+        txt_ModuloInventario.setText("Inventario");
+        txt_ModuloInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_ModuloInventarioMouseEntered(evt);
@@ -389,31 +346,32 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout moduloInventarioLayout = new javax.swing.GroupLayout(moduloInventario);
-        moduloInventario.setLayout(moduloInventarioLayout);
-        moduloInventarioLayout.setHorizontalGroup(
-            moduloInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloInventarioLayout.createSequentialGroup()
+        javax.swing.GroupLayout moduloInventario_panelIzqLayout = new javax.swing.GroupLayout(moduloInventario_panelIzq);
+        moduloInventario_panelIzq.setLayout(moduloInventario_panelIzqLayout);
+        moduloInventario_panelIzqLayout.setHorizontalGroup(
+            moduloInventario_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moduloInventario_panelIzqLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(txt_ModuloInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        moduloInventarioLayout.setVerticalGroup(
-            moduloInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(moduloInventarioLayout.createSequentialGroup()
+        moduloInventario_panelIzqLayout.setVerticalGroup(
+            moduloInventario_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moduloInventario_panelIzqLayout.createSequentialGroup()
                 .addComponent(txt_ModuloInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        LeftPanel.add(moduloInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 300, -1));
+        LeftPanel.add(moduloInventario_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 440, -1, -1));
 
-        moduloInforme.setBackground(new java.awt.Color(176, 137, 104));
-        moduloInforme.setPreferredSize(new java.awt.Dimension(310, 70));
+        moduloInforme_panelIzq.setBackground(new java.awt.Color(176, 137, 104));
+        moduloInforme_panelIzq.setPreferredSize(new java.awt.Dimension(297, 70));
 
         txt_ModuloInforme.setBackground(new java.awt.Color(255, 255, 255));
         txt_ModuloInforme.setFont(new java.awt.Font("Roboto Thin", 1, 24)); // NOI18N
         txt_ModuloInforme.setForeground(new java.awt.Color(255, 255, 255));
         txt_ModuloInforme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_ModuloInforme.setText("Módulo Informe");
+        txt_ModuloInforme.setText("Informe");
+        txt_ModuloInforme.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_ModuloInforme.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_ModuloInformeMouseEntered(evt);
@@ -429,22 +387,22 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout moduloInformeLayout = new javax.swing.GroupLayout(moduloInforme);
-        moduloInforme.setLayout(moduloInformeLayout);
-        moduloInformeLayout.setHorizontalGroup(
-            moduloInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(moduloInformeLayout.createSequentialGroup()
+        javax.swing.GroupLayout moduloInforme_panelIzqLayout = new javax.swing.GroupLayout(moduloInforme_panelIzq);
+        moduloInforme_panelIzq.setLayout(moduloInforme_panelIzqLayout);
+        moduloInforme_panelIzqLayout.setHorizontalGroup(
+            moduloInforme_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moduloInforme_panelIzqLayout.createSequentialGroup()
                 .addComponent(txt_ModuloInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        moduloInformeLayout.setVerticalGroup(
-            moduloInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(moduloInformeLayout.createSequentialGroup()
+        moduloInforme_panelIzqLayout.setVerticalGroup(
+            moduloInforme_panelIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moduloInforme_panelIzqLayout.createSequentialGroup()
                 .addComponent(txt_ModuloInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        LeftPanel.add(moduloInforme, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 300, -1));
+        LeftPanel.add(moduloInforme_panelIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 520, -1, -1));
 
         Background.add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 1010));
 
@@ -463,7 +421,7 @@ public class Home extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        txt_ModuloSeleccionado.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        txt_ModuloSeleccionado.setFont(new java.awt.Font("Roboto Medium", 1, 36)); // NOI18N
         txt_ModuloSeleccionado.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout ModuloSeleccionadoTituloLayout = new javax.swing.GroupLayout(ModuloSeleccionadoTitulo);
@@ -487,157 +445,16 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Background.add(ModuloSeleccionadoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 800, 100));
-
-        PanelVenta.setBackground(new java.awt.Color(230, 204, 178));
-        PanelVenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btn_opcion1.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion1.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        txt_opcion1.setForeground(new java.awt.Color(255, 255, 255));
-        txt_opcion1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                txt_opcion1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                txt_opcion1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txt_opcion1MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                txt_opcion1MouseReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout btn_opcion1Layout = new javax.swing.GroupLayout(btn_opcion1);
-        btn_opcion1.setLayout(btn_opcion1Layout);
-        btn_opcion1Layout.setHorizontalGroup(
-            btn_opcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion1Layout.createSequentialGroup()
-                .addComponent(txt_opcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion1Layout.setVerticalGroup(
-            btn_opcion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 50, -1, -1));
-
-        btn_opcion2.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion2.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        txt_opcion2.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout btn_opcion2Layout = new javax.swing.GroupLayout(btn_opcion2);
-        btn_opcion2.setLayout(btn_opcion2Layout);
-        btn_opcion2Layout.setHorizontalGroup(
-            btn_opcion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion2Layout.createSequentialGroup()
-                .addComponent(txt_opcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion2Layout.setVerticalGroup(
-            btn_opcion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 185, -1, -1));
-
-        btn_opcion3.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion3.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        txt_opcion3.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout btn_opcion3Layout = new javax.swing.GroupLayout(btn_opcion3);
-        btn_opcion3.setLayout(btn_opcion3Layout);
-        btn_opcion3Layout.setHorizontalGroup(
-            btn_opcion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion3Layout.createSequentialGroup()
-                .addComponent(txt_opcion3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion3Layout.setVerticalGroup(
-            btn_opcion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 320, -1, -1));
-
-        btn_opcion4.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion4.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        txt_opcion4.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout btn_opcion4Layout = new javax.swing.GroupLayout(btn_opcion4);
-        btn_opcion4.setLayout(btn_opcion4Layout);
-        btn_opcion4Layout.setHorizontalGroup(
-            btn_opcion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion4Layout.createSequentialGroup()
-                .addComponent(txt_opcion4, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion4Layout.setVerticalGroup(
-            btn_opcion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion4, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 50, -1, -1));
-
-        btn_opcion5.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion5.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
-        txt_opcion5.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout btn_opcion5Layout = new javax.swing.GroupLayout(btn_opcion5);
-        btn_opcion5.setLayout(btn_opcion5Layout);
-        btn_opcion5Layout.setHorizontalGroup(
-            btn_opcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion5Layout.createSequentialGroup()
-                .addComponent(txt_opcion5, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion5Layout.setVerticalGroup(
-            btn_opcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 185, -1, -1));
-
-        btn_opcion6.setBackground(new java.awt.Color(156, 102, 68));
-
-        txt_opcion6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_opcion6.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout btn_opcion6Layout = new javax.swing.GroupLayout(btn_opcion6);
-        btn_opcion6.setLayout(btn_opcion6Layout);
-        btn_opcion6Layout.setHorizontalGroup(
-            btn_opcion6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_opcion6Layout.createSequentialGroup()
-                .addComponent(txt_opcion6, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btn_opcion6Layout.setVerticalGroup(
-            btn_opcion6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_opcion6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-
-        PanelVenta.add(btn_opcion6, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 320, -1, -1));
-
-        logoBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/piliscoffee-logo-no-bg.png"))); // NOI18N
-        PanelVenta.add(logoBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 750, 580));
-
-        Background.add(PanelVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, 790, 620));
+        Background.add(ModuloSeleccionadoTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 60, 800, 100));
 
         ClosePanel.setBackground(new java.awt.Color(230, 204, 178));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         txt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_close.setText("X");
+        txt_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_closeMouseEntered(evt);
@@ -668,11 +485,13 @@ public class Home extends javax.swing.JFrame {
         Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, 40, 40));
 
         MinPanel.setBackground(new java.awt.Color(230, 204, 178));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
 
         txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         txt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_minimize.setText("_");
+        txt_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_minimizeMouseEntered(evt);
@@ -692,14 +511,620 @@ public class Home extends javax.swing.JFrame {
         MinPanel.setLayout(MinPanelLayout);
         MinPanelLayout.setHorizontalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
         MinPanelLayout.setVerticalGroup(
             MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 0, 40, 40));
+
+        PanelesPorModulo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ModuloInicio.setBackground(new java.awt.Color(204, 204, 204));
+        ModuloInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_crearPaleta.setBackground(new java.awt.Color(51, 255, 255));
+        btn_crearPaleta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_crearPaleta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        txt_crearPaleta.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_crearPaleta.setForeground(new java.awt.Color(255, 255, 255));
+        txt_crearPaleta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/color_palette.png"))); // NOI18N
+        txt_crearPaleta.setText("CREAR PALETA DE COLORES");
+        txt_crearPaleta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_crearPaleta.setPreferredSize(new java.awt.Dimension(340, 100));
+        txt_crearPaleta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_crearPaletaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_crearPaletaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_crearPaletaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_crearPaletaMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_crearPaletaLayout = new javax.swing.GroupLayout(btn_crearPaleta);
+        btn_crearPaleta.setLayout(btn_crearPaletaLayout);
+        btn_crearPaletaLayout.setHorizontalGroup(
+            btn_crearPaletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_crearPaletaLayout.createSequentialGroup()
+                .addComponent(txt_crearPaleta, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_crearPaletaLayout.setVerticalGroup(
+            btn_crearPaletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearPaleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        ModuloInicio.add(btn_crearPaleta, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+
+        btn_paletaColor.setBackground(new java.awt.Color(51, 255, 255));
+        btn_paletaColor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_paletaColor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_paletaColor.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_paletaColor.setFont(new java.awt.Font("Roboto", 0, 19)); // NOI18N
+        txt_paletaColor.setForeground(new java.awt.Color(255, 255, 255));
+        txt_paletaColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/color_palette.png"))); // NOI18N
+        txt_paletaColor.setText("CAMBIAR PALETA DE COLORES");
+        txt_paletaColor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_paletaColor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_paletaColorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_paletaColorMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_paletaColorMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_paletaColorMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_paletaColorLayout = new javax.swing.GroupLayout(btn_paletaColor);
+        btn_paletaColor.setLayout(btn_paletaColorLayout);
+        btn_paletaColorLayout.setHorizontalGroup(
+            btn_paletaColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_paletaColorLayout.createSequentialGroup()
+                .addComponent(txt_paletaColor, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_paletaColorLayout.setVerticalGroup(
+            btn_paletaColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_paletaColor, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInicio.add(btn_paletaColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        logoBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/piliscoffee-logo-no-bg.png"))); // NOI18N
+        ModuloInicio.add(logoBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        PanelesPorModulo.add(ModuloInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        ModuloVentas.setBackground(new java.awt.Color(230, 204, 178));
+        ModuloVentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_nuevaVenta.setBackground(new java.awt.Color(51, 255, 255));
+        btn_nuevaVenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nuevaVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        txt_nuevaVenta.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_nuevaVenta.setForeground(new java.awt.Color(255, 255, 255));
+        txt_nuevaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nueva_venta.png"))); // NOI18N
+        txt_nuevaVenta.setText("NUEVA VENTA");
+        txt_nuevaVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_nuevaVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_nuevaVentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_nuevaVentaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_nuevaVentaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_nuevaVentaMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_nuevaVentaLayout = new javax.swing.GroupLayout(btn_nuevaVenta);
+        btn_nuevaVenta.setLayout(btn_nuevaVentaLayout);
+        btn_nuevaVentaLayout.setHorizontalGroup(
+            btn_nuevaVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nuevaVentaLayout.createSequentialGroup()
+                .addComponent(txt_nuevaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btn_nuevaVentaLayout.setVerticalGroup(
+            btn_nuevaVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_nuevaVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+
+        ModuloVentas.add(btn_nuevaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        btn_descartarProd.setBackground(new java.awt.Color(153, 153, 153));
+        btn_descartarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_descartarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_descartarProd.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_descartarProd.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_descartarProd.setForeground(new java.awt.Color(255, 255, 255));
+        txt_descartarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove_product.png"))); // NOI18N
+        txt_descartarProd.setText("DESCARTAR PRODUCTO");
+        txt_descartarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_descartarProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_descartarProdMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_descartarProdMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_descartarProdMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_descartarProdMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_descartarProdLayout = new javax.swing.GroupLayout(btn_descartarProd);
+        btn_descartarProd.setLayout(btn_descartarProdLayout);
+        btn_descartarProdLayout.setHorizontalGroup(
+            btn_descartarProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_descartarProd, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_descartarProdLayout.setVerticalGroup(
+            btn_descartarProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_descartarProd, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloVentas.add(btn_descartarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btn_consultarPrecio.setBackground(new java.awt.Color(153, 153, 153));
+        btn_consultarPrecio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_consultarPrecio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_consultarPrecio.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_consultarPrecio.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_consultarPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        txt_consultarPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consultar_precio.png"))); // NOI18N
+        txt_consultarPrecio.setText("CONSULTAR PRECIO");
+        txt_consultarPrecio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_consultarPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_consultarPrecioMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_consultarPrecioMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_consultarPrecioMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_consultarPrecioMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_consultarPrecioLayout = new javax.swing.GroupLayout(btn_consultarPrecio);
+        btn_consultarPrecio.setLayout(btn_consultarPrecioLayout);
+        btn_consultarPrecioLayout.setHorizontalGroup(
+            btn_consultarPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_consultarPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_consultarPrecioLayout.setVerticalGroup(
+            btn_consultarPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_consultarPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloVentas.add(btn_consultarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+
+        logoBackground1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoBackground1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/piliscoffee-logo-no-bg.png"))); // NOI18N
+        ModuloVentas.add(logoBackground1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        PanelesPorModulo.add(ModuloVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        ModuloInforme.setBackground(new java.awt.Color(204, 204, 204));
+        ModuloInforme.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_stockNegativo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_stockNegativo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_stockNegativo.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_stockNegativo.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_stockNegativo.setForeground(new java.awt.Color(255, 255, 255));
+        txt_stockNegativo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
+        txt_stockNegativo.setText("STOCK NEGATIVO");
+        txt_stockNegativo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_stockNegativo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_stockNegativoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_stockNegativoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_stockNegativoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_stockNegativoMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_stockNegativoLayout = new javax.swing.GroupLayout(btn_stockNegativo);
+        btn_stockNegativo.setLayout(btn_stockNegativoLayout);
+        btn_stockNegativoLayout.setHorizontalGroup(
+            btn_stockNegativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_stockNegativo, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_stockNegativoLayout.setVerticalGroup(
+            btn_stockNegativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_stockNegativo, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInforme.add(btn_stockNegativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btn_ventaPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_ventaPeriodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ventaPeriodo.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_ventaPeriodo.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_ventaPeriodo.setForeground(new java.awt.Color(255, 255, 255));
+        txt_ventaPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
+        txt_ventaPeriodo.setText("VENTA POR PERIODO");
+        txt_ventaPeriodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_ventaPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_ventaPeriodoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_ventaPeriodoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_ventaPeriodoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_ventaPeriodoMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_ventaPeriodoLayout = new javax.swing.GroupLayout(btn_ventaPeriodo);
+        btn_ventaPeriodo.setLayout(btn_ventaPeriodoLayout);
+        btn_ventaPeriodoLayout.setHorizontalGroup(
+            btn_ventaPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_ventaPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_ventaPeriodoLayout.setVerticalGroup(
+            btn_ventaPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_ventaPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInforme.add(btn_ventaPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+
+        btn_ventaDiaria.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_ventaDiaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ventaDiaria.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_ventaDiaria.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_ventaDiaria.setForeground(new java.awt.Color(255, 255, 255));
+        txt_ventaDiaria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
+        txt_ventaDiaria.setText("VENTA DIARIA");
+        txt_ventaDiaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_ventaDiaria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_ventaDiariaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_ventaDiariaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_ventaDiariaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_ventaDiariaMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_ventaDiariaLayout = new javax.swing.GroupLayout(btn_ventaDiaria);
+        btn_ventaDiaria.setLayout(btn_ventaDiariaLayout);
+        btn_ventaDiariaLayout.setHorizontalGroup(
+            btn_ventaDiariaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_ventaDiaria, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_ventaDiariaLayout.setVerticalGroup(
+            btn_ventaDiariaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_ventaDiaria, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInforme.add(btn_ventaDiaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        btn_stockGeneral.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_stockGeneral.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_stockGeneral.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_stockGeneral.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_stockGeneral.setForeground(new java.awt.Color(255, 255, 255));
+        txt_stockGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
+        txt_stockGeneral.setText("STOCK GENERAL");
+        txt_stockGeneral.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_stockGeneral.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_stockGeneralMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_stockGeneralMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_stockGeneralMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_stockGeneralMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_stockGeneralLayout = new javax.swing.GroupLayout(btn_stockGeneral);
+        btn_stockGeneral.setLayout(btn_stockGeneralLayout);
+        btn_stockGeneralLayout.setHorizontalGroup(
+            btn_stockGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_stockGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_stockGeneralLayout.setVerticalGroup(
+            btn_stockGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_stockGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInforme.add(btn_stockGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, -1, -1));
+
+        logoBackground3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoBackground3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/piliscoffee-logo-no-bg.png"))); // NOI18N
+        ModuloInforme.add(logoBackground3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        PanelesPorModulo.add(ModuloInforme, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        ModuloInventario.setBackground(new java.awt.Color(204, 204, 204));
+        ModuloInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_actualizacionMasiva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_actualizacionMasiva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_actualizacionMasiva.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_actualizacionMasiva.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_actualizacionMasiva.setForeground(new java.awt.Color(255, 255, 255));
+        txt_actualizacionMasiva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/update_products.png"))); // NOI18N
+        txt_actualizacionMasiva.setText("ACTUALIZACION MASIVA");
+        txt_actualizacionMasiva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_actualizacionMasiva.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_actualizacionMasivaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_actualizacionMasivaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_actualizacionMasivaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_actualizacionMasivaMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_actualizacionMasivaLayout = new javax.swing.GroupLayout(btn_actualizacionMasiva);
+        btn_actualizacionMasiva.setLayout(btn_actualizacionMasivaLayout);
+        btn_actualizacionMasivaLayout.setHorizontalGroup(
+            btn_actualizacionMasivaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_actualizacionMasiva, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_actualizacionMasivaLayout.setVerticalGroup(
+            btn_actualizacionMasivaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_actualizacionMasiva, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_actualizacionMasiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, -1, -1));
+
+        btn_nuevoProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nuevoProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_nuevoProducto.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_nuevoProducto.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_nuevoProducto.setForeground(new java.awt.Color(255, 255, 255));
+        txt_nuevoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add_product.png"))); // NOI18N
+        txt_nuevoProducto.setText("NUEVO PRODUCTO");
+        txt_nuevoProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_nuevoProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_nuevoProductoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_nuevoProductoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_nuevoProductoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_nuevoProductoMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_nuevoProductoLayout = new javax.swing.GroupLayout(btn_nuevoProducto);
+        btn_nuevoProducto.setLayout(btn_nuevoProductoLayout);
+        btn_nuevoProductoLayout.setHorizontalGroup(
+            btn_nuevoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_nuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_nuevoProductoLayout.setVerticalGroup(
+            btn_nuevoProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_nuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_nuevoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        btn_consultarStock.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_consultarStock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_consultarStock.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_consultarStock.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_consultarStock.setForeground(new java.awt.Color(255, 255, 255));
+        txt_consultarStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consultar_stock.png"))); // NOI18N
+        txt_consultarStock.setText("CONSULTAR STOCK");
+        txt_consultarStock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_consultarStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_consultarStockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_consultarStockMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_consultarStockMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_consultarStockMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_consultarStockLayout = new javax.swing.GroupLayout(btn_consultarStock);
+        btn_consultarStock.setLayout(btn_consultarStockLayout);
+        btn_consultarStockLayout.setHorizontalGroup(
+            btn_consultarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_consultarStock, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_consultarStockLayout.setVerticalGroup(
+            btn_consultarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_consultarStock, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_consultarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+
+        btn_actualizarProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_actualizarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_actualizarProducto.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_actualizarProducto.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_actualizarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        txt_actualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/update_products.png"))); // NOI18N
+        txt_actualizarProducto.setText("ACTUALIZAR PRODUCTO");
+        txt_actualizarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_actualizarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_actualizarProductoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_actualizarProductoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_actualizarProductoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_actualizarProductoMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_actualizarProductoLayout = new javax.swing.GroupLayout(btn_actualizarProducto);
+        btn_actualizarProducto.setLayout(btn_actualizarProductoLayout);
+        btn_actualizarProductoLayout.setHorizontalGroup(
+            btn_actualizarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_actualizarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_actualizarProductoLayout.setVerticalGroup(
+            btn_actualizarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_actualizarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_actualizarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btn_crearOferta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_crearOferta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_crearOferta.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_crearOferta.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
+        txt_crearOferta.setForeground(new java.awt.Color(255, 255, 255));
+        txt_crearOferta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sales.png"))); // NOI18N
+        txt_crearOferta.setText("CREAR OFERTA");
+        txt_crearOferta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_crearOferta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_crearOfertaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_crearOfertaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_crearOfertaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_crearOfertaMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_crearOfertaLayout = new javax.swing.GroupLayout(btn_crearOferta);
+        btn_crearOferta.setLayout(btn_crearOfertaLayout);
+        btn_crearOfertaLayout.setHorizontalGroup(
+            btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+        );
+        btn_crearOfertaLayout.setVerticalGroup(
+            btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, -1, -1));
+
+        btn_cargaMasivaProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_cargaMasivaProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_cargaMasivaProd.setPreferredSize(new java.awt.Dimension(340, 100));
+
+        txt_cargaMasivaProd.setFont(new java.awt.Font("Roboto", 0, 19)); // NOI18N
+        txt_cargaMasivaProd.setForeground(new java.awt.Color(255, 255, 255));
+        txt_cargaMasivaProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carga_masiva.png"))); // NOI18N
+        txt_cargaMasivaProd.setText("CARGA MASIVA DE PRODUCTOS");
+        txt_cargaMasivaProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_cargaMasivaProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_cargaMasivaProdMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_cargaMasivaProdMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_cargaMasivaProdMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_cargaMasivaProdMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_cargaMasivaProdLayout = new javax.swing.GroupLayout(btn_cargaMasivaProd);
+        btn_cargaMasivaProd.setLayout(btn_cargaMasivaProdLayout);
+        btn_cargaMasivaProdLayout.setHorizontalGroup(
+            btn_cargaMasivaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_cargaMasivaProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        btn_cargaMasivaProdLayout.setVerticalGroup(
+            btn_cargaMasivaProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_cargaMasivaProd, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+
+        ModuloInventario.add(btn_cargaMasivaProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
+
+        logoBackground2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoBackground2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/piliscoffee-logo-no-bg.png"))); // NOI18N
+        logoBackground2.setPreferredSize(new java.awt.Dimension(340, 100));
+        ModuloInventario.add(logoBackground2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        PanelesPorModulo.add(ModuloInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 580));
+
+        Background.add(PanelesPorModulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 750, 580));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -717,176 +1142,101 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_ModuloVentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloVentaMouseEntered
-        moduloVenta.setBackground(mouseEnterPanelColor);
+        moduloVenta_panelIzq.setBackground(mouseEnterPanelColor);
     }//GEN-LAST:event_txt_ModuloVentaMouseEntered
 
     private void txt_ModuloVentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloVentaMouseExited
-        if(!MODULO.equals("VENTA")) moduloVenta.setBackground(mouseExitPanelColor);
+        if(!MODULO.equals("VENTA")) moduloVenta_panelIzq.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_ModuloVentaMouseExited
 
     private void txt_ModuloInventarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInventarioMouseEntered
-        moduloInventario.setBackground(mouseEnterPanelColor);
+        moduloInventario_panelIzq.setBackground(mouseEnterPanelColor);
     }//GEN-LAST:event_txt_ModuloInventarioMouseEntered
 
     private void txt_ModuloInventarioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInventarioMouseExited
-        if(!MODULO.equals("INVENTARIO")) moduloInventario.setBackground(mouseExitPanelColor);
+        if(!MODULO.equals("INVENTARIO")) moduloInventario_panelIzq.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_ModuloInventarioMouseExited
 
     private void txt_ModuloInformeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInformeMouseEntered
-        moduloInforme.setBackground(mouseEnterPanelColor);
+        moduloInforme_panelIzq.setBackground(mouseEnterPanelColor);
     }//GEN-LAST:event_txt_ModuloInformeMouseEntered
 
     private void txt_ModuloInformeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInformeMouseExited
-        if(!MODULO.equals("INFORMES")) moduloInforme.setBackground(mouseExitPanelColor);
+        if(!MODULO.equals("INFORMES")) moduloInforme_panelIzq.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_ModuloInformeMouseExited
 
     private void txt_ModuloVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloVentaMousePressed
         if(evt.getButton() == 1){
-            moduloVenta.setBackground(mouseClickPanelColor);
+            moduloVenta_panelIzq.setBackground(mouseClickPanelColor);
             txt_ModuloVenta.setForeground(Color.BLACK);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);            
             TipoModuloColor.setBackground(ColorVenta);
-            txt_ModuloSeleccionado.setText("MÓDULO DE VENTAS");
-            PanelVenta.setVisible(true);
-            activarBotonesPorModulo("VENTA");
+            txt_ModuloSeleccionado.setText("VENTAS");
+            seleccionarModulo("VENTA");            
         }
     }//GEN-LAST:event_txt_ModuloVentaMousePressed
 
     private void txt_ModuloVentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloVentaMouseReleased
-        moduloVenta.setBackground(mouseEnterPanelColor);
+        moduloVenta_panelIzq.setBackground(mouseEnterPanelColor);
         txt_ModuloVenta.setForeground(Color.WHITE);
     }//GEN-LAST:event_txt_ModuloVentaMouseReleased
 
     private void txt_ModuloInventarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInventarioMousePressed
         if(evt.getButton() == 1){
-            moduloInventario.setBackground(mouseClickPanelColor);
+            moduloInventario_panelIzq.setBackground(mouseClickPanelColor);
             txt_ModuloInventario.setForeground(Color.BLACK);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             TipoModuloColor.setBackground(ColorInventario);
-            txt_ModuloSeleccionado.setText("MÓDULO DE INVENTARIO");
-            PanelVenta.setVisible(true);
-            activarBotonesPorModulo("INVENTARIO");
+            txt_ModuloSeleccionado.setText("INVENTARIO");
+            seleccionarModulo("INVENTARIO");
         }
     }//GEN-LAST:event_txt_ModuloInventarioMousePressed
 
     private void txt_ModuloInventarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInventarioMouseReleased
-        moduloInventario.setBackground(mouseEnterPanelColor);
+        moduloInventario_panelIzq.setBackground(mouseEnterPanelColor);
         txt_ModuloInventario.setForeground(Color.WHITE);
     }//GEN-LAST:event_txt_ModuloInventarioMouseReleased
 
     private void txt_ModuloInformeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInformeMousePressed
         if(evt.getButton() == 1){
-            moduloInforme.setBackground(mouseClickPanelColor);
+            moduloInforme_panelIzq.setBackground(mouseClickPanelColor);
             txt_ModuloInforme.setForeground(Color.BLACK);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             TipoModuloColor.setBackground(ColorInforme);
-            txt_ModuloSeleccionado.setText("MÓDULO DE INFORMES");    
-            PanelVenta.setVisible(true); 
-            activarBotonesPorModulo("INFORMES");
+            txt_ModuloSeleccionado.setText("INFORMES");   
+            seleccionarModulo("INFORMES");
+            
         }
     }//GEN-LAST:event_txt_ModuloInformeMousePressed
 
     private void txt_ModuloInformeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ModuloInformeMouseReleased
-        moduloInforme.setBackground(mouseEnterPanelColor);
+        moduloInforme_panelIzq.setBackground(mouseEnterPanelColor);
         txt_ModuloInforme.setForeground(Color.WHITE);
     }//GEN-LAST:event_txt_ModuloInformeMouseReleased
 
-    private void txt_opcion1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_opcion1MouseEntered
-        if(MODULO.equals("VENTA")){
-            btn_opcion1.setBackground(mouseEnterColorVenta);
-        }
-        else if(MODULO.equals("INVENTARIO")){
-            btn_opcion1.setBackground(mouseEnterColorInventario);
-        }
-        else if(MODULO.equals("INFORMES")){
-            btn_opcion1.setBackground(mouseEnterColorInforme);
-        }
-        else if(MODULO.equals("HOME")){
-            btn_opcion1.setBackground(mouseEnterPanelColor);
-        }
-    }//GEN-LAST:event_txt_opcion1MouseEntered
-
-    private void txt_opcion1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_opcion1MouseExited
-        if(MODULO.equals("VENTA")){
-            btn_opcion1.setBackground(mouseExitColorVenta);
-        }
-        else if(MODULO.equals("INVENTARIO")){
-            btn_opcion1.setBackground(mouseExitColorInventario);
-        }
-        else if(MODULO.equals("INFORMES")){
-            btn_opcion1.setBackground(mouseExitColorInforme);
-        }
-        else if(MODULO.equals("HOME")){
-            btn_opcion1.setBackground(mouseExitPanelColor);
-        }        
-    }//GEN-LAST:event_txt_opcion1MouseExited
-
-    private void txt_opcion1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_opcion1MousePressed
-        if(evt.getButton() == 1){
-            if(MODULO.equals("VENTA")){
-                //NUEVA VENTA
-                btn_opcion1.setBackground(mouseClickColorVenta);
-                ConProducto cProducto = new ConProducto();
-                ArrayList<Producto> listado = cProducto.listarProductos();
-                NuevaVenta ventana = new NuevaVenta(listado);
-                ventana.setVisible(true);
-            } 
-            else if(MODULO.equals("INVENTARIO")){
-                //NUEVO PRODUCTO
-                btn_opcion1.setBackground(mouseClickColorInventario);
-                IngresarProducto ventana = new IngresarProducto();
-                ventana.setVisible(true);
-            }
-            else if(MODULO.equals("INFORMES")){
-                //VENTA DIARIA
-                btn_opcion1.setBackground(mouseClickColorInforme);
-                ReporteDiario ventana = new ReporteDiario();
-                ventana.setVisible(true);                
-            }
-            else if(MODULO.equals("HOME")){
-                Instant start = Instant.now();
-                CambiarPaleta ventana = new CambiarPaleta(paleta, start);
-                ventana.setVisible(true);
-            }
-        }
-
-    }//GEN-LAST:event_txt_opcion1MousePressed
-
-    private void txt_opcion1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_opcion1MouseReleased
-        if(MODULO.equals("VENTA")){
-           btn_opcion1.setBackground(mouseEnterColorVenta);
-        } 
-        else if(MODULO.equals("INVENTARIO")){
-            btn_opcion1.setBackground(mouseEnterColorInventario);
-        }
-        else if(MODULO.equals("INFORMES")){
-            btn_opcion1.setBackground(mouseEnterColorInforme);
-        }        
-    }//GEN-LAST:event_txt_opcion1MouseReleased
-
     private void txt_moduloInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_moduloInicioMouseEntered
-        moduloHome.setBackground(mouseEnterPanelColor);
+        moduloHome_panelIzq.setBackground(mouseEnterPanelColor);
     }//GEN-LAST:event_txt_moduloInicioMouseEntered
 
     private void txt_moduloInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_moduloInicioMouseExited
-        if(!MODULO.equals("HOME")) moduloHome.setBackground(mouseExitPanelColor);
+        if(!MODULO.equals("HOME")) moduloHome_panelIzq.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_moduloInicioMouseExited
 
     private void txt_moduloInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_moduloInicioMousePressed
         if(evt.getButton() == 1){
-            moduloHome.setBackground(mouseClickPanelColor);
+            moduloHome_panelIzq.setBackground(mouseClickPanelColor);
             txt_moduloInicio.setForeground(Color.BLACK);
             ModuloSeleccionadoTitulo.setBackground(PanelColor);
             TipoModuloColor.setBackground(ColorHome);
-            txt_ModuloSeleccionado.setText("INICIO");  
-            activarBotonesPorModulo("HOME");
+            txt_ModuloSeleccionado.setText("INICIO"); 
+            seleccionarModulo("HOME");
         }
     }//GEN-LAST:event_txt_moduloInicioMousePressed
 
     private void txt_moduloInicioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_moduloInicioMouseReleased
-        moduloHome.setBackground(mouseEnterPanelColor);
+        moduloHome_panelIzq.setBackground(mouseEnterPanelColor);
         txt_moduloInicio.setForeground(Color.WHITE);
     }//GEN-LAST:event_txt_moduloInicioMouseReleased
 
@@ -901,10 +1251,12 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_closeMouseExited
 
     private void txt_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMousePressed
-        Color DarkRed = new Color(146, 55, 77); 
-        ClosePanel.setBackground(DarkRed);
-        txt_close.setForeground(Color.WHITE);
-        this.dispose();
+        if(evt.getButton() == 1){
+            Color DarkRed = new Color(146, 55, 77); 
+            ClosePanel.setBackground(DarkRed);
+            txt_close.setForeground(Color.WHITE);
+            this.dispose();
+        }
     }//GEN-LAST:event_txt_closeMousePressed
 
     private void txt_minimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseEntered
@@ -918,15 +1270,343 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_minimizeMouseExited
 
     private void txt_minimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMousePressed
-        MinPanel.setBackground(mouseClickPanelColor);
-        txt_minimize.setForeground(Color.WHITE);
-        this.setState(Frame.ICONIFIED);
+        if(evt.getButton() == 1){
+            MinPanel.setBackground(mouseClickPanelColor);
+            txt_minimize.setForeground(Color.WHITE);
+            this.setState(Frame.ICONIFIED);
+        }
     }//GEN-LAST:event_txt_minimizeMousePressed
 
     private void txt_minimizeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseReleased
-        MinPanel.setBackground(BackgroundColor);
+        MinPanel.setBackground(mouseEnterPanelColor);
         txt_minimize.setForeground(Color.BLACK);
     }//GEN-LAST:event_txt_minimizeMouseReleased
+
+    private void txt_paletaColorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_paletaColorMouseEntered
+        btn_paletaColor.setBackground(mouseEnterColorHome);
+    }//GEN-LAST:event_txt_paletaColorMouseEntered
+
+    private void txt_paletaColorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_paletaColorMouseExited
+        btn_paletaColor.setBackground(mouseExitColorHome);
+    }//GEN-LAST:event_txt_paletaColorMouseExited
+
+    private void txt_paletaColorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_paletaColorMousePressed
+        if(evt.getButton() == 1){       
+            btn_paletaColor.setBackground(mouseClickColorHome);
+            CambiarPaleta ventana = new CambiarPaleta(this);
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_paletaColorMousePressed
+
+    private void txt_paletaColorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_paletaColorMouseReleased
+        if(btn_paletaColor.contains(evt.getPoint())) btn_paletaColor.setBackground(mouseEnterColorHome);
+        else btn_paletaColor.setBackground(mouseExitColorHome);
+    }//GEN-LAST:event_txt_paletaColorMouseReleased
+
+    private void txt_nuevaVentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevaVentaMouseEntered
+        btn_nuevaVenta.setBackground(mouseEnterColorVenta);
+    }//GEN-LAST:event_txt_nuevaVentaMouseEntered
+
+    private void txt_nuevaVentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevaVentaMouseExited
+        btn_nuevaVenta.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_nuevaVentaMouseExited
+
+    private void txt_nuevaVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevaVentaMousePressed
+        if(evt.getButton() == 1){        
+            btn_nuevaVenta.setBackground(mouseClickColorVenta);
+            ConProducto cProducto = new ConProducto();
+            NuevaVenta ventana = new NuevaVenta(cProducto.listarProductos());
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_nuevaVentaMousePressed
+
+    private void txt_nuevaVentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevaVentaMouseReleased
+        if(btn_nuevaVenta.contains(evt.getPoint()))btn_nuevaVenta.setBackground(mouseEnterColorVenta);
+        else btn_nuevaVenta.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_nuevaVentaMouseReleased
+
+    private void txt_consultarPrecioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarPrecioMouseEntered
+        btn_consultarPrecio.setBackground(mouseEnterColorVenta);
+    }//GEN-LAST:event_txt_consultarPrecioMouseEntered
+
+    private void txt_consultarPrecioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarPrecioMouseExited
+        btn_consultarPrecio.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_consultarPrecioMouseExited
+
+    private void txt_consultarPrecioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarPrecioMousePressed
+        if(evt.getButton() == 1){        
+            btn_consultarPrecio.setBackground(mouseClickColorVenta);
+            ConProducto cProducto = new ConProducto();
+            ConsultarPrecio ventana = new ConsultarPrecio(cProducto.listarProductos());
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_consultarPrecioMousePressed
+
+    private void txt_nuevoProductoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevoProductoMouseEntered
+        btn_nuevoProducto.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_nuevoProductoMouseEntered
+
+    private void txt_nuevoProductoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevoProductoMouseExited
+        btn_nuevoProducto.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_nuevoProductoMouseExited
+
+    private void txt_nuevoProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevoProductoMousePressed
+        if(evt.getButton() == 1){        
+            btn_nuevoProducto.setBackground(mouseClickColorInventario);
+            IngresarProducto ventana = new IngresarProducto();
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_nuevoProductoMousePressed
+
+    private void txt_nuevoProductoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_nuevoProductoMouseReleased
+        if(btn_nuevoProducto.contains(evt.getPoint())) btn_nuevoProducto.setBackground(mouseEnterColorInventario);        
+        else  btn_nuevoProducto.setBackground(mouseExitColorInventario);        
+    }//GEN-LAST:event_txt_nuevoProductoMouseReleased
+
+    private void txt_consultarStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarStockMouseEntered
+        btn_consultarStock.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_consultarStockMouseEntered
+
+    private void txt_consultarStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarStockMouseExited
+        btn_consultarStock.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_consultarStockMouseExited
+
+    private void txt_consultarStockMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarStockMousePressed
+        if(evt.getButton() == 1){        
+            btn_consultarStock.setBackground(mouseClickColorInventario);
+            ConsultaStockUnit ventana = new ConsultaStockUnit();
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_consultarStockMousePressed
+
+    private void txt_actualizarProductoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizarProductoMouseEntered
+        btn_actualizarProducto.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_actualizarProductoMouseEntered
+
+    private void txt_actualizarProductoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizarProductoMouseExited
+        btn_actualizarProducto.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_actualizarProductoMouseExited
+
+    private void txt_actualizarProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizarProductoMousePressed
+        if(evt.getButton() == 1){
+                btn_actualizarProducto.setBackground(mouseClickColorInventario);
+                EditarStockPrecio ventana = new EditarStockPrecio();
+                ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_actualizarProductoMousePressed
+
+    private void txt_actualizarProductoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizarProductoMouseReleased
+        if(btn_actualizarProducto.contains(evt.getPoint())) btn_actualizarProducto.setBackground(mouseEnterColorInventario);
+        else  btn_actualizarProducto.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_actualizarProductoMouseReleased
+
+    private void txt_crearOfertaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearOfertaMouseEntered
+        btn_crearOferta.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_crearOfertaMouseEntered
+
+    private void txt_crearOfertaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearOfertaMouseExited
+        btn_crearOferta.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_crearOfertaMouseExited
+
+    private void txt_crearOfertaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearOfertaMousePressed
+        if(evt.getButton() == 1){
+            btn_crearOferta.setBackground(mouseClickColorInventario);
+            ConProducto cProducto = new ConProducto();
+            CrearOferta ventana = new CrearOferta(cProducto.listarProductos());
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_crearOfertaMousePressed
+
+    private void txt_crearOfertaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearOfertaMouseReleased
+        if(btn_crearOferta.contains(evt.getPoint())) btn_crearOferta.setBackground(mouseEnterColorInventario);
+        else  btn_crearOferta.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_crearOfertaMouseReleased
+
+    private void txt_cargaMasivaProdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargaMasivaProdMouseEntered
+        btn_cargaMasivaProd.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_cargaMasivaProdMouseEntered
+
+    private void txt_cargaMasivaProdMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargaMasivaProdMouseExited
+        btn_cargaMasivaProd.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_cargaMasivaProdMouseExited
+
+    private void txt_cargaMasivaProdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargaMasivaProdMousePressed
+        if(evt.getButton() == 1){
+                    btn_cargaMasivaProd.setBackground(mouseClickColorInventario);
+                    CargaMasiva ventana = new CargaMasiva();
+                    ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_cargaMasivaProdMousePressed
+
+    private void txt_cargaMasivaProdMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargaMasivaProdMouseReleased
+        if(btn_cargaMasivaProd.contains(evt.getPoint())) btn_cargaMasivaProd.setBackground(mouseEnterColorInventario);
+        else  btn_cargaMasivaProd.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_cargaMasivaProdMouseReleased
+
+    private void txt_actualizacionMasivaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizacionMasivaMouseEntered
+        btn_actualizacionMasiva.setBackground(mouseEnterColorInventario);
+    }//GEN-LAST:event_txt_actualizacionMasivaMouseEntered
+
+    private void txt_actualizacionMasivaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizacionMasivaMouseExited
+        btn_actualizacionMasiva.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_actualizacionMasivaMouseExited
+
+    private void txt_actualizacionMasivaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizacionMasivaMousePressed
+        if(evt.getButton() == 1){
+            btn_actualizacionMasiva.setBackground(mouseClickColorInventario);
+            ActualizarStockMasivo ventana = new ActualizarStockMasivo();
+            ventana.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_txt_actualizacionMasivaMousePressed
+
+    private void txt_actualizacionMasivaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_actualizacionMasivaMouseReleased
+        if(btn_actualizacionMasiva.contains(evt.getPoint())) btn_actualizacionMasiva.setBackground(mouseEnterColorInventario);
+        else btn_actualizacionMasiva.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_actualizacionMasivaMouseReleased
+
+    private void txt_ventaDiariaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaDiariaMouseEntered
+        btn_ventaDiaria.setBackground(mouseEnterColorInforme);
+    }//GEN-LAST:event_txt_ventaDiariaMouseEntered
+
+    private void txt_ventaDiariaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaDiariaMouseExited
+        btn_ventaDiaria.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_ventaDiariaMouseExited
+
+    private void txt_ventaDiariaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaDiariaMousePressed
+        if(evt.getButton() == 1){
+            btn_ventaDiaria.setBackground(mouseClickColorInforme);
+            ReporteDiario ventana = new ReporteDiario();
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_ventaDiariaMousePressed
+
+    private void txt_ventaDiariaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaDiariaMouseReleased
+        if(btn_ventaDiaria.contains(evt.getPoint())) btn_ventaDiaria.setBackground(mouseEnterColorInforme);
+        else  btn_ventaDiaria.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_ventaDiariaMouseReleased
+
+    private void txt_ventaPeriodoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaPeriodoMouseEntered
+        btn_ventaPeriodo.setBackground(mouseEnterColorInforme);
+    }//GEN-LAST:event_txt_ventaPeriodoMouseEntered
+
+    private void txt_ventaPeriodoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaPeriodoMouseExited
+        btn_ventaPeriodo.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_ventaPeriodoMouseExited
+
+    private void txt_ventaPeriodoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaPeriodoMousePressed
+        if(evt.getButton() == 1){
+                    btn_ventaPeriodo.setBackground(mouseClickColorInforme);
+                    ReportePeriodo ventana = new ReportePeriodo();
+                    ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_ventaPeriodoMousePressed
+
+    private void txt_ventaPeriodoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_ventaPeriodoMouseReleased
+        if(btn_ventaPeriodo.contains(evt.getPoint())) btn_ventaPeriodo.setBackground(mouseEnterColorInforme);
+        else btn_ventaPeriodo.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_ventaPeriodoMouseReleased
+
+    private void txt_stockNegativoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockNegativoMouseEntered
+        btn_stockNegativo.setBackground(mouseEnterColorInforme);
+    }//GEN-LAST:event_txt_stockNegativoMouseEntered
+
+    private void txt_stockNegativoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockNegativoMouseExited
+        btn_stockNegativo.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_stockNegativoMouseExited
+
+    private void txt_stockNegativoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockNegativoMousePressed
+        if(evt.getButton() == 1){
+            btn_stockNegativo.setBackground(mouseClickColorInforme);
+            ConInformes cInforme = new ConInformes();
+            cInforme.informeStockNegativo(this);      
+        }
+    }//GEN-LAST:event_txt_stockNegativoMousePressed
+
+    private void txt_stockNegativoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockNegativoMouseReleased
+        if(btn_stockNegativo.contains(evt.getPoint())) btn_stockNegativo.setBackground(mouseEnterColorInforme);
+        else btn_stockNegativo.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_stockNegativoMouseReleased
+
+    private void txt_stockGeneralMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockGeneralMouseEntered
+        btn_stockGeneral.setBackground(mouseEnterColorInforme);
+    }//GEN-LAST:event_txt_stockGeneralMouseEntered
+
+    private void txt_stockGeneralMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockGeneralMouseExited
+        btn_stockGeneral.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_stockGeneralMouseExited
+
+    private void txt_stockGeneralMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockGeneralMouseReleased
+        if(btn_stockGeneral.contains(evt.getPoint())) btn_stockGeneral.setBackground(mouseEnterColorInforme);
+        else  btn_stockGeneral.setBackground(mouseExitColorInforme);
+    }//GEN-LAST:event_txt_stockGeneralMouseReleased
+
+    private void txt_stockGeneralMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_stockGeneralMousePressed
+        if(evt.getButton() == 1){
+            btn_stockGeneral.setBackground(mouseClickColorInforme);
+            TipoReporteStock ventana = new TipoReporteStock();
+            ventana.setVisible(true);  
+        }
+    }//GEN-LAST:event_txt_stockGeneralMousePressed
+
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
+
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
+
+    private void txt_crearPaletaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearPaletaMouseEntered
+        btn_crearPaleta.setBackground(mouseEnterColorHome);
+    }//GEN-LAST:event_txt_crearPaletaMouseEntered
+
+    private void txt_crearPaletaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearPaletaMouseExited
+        btn_crearPaleta.setBackground(mouseExitColorHome);
+    }//GEN-LAST:event_txt_crearPaletaMouseExited
+
+    private void txt_crearPaletaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearPaletaMousePressed
+        if(evt.getButton() == 1){
+            CrearPaleta ventana = new CrearPaleta(this);
+            ventana.setVisible(true);
+        }
+    }//GEN-LAST:event_txt_crearPaletaMousePressed
+
+    private void txt_crearPaletaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearPaletaMouseReleased
+        if(btn_crearPaleta.contains(evt.getPoint())) btn_crearPaleta.setBackground(mouseEnterColorHome);
+        else  btn_crearPaleta.setBackground(mouseExitColorHome);
+    }//GEN-LAST:event_txt_crearPaletaMouseReleased
+
+    private void txt_descartarProdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_descartarProdMouseEntered
+        btn_descartarProd.setBackground(mouseEnterColorVenta);
+    }//GEN-LAST:event_txt_descartarProdMouseEntered
+
+    private void txt_descartarProdMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_descartarProdMouseExited
+        btn_descartarProd.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_descartarProdMouseExited
+
+    private void txt_descartarProdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_descartarProdMousePressed
+        DescartarProducto ventana = new DescartarProducto();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_txt_descartarProdMousePressed
+
+    private void txt_descartarProdMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_descartarProdMouseReleased
+        if(btn_descartarProd.contains(evt.getPoint())) btn_descartarProd.setBackground(mouseEnterColorVenta);
+        else btn_descartarProd.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_descartarProdMouseReleased
+
+    private void txt_consultarPrecioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarPrecioMouseReleased
+        if(btn_consultarPrecio.contains(evt.getPoint())) btn_consultarPrecio.setBackground(mouseEnterColorVenta);
+        else btn_consultarPrecio.setBackground(mouseExitColorVenta);
+    }//GEN-LAST:event_txt_consultarPrecioMouseReleased
+
+    private void txt_consultarStockMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarStockMouseReleased
+        if(btn_consultarPrecio.contains(evt.getPoint())) btn_consultarPrecio.setBackground(mouseEnterColorInventario);
+        else btn_consultarPrecio.setBackground(mouseExitColorInventario);
+    }//GEN-LAST:event_txt_consultarStockMouseReleased
 
     /**
      * @param args the command line arguments
@@ -969,34 +1649,60 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel MinPanel;
+    private javax.swing.JPanel ModuloInforme;
+    private javax.swing.JPanel ModuloInicio;
+    private javax.swing.JPanel ModuloInventario;
     private javax.swing.JPanel ModuloSeleccionadoTitulo;
-    public javax.swing.JPanel PanelVenta;
+    private javax.swing.JPanel ModuloVentas;
+    private javax.swing.JPanel PanelesPorModulo;
     private javax.swing.JLabel Subtitle;
     private javax.swing.JPanel TipoModuloColor;
     private javax.swing.JLabel Title;
-    private javax.swing.JPanel btn_opcion1;
-    private javax.swing.JPanel btn_opcion2;
-    private javax.swing.JPanel btn_opcion3;
-    private javax.swing.JPanel btn_opcion4;
-    private javax.swing.JPanel btn_opcion5;
-    private javax.swing.JPanel btn_opcion6;
+    private javax.swing.JPanel btn_actualizacionMasiva;
+    private javax.swing.JPanel btn_actualizarProducto;
+    private javax.swing.JPanel btn_cargaMasivaProd;
+    private javax.swing.JPanel btn_consultarPrecio;
+    private javax.swing.JPanel btn_consultarStock;
+    private javax.swing.JPanel btn_crearOferta;
+    private javax.swing.JPanel btn_crearPaleta;
+    private javax.swing.JPanel btn_descartarProd;
+    private javax.swing.JPanel btn_nuevaVenta;
+    private javax.swing.JPanel btn_nuevoProducto;
+    private javax.swing.JPanel btn_paletaColor;
+    private javax.swing.JPanel btn_stockGeneral;
+    private javax.swing.JPanel btn_stockNegativo;
+    private javax.swing.JPanel btn_ventaDiaria;
+    private javax.swing.JPanel btn_ventaPeriodo;
     private javax.swing.JLabel logoBackground;
-    private javax.swing.JPanel moduloHome;
-    private javax.swing.JPanel moduloInforme;
-    private javax.swing.JPanel moduloInventario;
-    private javax.swing.JPanel moduloVenta;
+    private javax.swing.JLabel logoBackground1;
+    private javax.swing.JLabel logoBackground2;
+    private javax.swing.JLabel logoBackground3;
+    private javax.swing.JPanel moduloHome_panelIzq;
+    private javax.swing.JPanel moduloInforme_panelIzq;
+    private javax.swing.JPanel moduloInventario_panelIzq;
+    private javax.swing.JPanel moduloVenta_panelIzq;
     private javax.swing.JLabel txt_ModuloInforme;
     private javax.swing.JLabel txt_ModuloInventario;
     private javax.swing.JLabel txt_ModuloSeleccionado;
     private javax.swing.JLabel txt_ModuloVenta;
+    private javax.swing.JLabel txt_actualizacionMasiva;
+    private javax.swing.JLabel txt_actualizarProducto;
+    private javax.swing.JLabel txt_cargaMasivaProd;
     private javax.swing.JLabel txt_close;
+    private javax.swing.JLabel txt_consultarPrecio;
+    private javax.swing.JLabel txt_consultarStock;
+    private javax.swing.JLabel txt_crearOferta;
+    private javax.swing.JLabel txt_crearPaleta;
+    private javax.swing.JLabel txt_descartarProd;
     private javax.swing.JLabel txt_minimize;
     private javax.swing.JLabel txt_moduloInicio;
-    private javax.swing.JLabel txt_opcion1;
-    private javax.swing.JLabel txt_opcion2;
-    private javax.swing.JLabel txt_opcion3;
-    private javax.swing.JLabel txt_opcion4;
-    private javax.swing.JLabel txt_opcion5;
-    private javax.swing.JLabel txt_opcion6;
+    private javax.swing.JLabel txt_nuevaVenta;
+    private javax.swing.JLabel txt_nuevoProducto;
+    private javax.swing.JLabel txt_paletaColor;
+    private javax.swing.JLabel txt_stockGeneral;
+    private javax.swing.JLabel txt_stockNegativo;
+    private javax.swing.JLabel txt_tituloVentana;
+    private javax.swing.JLabel txt_ventaDiaria;
+    private javax.swing.JLabel txt_ventaPeriodo;
     // End of variables declaration//GEN-END:variables
 }

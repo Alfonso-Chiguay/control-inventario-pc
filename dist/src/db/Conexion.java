@@ -3,6 +3,7 @@ package db;
 import controlador.Logs;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class Conexion {
@@ -13,34 +14,34 @@ public class Conexion {
     private final static String DB="piliscof_posdb";
     //private final static String DB="piliscof_posdb_desarrollo";
     
-    //SINGLETON
-    private static Connection conn;    
+    private static Conexion instance; 
+    private static Connection conn;
     
-    public static Connection getConnection(){
+    private Conexion(){
         Logs log = new Logs();
         Properties propiedadesConexion = new Properties();
-        if(conn == null){
-            try{
-                propiedadesConexion.put("user", USER);
-                propiedadesConexion.put("password", PASS);
-                conn = DriverManager.getConnection("jdbc:mysql://"+SERVER+"/"+DB
-                        ,propiedadesConexion);
-                log.RegistrarLog("[Conexion|getConnection] Conexion a base de datos exitosa");                 
-                return conn;
-            }
-            catch(Exception err){
-                log.RegistrarLog("[ERROR][Conexion|getConnection] "+err.getMessage());                  
-                return null;
-            }    
+        try{
+            propiedadesConexion.put("user", USER);
+            propiedadesConexion.put("password", PASS);
+            conn = DriverManager.getConnection("jdbc:mysql://"+SERVER+"/"+DB
+                    ,propiedadesConexion);
+            log.RegistrarLog("[Conexion|getConnection] Conexion a base de datos exitosa");    
+            System.out.println("Creando conexion");
+            
         }
-        else{            
-            return conn;
+        catch(Exception err){
+            log.RegistrarLog("[ERROR][Conexion|getConnection] "+err.getMessage()); 
+            conn = null;
+            instance = null;
+            System.out.println("Error creando conexion: "+err.getMessage());
         }
-        
     }
     
-    public boolean isNetworkOnline(){
-        return true;             
-    }
+    public static synchronized Connection getConnection() throws SQLException{
+        if(conn == null || conn.isClosed()){
+            instance = new Conexion();            
+        }
+        return conn;
+    }   
 }
 

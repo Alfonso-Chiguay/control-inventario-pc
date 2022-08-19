@@ -3,7 +3,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 
@@ -74,7 +73,9 @@ public class ConInformes {
 
             reporte.addCell(cell);
 
-            for(Producto p: listado){       
+            for(Producto p: listado){ 
+                if(cProducto.listarDescartados().contains(p.getCodigo_barra())) continue;
+                
                 if(p.getStock() <= 0){
                     font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
                     font.setColor(BaseColor.RED);
@@ -170,7 +171,8 @@ public class ConInformes {
 
             reporte.addCell(cell);
 
-            for(Producto p: listado){       
+            for(Producto p: listado){   
+                if(cProducto.listarDescartados().contains(p.getCodigo_barra())) continue;
                 if(p.getStock() <= 0){
                     font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
                     font.setColor(BaseColor.RED);
@@ -256,7 +258,7 @@ public class ConInformes {
             ConProducto cProducto = new ConProducto();
             ArrayList<Producto> listado = cProducto.stockNegativo();
             
-            if(listado.size() == 0){
+            if(listado.isEmpty()){
                 Image body = Image.getInstance("src/img/stockOK.png");
                 body.scaleToFit(200, 200);
             
@@ -366,7 +368,7 @@ public class ConInformes {
             documento.add(titulo);
             documento.add(subtitulo);    
             
-            if(listado.size() == 0){
+            if(listado.isEmpty()){
                 Image body = Image.getInstance("src/img/noventas.png");
                 body.scaleToFit(200, 200);
             
@@ -391,12 +393,12 @@ public class ConInformes {
                     else ventaCredito+=v.getTotal();
                 }
                 
-                String str_totalVenta = String.format("$%,d",Integer.valueOf(totalVenta));
-                String str_efectivo = String.format("$%,d",Integer.valueOf(ventaEfectivo));
-                String str_debito = String.format("$%,d",Integer.valueOf(ventaDebito));
-                String str_transferencia = String.format("$%,d",Integer.valueOf(ventaTransferencia));
-                String str_credito = String.format("$%,d",Integer.valueOf(ventaCredito));
-                String str_edenred = String.format("$%,d",Integer.valueOf(ventaEdenRed));
+                String str_totalVenta = String.format("$%,d", totalVenta);
+                String str_efectivo = String.format("$%,d", ventaEfectivo);
+                String str_debito = String.format("$%,d", ventaDebito);
+                String str_transferencia = String.format("$%,d", ventaTransferencia);
+                String str_credito = String.format("$%,d", ventaCredito);
+                String str_edenred = String.format("$%,d", ventaEdenRed);
                 
                 Paragraph venta = new Paragraph();
                 venta.setAlignment(Chunk.ALIGN_LEFT);
@@ -469,7 +471,7 @@ public class ConInformes {
                     String tipo_venta = o[1].toString();
                     String fechaTransacction = o[2].toString();
                     int int_total = (int) o[3];
-                    String str_total = String.format("$%,d",Integer.valueOf(int_total));
+                    String str_total = String.format("$%,d", int_total);
                     PdfPCell cellTotal = new PdfPCell();
                     cellTotal.setHorizontalAlignment(Chunk.ALIGN_RIGHT);
                     cellTotal.setPhrase(new Phrase(str_total));
@@ -561,7 +563,7 @@ public class ConInformes {
                     String nombreProducto = o[0].toString();
                     int cantidad = (int) o[1];
                     int total = (int) o[2];
-                    String str_total = String.format("$%,d",Integer.valueOf(total));
+                    String str_total = String.format("$%,d", total);
                     
                     
                     PdfPCell cellDerecha = new PdfPCell();
@@ -578,15 +580,8 @@ public class ConInformes {
                     
                 }
                 documento.add(tituloProducto);
-                documento.add(tablaProductos);
-                
-                
-            }
-            
-            
-            
-            
-            
+                documento.add(tablaProductos);                
+            }            
             
             Paragraph firma = new Paragraph("\n\n\n________________________");
             firma.setAlignment(Chunk.ALIGN_RIGHT);

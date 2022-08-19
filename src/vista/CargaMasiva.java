@@ -171,6 +171,8 @@ public class CargaMasiva extends javax.swing.JFrame {
         });
         BackGround.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 40));
 
+        btn_descargarPlantilla.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_descargarPlantilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_descargarPlantilla.setPreferredSize(new java.awt.Dimension(270, 70));
 
         txt_descargarPlantilla.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
@@ -198,15 +200,17 @@ public class CargaMasiva extends javax.swing.JFrame {
         btn_descargarPlantilla.setLayout(btn_descargarPlantillaLayout);
         btn_descargarPlantillaLayout.setHorizontalGroup(
             btn_descargarPlantillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_descargarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txt_descargarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
         btn_descargarPlantillaLayout.setVerticalGroup(
             btn_descargarPlantillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_descargarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txt_descargarPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         BackGround.add(btn_descargarPlantilla, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 270, 70));
 
+        btn_cargarExcel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_cargarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_cargarExcel.setPreferredSize(new java.awt.Dimension(270, 70));
 
         txt_cargarExcel.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
@@ -234,11 +238,11 @@ public class CargaMasiva extends javax.swing.JFrame {
         btn_cargarExcel.setLayout(btn_cargarExcelLayout);
         btn_cargarExcelLayout.setHorizontalGroup(
             btn_cargarExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_cargarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txt_cargarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
         btn_cargarExcelLayout.setVerticalGroup(
             btn_cargarExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_cargarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txt_cargarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         BackGround.add(btn_cargarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 270, 70));
@@ -338,7 +342,8 @@ public class CargaMasiva extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_descargarPlantillaMousePressed
 
     private void txt_descargarPlantillaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_descargarPlantillaMouseReleased
-        btn_descargarPlantilla.setBackground(mouseEnterPanelColor);
+        if(btn_descargarPlantilla.contains(evt.getPoint())) btn_descargarPlantilla.setBackground(mouseEnterPanelColor);
+        else  btn_descargarPlantilla.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_descargarPlantillaMouseReleased
 
     private void txt_cargarExcelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargarExcelMouseEntered
@@ -372,7 +377,8 @@ public class CargaMasiva extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_cargarExcelMousePressed
 
     private void txt_cargarExcelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_cargarExcelMouseReleased
-        btn_cargarExcel.setBackground(mouseEnterPanelColor);
+        if(btn_cargarExcel.contains(evt.getPoint())) btn_cargarExcel.setBackground(mouseEnterPanelColor);
+        else btn_cargarExcel.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_cargarExcelMouseReleased
 
     /**

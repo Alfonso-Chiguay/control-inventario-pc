@@ -37,9 +37,9 @@ public class CrearOferta extends javax.swing.JFrame {
     Color mouseExitPanelColor = PanelColor;
     Color mouseClickPanelColor = paleta.getMouseClick();
     Color textColor = mouseEnterPanelColor;      
-    Color verde = new Color(60, 157, 52);
-    Color verdeMouseEnter = new Color(21, 162, 68);
-    Color verdeClick = new Color(0, 80, 0);
+    Color verde = new Color(3, 166, 45);
+    Color verdeMouseEnter = new Color(2, 115, 31);
+    Color verdeClick = new Color(3, 84, 23);
     Color rojo = new Color(201, 0, 37);
     Color rojoMouseEnter = new Color(240, 36, 15);
     Color rojoClick = new Color(255, 116, 0);
@@ -48,14 +48,23 @@ public class CrearOferta extends javax.swing.JFrame {
     
     public void actualizarProductos(){
         String palabraClave = txt_nombreProducto.getText();
+        ArrayList<Producto> listadoFinal = new ArrayList<>();
+
+        for(Producto p:productos){
+            if(!listaNoSeMuestra.contains(p.getCodigo_barra())){
+                listadoFinal.add(p);
+            }
+        }
+
+        productos = listadoFinal;
+
         if(!palabraClave.equals("")){
             DefaultListModel dl = new DefaultListModel();
             dl.clear();
-            
+
             productos.forEach((p) -> {                
                 String nombre = p.getNombre().toLowerCase().replace("á","a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
-                if (nombre.contains(palabraClave.toLowerCase()) &&
-                        !listaNoSeMuestra.contains(p.getCodigo_barra().toUpperCase())) {
+                if (nombre.contains(palabraClave.toLowerCase())) {
                     dl.addElement(p.getNombre()+" ("+p.getCodigo_barra()+")");
                 }
             });
@@ -78,6 +87,9 @@ public class CrearOferta extends javax.swing.JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
         this.setTitle("Crear oferta");
+
+
+        
         productos = listado;
         DefaultTableModel table = (DefaultTableModel) tbl_listadoProductos.getModel();
         table.setRowCount(0);
@@ -109,8 +121,8 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_restar1.setBackground(rojo);
         btn_eliminar1.setBackground(rojo);
         
-        //CODIGOS DE BARRA NO VENDIBLES
-        listaNoSeMuestra.add("VASOMARLEY1");
+
+        /*listaNoSeMuestra.add("VASOMARLEY1");
         listaNoSeMuestra.add("VASOMARLEY2");
         listaNoSeMuestra.add("VASOMARLEY3");
         listaNoSeMuestra.add("VASONESCAFE1");
@@ -124,7 +136,7 @@ public class CrearOferta extends javax.swing.JFrame {
         listaNoSeMuestra.add("7613036935975");
         listaNoSeMuestra.add("7613036939171");
         listaNoSeMuestra.add("7613036956895");
-        listaNoSeMuestra.add("859940002991");
+        listaNoSeMuestra.add("859940002991");*/
         
         //TABLA
         PanelTabla.setBackground(BackgroundColor);
@@ -150,7 +162,7 @@ public class CrearOferta extends javax.swing.JFrame {
         tbl_listadoProductos.setFillsViewportHeight(true);
         
         tbl_listadoProductos.getTableHeader().setOpaque(false);
-        tbl_listadoProductos.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        tbl_listadoProductos.getTableHeader().setFont(new Font("Roboto", Font.BOLD, 14));
         tbl_listadoProductos.getTableHeader().setBackground(PanelColor);
         tbl_listadoProductos.getTableHeader().setForeground(Color.WHITE);
         
@@ -169,6 +181,12 @@ public class CrearOferta extends javax.swing.JFrame {
     Thread threadAutomatico = new Thread(new Runnable() {
         @Override
         public void run() {
+            if(CON_PRODUCTO.listarDescartados().contains(txt_codigoBarra.getText().toUpperCase())){
+                JOptionPane.showMessageDialog(null, "Este producto está descartado", "Produto descartado",JOptionPane.INFORMATION_MESSAGE);
+                txt_codigoBarra.setText("");
+                txt_codigoBarra.requestFocus();
+                return;
+            }
             DefaultTableModel table = (DefaultTableModel) tbl_listadoProductos.getModel();
 
             Producto p = new Producto();
@@ -335,6 +353,7 @@ public class CrearOferta extends javax.swing.JFrame {
 
         txt_codigoOferta.setFont(new java.awt.Font("Roboto Thin", 0, 24)); // NOI18N
         txt_codigoOferta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_codigoOferta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_codigoOferta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_codigoOfertaFocusLost(evt);
@@ -402,6 +421,7 @@ public class CrearOferta extends javax.swing.JFrame {
         PanelIdentificaProd.add(panelIzqIdentifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 360));
 
         txt_codigoBarra.setFont(new java.awt.Font("Roboto Thin", 0, 22)); // NOI18N
+        txt_codigoBarra.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_codigoBarra.setPreferredSize(new java.awt.Dimension(6, 40));
         txt_codigoBarra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,6 +450,8 @@ public class CrearOferta extends javax.swing.JFrame {
         separadorVertical.setOrientation(javax.swing.SwingConstants.VERTICAL);
         PanelIdentificaProd.add(separadorVertical, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 18, 360));
 
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         listaFiltrada.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
         listaFiltrada.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -443,9 +465,10 @@ public class CrearOferta extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listaFiltrada);
 
-        PanelIdentificaProd.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 415, 167));
+        PanelIdentificaProd.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 415, 167));
 
         txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 22)); // NOI18N
+        txt_nombreProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_nombreProducto.setPreferredSize(new java.awt.Dimension(6, 40));
         txt_nombreProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -499,6 +522,10 @@ public class CrearOferta extends javax.swing.JFrame {
 
         PanelIdentificaProd.add(PanelTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 662, -1));
 
+        btn_anadir1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_anadir1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_anadir1.setPreferredSize(new java.awt.Dimension(200, 70));
+
         txt_anadir1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_anadir1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_anadir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/f1_key.png"))); // NOI18N
@@ -529,11 +556,13 @@ public class CrearOferta extends javax.swing.JFrame {
         );
         btn_anadir1Layout.setVerticalGroup(
             btn_anadir1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_anadir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txt_anadir1, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         PanelIdentificaProd.add(btn_anadir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 50, -1, -1));
 
+        btn_restar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_restar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_restar1.setPreferredSize(new java.awt.Dimension(200, 70));
 
         txt_restar1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
@@ -559,15 +588,17 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_restar1.setLayout(btn_restar1Layout);
         btn_restar1Layout.setHorizontalGroup(
             btn_restar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_restar1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(txt_restar1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
         btn_restar1Layout.setVerticalGroup(
             btn_restar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_restar1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(txt_restar1, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         PanelIdentificaProd.add(btn_restar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 140, -1, -1));
 
+        btn_eliminar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_eliminar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_eliminar1.setPreferredSize(new java.awt.Dimension(200, 70));
 
         txt_eliminar1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
@@ -593,11 +624,11 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_eliminar1.setLayout(btn_eliminar1Layout);
         btn_eliminar1Layout.setHorizontalGroup(
             btn_eliminar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(txt_eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
         btn_eliminar1Layout.setVerticalGroup(
             btn_eliminar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(txt_eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         PanelIdentificaProd.add(btn_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 230, -1, -1));
@@ -616,6 +647,7 @@ public class CrearOferta extends javax.swing.JFrame {
         txt_precioOferta.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
         txt_precioOferta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_precioOferta.setText("$0");
+        txt_precioOferta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_precioOferta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txt_precioOfertaFocusGained(evt);
@@ -637,6 +669,7 @@ public class CrearOferta extends javax.swing.JFrame {
         PanelDetalleOferta.add(lbl_nombreOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 280, 30));
 
         txt_nombreOferta.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
+        txt_nombreOferta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         PanelDetalleOferta.add(txt_nombreOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 450, 31));
 
         panelIzqDetalle.setPreferredSize(new java.awt.Dimension(43, 100));
@@ -747,6 +780,9 @@ public class CrearOferta extends javax.swing.JFrame {
 
         PanelPrincipal.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1480, 0, 40, 40));
 
+        btn_crearOferta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_crearOferta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         txt_crearOferta.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_crearOferta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_crearOferta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sale.png"))); // NOI18N
@@ -770,18 +806,14 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_crearOferta.setLayout(btn_crearOfertaLayout);
         btn_crearOfertaLayout.setHorizontalGroup(
             btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_crearOfertaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txt_crearOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(txt_crearOferta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
         );
         btn_crearOfertaLayout.setVerticalGroup(
             btn_crearOfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_crearOfertaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txt_crearOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(txt_crearOferta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
         );
 
-        PanelPrincipal.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 655, 290, -1));
+        PanelPrincipal.add(btn_crearOferta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1175, 625, 360, 170));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -801,8 +833,7 @@ public class CrearOferta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoBarraActionPerformed
-        if(actualizarListado){
-            
+        if(actualizarListado){            
             productos = CON_PRODUCTO.listarProductos();
             actualizarProductos();
             actualizarListado = false;
@@ -991,7 +1022,8 @@ public class CrearOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_crearOfertaMousePressed
 
     private void txt_crearOfertaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearOfertaMouseReleased
-        btn_crearOferta.setBackground(mouseEnterPanelColor);
+        if(btn_crearOferta.contains(evt.getPoint())) btn_crearOferta.setBackground(mouseEnterPanelColor);
+        else  btn_crearOferta.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_crearOfertaMouseReleased
 
     private void txt_anadir1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_anadir1MouseEntered
@@ -1003,15 +1035,16 @@ public class CrearOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_anadir1MouseExited
 
     private void txt_anadir1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_anadir1MousePressed
-            if(evt.getButton() == 1){
-                        btn_anadir1.setBackground(verdeClick);
-                        sumar_item();
-            }
+        if(evt.getButton() == 1){
+            btn_anadir1.setBackground(verdeClick);
+            sumar_item();
+        }
         
     }//GEN-LAST:event_txt_anadir1MousePressed
 
     private void txt_anadir1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_anadir1MouseReleased
-        btn_anadir1.setBackground(verdeMouseEnter);
+        if(btn_anadir1.contains(evt.getPoint())) btn_anadir1.setBackground(verdeMouseEnter);
+        else btn_anadir1.setBackground(verde);
     }//GEN-LAST:event_txt_anadir1MouseReleased
 
     private void txt_restar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_restar1MouseEntered
@@ -1030,7 +1063,8 @@ public class CrearOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_restar1MousePressed
 
     private void txt_restar1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_restar1MouseReleased
-        btn_restar1.setBackground(rojoMouseEnter);
+        if(btn_restar1.contains(evt.getPoint())) btn_restar1.setBackground(rojoMouseEnter);
+        else btn_restar1.setBackground(rojo);
     }//GEN-LAST:event_txt_restar1MouseReleased
 
     private void txt_eliminar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_eliminar1MouseEntered
@@ -1049,7 +1083,8 @@ public class CrearOferta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_eliminar1MousePressed
 
     private void txt_eliminar1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_eliminar1MouseReleased
-        btn_eliminar1.setBackground(rojoMouseEnter);
+        if(btn_eliminar1.contains(evt.getPoint())) btn_eliminar1.setBackground(rojoMouseEnter);
+        else btn_eliminar1.setBackground(rojo); 
     }//GEN-LAST:event_txt_eliminar1MouseReleased
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){

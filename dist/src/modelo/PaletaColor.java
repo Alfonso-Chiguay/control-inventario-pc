@@ -12,7 +12,6 @@ public class PaletaColor {
     private Color MouseEnter;
     private Color MouseClick;
     
-    
     public PaletaColor(){
         this.id_paleta = "";
         this.Background = Color.decode("#c6ebbe");
@@ -27,8 +26,11 @@ public class PaletaColor {
         this.Panel = Color.decode(panel);
         this.MouseEnter = Color.decode(mouse_enter);
         this.MouseClick = Color.decode(mouse_click);
+
     }
 
+
+    
     public String getId_paleta() {
         return id_paleta;
     }
@@ -68,6 +70,7 @@ public class PaletaColor {
     public void setMouseClick(Color MouseClick) {
         this.MouseClick = MouseClick;
     }
+    
     
     
 }

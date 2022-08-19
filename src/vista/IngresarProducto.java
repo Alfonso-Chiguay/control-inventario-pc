@@ -85,7 +85,6 @@ public class IngresarProducto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(803, 450));
         setResizable(false);
 
         Background.setBackground(new java.awt.Color(230, 204, 178));
@@ -98,7 +97,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         DataPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_codigoProducto.setFont(new java.awt.Font("Roboto Thin", 0, 20)); // NOI18N
-        txt_codigoProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_codigoProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         DataPanel.add(txt_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 56, 320, 38));
 
         lbl_codigoProducto.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -113,7 +112,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         DataPanel.add(lbl_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 350, 40));
 
         txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
-        txt_nombreProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_nombreProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         DataPanel.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 470, 38));
 
         lbl_precio.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -124,7 +123,7 @@ public class IngresarProducto extends javax.swing.JFrame {
 
         txt_precio.setFont(new java.awt.Font("Roboto Thin", 0, 20)); // NOI18N
         txt_precio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_precio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txt_precio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_precio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txt_precioFocusGained(evt);
@@ -148,7 +147,7 @@ public class IngresarProducto extends javax.swing.JFrame {
 
         txt_stockInicial.setFont(new java.awt.Font("Roboto Thin", 0, 20)); // NOI18N
         txt_stockInicial.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_stockInicial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txt_stockInicial.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_stockInicial.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txt_stockInicialFocusGained(evt);
@@ -261,6 +260,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         txt_guardarCerrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_guardarCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         txt_guardarCerrar.setText("GUARDAR Y CERRAR");
+        txt_guardarCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_guardarCerrar.setPreferredSize(new java.awt.Dimension(252, 48));
         txt_guardarCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -298,6 +298,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         txt_guardarOtro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_guardarOtro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         txt_guardarOtro.setText("GUARDAR E INGRESAR OTRO");
+        txt_guardarOtro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_guardarOtro.setPreferredSize(new java.awt.Dimension(252, 48));
         txt_guardarOtro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -335,6 +336,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         txt_limpiarCampos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_limpiarCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clearText.png"))); // NOI18N
         txt_limpiarCampos.setText("LIMPIAR CAMPOS");
+        txt_limpiarCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_limpiarCampos.setPreferredSize(new java.awt.Dimension(252, 88));
         txt_limpiarCampos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -374,6 +376,7 @@ public class IngresarProducto extends javax.swing.JFrame {
         txt_exit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit.png"))); // NOI18N
         txt_exit.setText("SALIR");
+        txt_exit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txt_exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 txt_exitMouseEntered(evt);
@@ -541,7 +544,10 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_guardarOtroMousePressed
 
     private void txt_guardarOtroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarOtroMouseReleased
-        btn_guardarOtro.setBackground(mouseExitPanelColor);
+        if(btn_guardarOtro.isEnabled()){
+            if(btn_guardarOtro.contains(evt.getPoint())) btn_guardarOtro.setBackground(mouseEnterPanelColor);
+            else btn_guardarOtro.setBackground(mouseExitPanelColor);
+        }
     }//GEN-LAST:event_txt_guardarOtroMouseReleased
 
     private void txt_limpiarCamposMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMouseEntered
@@ -560,7 +566,8 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_limpiarCamposMousePressed
 
     private void txt_limpiarCamposMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_limpiarCamposMouseReleased
-        btn_limpiarCampos.setBackground(mouseExitPanelColor);
+        if(btn_limpiarCampos.contains(evt.getPoint())) btn_limpiarCampos.setBackground(mouseEnterPanelColor);
+        else btn_limpiarCampos.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_limpiarCamposMouseReleased
 
     private void txt_exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMouseEntered
@@ -576,7 +583,8 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_exitMousePressed
 
     private void txt_exitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_exitMouseReleased
-        btn_exit.setBackground(mouseExitPanelColor);
+        if(btn_exit.contains(evt.getPoint())) btn_exit.setBackground(mouseEnterPanelColor);
+        else btn_exit.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_exitMouseReleased
 
     private void txt_guardarCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMouseEntered
@@ -619,7 +627,10 @@ public class IngresarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_guardarCerrarMousePressed
 
     private void txt_guardarCerrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_guardarCerrarMouseReleased
-        if(btn_guardarCerrar.isEnabled()) btn_guardarCerrar.setBackground(mouseExitPanelColor);
+        if(btn_guardarCerrar.isEnabled()) {
+            if(btn_guardarCerrar.contains(evt.getPoint())) btn_guardarCerrar.setBackground(mouseEnterPanelColor);
+            else btn_guardarCerrar.setBackground(mouseExitPanelColor);
+        }
     }//GEN-LAST:event_txt_guardarCerrarMouseReleased
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){

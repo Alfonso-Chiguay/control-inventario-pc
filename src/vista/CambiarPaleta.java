@@ -238,7 +238,10 @@ public class CambiarPaleta extends javax.swing.JFrame {
         txt_ejemplo.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_ejemplo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_ejemplo.setText("EJEMPLO DE COMBINACION DE COLORES");
-        PanelDemostracion.add(txt_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 530, 30));
+        PanelDemostracion.add(txt_ejemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 530, 40));
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelDemostracion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 62, 530, -1));
 
         Background.add(PanelDemostracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 530, 480));
@@ -251,8 +254,12 @@ public class CambiarPaleta extends javax.swing.JFrame {
         });
         Background.add(cbb_paletas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 290, 40));
 
+        btn_seleccionar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_seleccionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_seleccionar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         txt_seleccionar.setBackground(new java.awt.Color(255, 255, 255));
-        txt_seleccionar.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        txt_seleccionar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txt_seleccionar.setForeground(new java.awt.Color(255, 255, 255));
         txt_seleccionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_seleccionar.setText("Seleccionar como predeterminado");
@@ -271,21 +278,7 @@ public class CambiarPaleta extends javax.swing.JFrame {
                 txt_seleccionarMouseReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout btn_seleccionarLayout = new javax.swing.GroupLayout(btn_seleccionar);
-        btn_seleccionar.setLayout(btn_seleccionarLayout);
-        btn_seleccionarLayout.setHorizontalGroup(
-            btn_seleccionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_seleccionarLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txt_seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        btn_seleccionarLayout.setVerticalGroup(
-            btn_seleccionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_seleccionarLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txt_seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        btn_seleccionar.add(txt_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 38));
 
         Background.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 230, 40));
 
@@ -369,7 +362,8 @@ public class CambiarPaleta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_seleccionarMouseExited
 
     private void txt_seleccionarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_seleccionarMouseReleased
-        btn_seleccionar.setBackground(mouseExitPanelColor);
+        if(btn_seleccionar.contains(evt.getPoint())) btn_seleccionar.setBackground(mouseEnterPanelColor);
+        else btn_seleccionar.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_seleccionarMouseReleased
 
     private void txt_seleccionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_seleccionarMousePressed

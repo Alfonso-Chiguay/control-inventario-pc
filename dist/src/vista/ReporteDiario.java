@@ -1,21 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
+import controlador.ConColores;
 import controlador.ConInformes;
-import db.Conexion;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import modelo.PaletaColor;
 
 /**
  *
@@ -24,12 +25,23 @@ import javax.swing.JTextField;
 public class ReporteDiario extends javax.swing.JFrame {
 
     String global_dia,global_mes,global_anio;
+    private static final ConColores cColor = new ConColores();  
+    JFrame mainWindow;
+    int xMouse, yMouse; 
+    PaletaColor paleta = cColor.paletaActiva();
+    //COLORES    
+    Color BackgroundColor = paleta.getBackground();
+    Color PanelColor = paleta.getPanel();
+    Color mouseEnterPanelColor = paleta.getMouseEnter();
+    Color mouseExitPanelColor = PanelColor;
+    Color mouseClickPanelColor = paleta.getMouseClick();
+    Color textColor = mouseEnterPanelColor;  
     
     public ReporteDiario() {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Reporte venta diario");     
+        this.setTitle("Reporte de venta diario");     
         Date date = Calendar.getInstance().getTime();
 
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -45,8 +57,17 @@ public class ReporteDiario extends javax.swing.JFrame {
         txt_dia.setText(dia);
         txt_anio.setText(anio);
         asignar_mes(mes);
-
         
+        //COLORES
+        PanelFechaReporte.setBorder(BorderFactory.createTitledBorder(null, "Fecha de reporte", TitledBorder.CENTER, TitledBorder.TOP, new Font("Roboto",Font.BOLD,24), textColor));
+        Background.setBackground(BackgroundColor);
+        PanelFechaReporte.setBackground(BackgroundColor);
+        txt_tituloVentana.setForeground(textColor);
+        MinPanel.setBackground(BackgroundColor);
+        ClosePanel.setBackground(BackgroundColor);
+        slash1.setForeground(textColor);
+        slash2.setForeground(textColor);
+        btn_crearReporte.setBackground(PanelColor);
     }
 
     private void asignar_mes(String mes){
@@ -98,32 +119,38 @@ public class ReporteDiario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        Background = new javax.swing.JPanel();
+        PanelFechaReporte = new javax.swing.JPanel();
         txt_dia = new javax.swing.JTextField();
         cb_mes = new javax.swing.JComboBox<>();
         txt_anio = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        btn_generarReporte = new javax.swing.JLabel();
+        slash1 = new javax.swing.JLabel();
+        slash2 = new javax.swing.JLabel();
+        txt_tituloVentana = new javax.swing.JLabel();
+        ClosePanel = new javax.swing.JPanel();
+        txt_close = new javax.swing.JLabel();
+        MinPanel = new javax.swing.JPanel();
+        txt_minimize = new javax.swing.JLabel();
+        btn_crearReporte = new javax.swing.JPanel();
+        txt_crearReporte = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(230, 204, 178));
+        Background.setBackground(new java.awt.Color(230, 204, 178));
+        Background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cashmachine.png"))); // NOI18N
-        jLabel1.setText(" Reporte diario de venta");
+        PanelFechaReporte.setBackground(new java.awt.Color(230, 204, 178));
+        PanelFechaReporte.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "Fecha de reporte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
+        PanelFechaReporte.setForeground(new java.awt.Color(127, 85, 57));
+        PanelFechaReporte.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(230, 204, 178));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true), "Fecha de reporte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18), new java.awt.Color(127, 85, 57))); // NOI18N
-        jPanel2.setForeground(new java.awt.Color(127, 85, 57));
-
-        txt_dia.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        txt_dia.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_dia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_dia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txt_dia.setPreferredSize(new java.awt.Dimension(2, 33));
         txt_dia.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_diaFocusLost(evt);
@@ -134,12 +161,17 @@ public class ReporteDiario extends javax.swing.JFrame {
                 txt_diaKeyTyped(evt);
             }
         });
+        PanelFechaReporte.add(txt_dia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 55, 54, -1));
 
-        cb_mes.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        cb_mes.setFont(new java.awt.Font("Roboto Thin", 1, 22)); // NOI18N
         cb_mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        cb_mes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelFechaReporte.add(cb_mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 55, -1, -1));
 
-        txt_anio.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        txt_anio.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_anio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_anio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txt_anio.setPreferredSize(new java.awt.Dimension(2, 33));
         txt_anio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_anioFocusLost(evt);
@@ -150,94 +182,151 @@ public class ReporteDiario extends javax.swing.JFrame {
                 txt_anioKeyTyped(evt);
             }
         });
+        PanelFechaReporte.add(txt_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 55, 90, -1));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel2.setText("/");
+        slash1.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        slash1.setText("/");
+        PanelFechaReporte.add(slash1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 51, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        jLabel3.setText("/");
+        slash2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        slash2.setText("/");
+        PanelFechaReporte.add(slash2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 51, -1, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(txt_dia, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cb_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txt_dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
+        Background.add(PanelFechaReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 490, 130));
 
-        btn_generarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"))); // NOI18N
-        btn_generarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+        txt_tituloVentana.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txt_tituloVentana.setText("  REPORTE DE VENTA DIARIA");
+        txt_tituloVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMouseDragged(evt);
+            }
+        });
+        txt_tituloVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_tituloVentanaMousePressed(evt);
+            }
+        });
+        Background.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 40));
+
+        ClosePanel.setBackground(new java.awt.Color(255, 255, 153));
+        ClosePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        ClosePanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_close.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_close.setText("X");
+        txt_close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseEntered(evt);
+                txt_closeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseExited(evt);
+                txt_closeMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_generarReporteMouseReleased(evt);
+                txt_closeMousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_generarReporte)))
-                .addContainerGap())
+        javax.swing.GroupLayout ClosePanelLayout = new javax.swing.GroupLayout(ClosePanel);
+        ClosePanel.setLayout(ClosePanelLayout);
+        ClosePanelLayout.setHorizontalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClosePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_generarReporte)
-                .addContainerGap(25, Short.MAX_VALUE))
+        ClosePanelLayout.setVerticalGroup(
+            ClosePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ClosePanelLayout.createSequentialGroup()
+                .addComponent(txt_close, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        Background.add(ClosePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 40, 40));
+
+        MinPanel.setBackground(new java.awt.Color(255, 255, 153));
+        MinPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        MinPanel.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        txt_minimize.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        txt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_minimize.setText("_");
+        txt_minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_minimizeMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_minimizeMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MinPanelLayout = new javax.swing.GroupLayout(MinPanel);
+        MinPanel.setLayout(MinPanelLayout);
+        MinPanelLayout.setHorizontalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+        MinPanelLayout.setVerticalGroup(
+            MinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_minimize, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+
+        Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 40, 40));
+
+        btn_crearReporte.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_crearReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        txt_crearReporte.setFont(new java.awt.Font("Roboto", 0, 21)); // NOI18N
+        txt_crearReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_crearReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/createPdf.png"))); // NOI18N
+        txt_crearReporte.setText("GENERAR REPORTE");
+        txt_crearReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txt_crearReporteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txt_crearReporteMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_crearReporteMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txt_crearReporteMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_crearReporteLayout = new javax.swing.GroupLayout(btn_crearReporte);
+        btn_crearReporte.setLayout(btn_crearReporteLayout);
+        btn_crearReporteLayout.setHorizontalGroup(
+            btn_crearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+        );
+        btn_crearReporteLayout.setVerticalGroup(
+            btn_crearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txt_crearReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+        );
+
+        Background.add(btn_crearReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 240, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,44 +357,85 @@ public class ReporteDiario extends javax.swing.JFrame {
         anioValido(txt_anio);
     }//GEN-LAST:event_txt_anioFocusLost
 
-    private void btn_generarReporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMousePressed
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
-        btn_generarReporte.setIcon(botonClick); 
-        ConInformes informe = new ConInformes();
-        txt_diaFocusLost(null);
-        String mes;
-        if((cb_mes.getSelectedIndex()+1)<10){
-            mes = "0"+String.valueOf(cb_mes.getSelectedIndex()+1);
-        }
-        else{
-           mes = String.valueOf(cb_mes.getSelectedIndex()+1); 
-        }
-        String fecha = txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
-        
-        Conexion conexion = new Conexion();
-        if(conexion.isNetworkOnline()){
-            informe.informeVentaPeriodo(fecha, fecha);            
-        }
-        else{
-           JOptionPane.showMessageDialog(this, "No hay conexion con la base de datos, revise su conexion a internet o reinicie la aplicación", "Generar reporte fallido", JOptionPane.WARNING_MESSAGE);   
-        }
-        
-    }//GEN-LAST:event_btn_generarReporteMousePressed
+    private void txt_tituloVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_txt_tituloVentanaMouseDragged
 
-    private void btn_generarReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseEntered
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_click.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseEntered
+    private void txt_tituloVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_tituloVentanaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_txt_tituloVentanaMousePressed
 
-    private void btn_generarReporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseExited
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseExited
+    private void txt_closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseEntered
+        ClosePanel.setBackground(Color.RED);
+        txt_close.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_closeMouseEntered
 
-    private void btn_generarReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_generarReporteMouseReleased
-        ImageIcon botonClick = new ImageIcon(getClass().getResource("/img/custom buttons/generarreporte_solid.png"));
-        btn_generarReporte.setIcon(botonClick);
-    }//GEN-LAST:event_btn_generarReporteMouseReleased
+    private void txt_closeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMouseExited
+        ClosePanel.setBackground(BackgroundColor);
+        txt_close.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_closeMouseExited
+
+    private void txt_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_closeMousePressed
+        Color DarkRed = new Color(146, 55, 77);
+        ClosePanel.setBackground(DarkRed);
+        txt_close.setForeground(Color.WHITE);
+        this.dispose();
+    }//GEN-LAST:event_txt_closeMousePressed
+
+    private void txt_minimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseEntered
+        MinPanel.setBackground(mouseEnterPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+    }//GEN-LAST:event_txt_minimizeMouseEntered
+
+    private void txt_minimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseExited
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseExited
+
+    private void txt_minimizeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMousePressed
+        MinPanel.setBackground(mouseClickPanelColor);
+        txt_minimize.setForeground(Color.WHITE);
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_txt_minimizeMousePressed
+
+    private void txt_minimizeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_minimizeMouseReleased
+        MinPanel.setBackground(BackgroundColor);
+        txt_minimize.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txt_minimizeMouseReleased
+
+    private void txt_crearReporteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseEntered
+        btn_crearReporte.setBackground(mouseEnterPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseEntered
+
+    private void txt_crearReporteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseExited
+        btn_crearReporte.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseExited
+
+    private void txt_crearReporteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMouseReleased
+        if(btn_crearReporte.contains(evt.getPoint())) btn_crearReporte.setBackground(mouseEnterPanelColor);
+        else btn_crearReporte.setBackground(mouseExitPanelColor);
+    }//GEN-LAST:event_txt_crearReporteMouseReleased
+
+    private void txt_crearReporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearReporteMousePressed
+        if(evt.getButton() == 1){    
+            ConInformes informe = new ConInformes();
+            txt_diaFocusLost(null);
+            String mes;
+            if((cb_mes.getSelectedIndex()+1)<10){
+                mes = "0"+String.valueOf(cb_mes.getSelectedIndex()+1);
+            }
+            else{
+               mes = String.valueOf(cb_mes.getSelectedIndex()+1); 
+            }
+            String fecha = txt_anio.getText()+"-"+mes +"-"+txt_dia.getText();
+
+
+            informe.informeVentaPeriodo(fecha, fecha); 
+        }
+    }//GEN-LAST:event_txt_crearReporteMousePressed
     
     private void onlyNumberField(java.awt.event.KeyEvent evt){
         char enter = evt.getKeyChar();
@@ -371,14 +501,19 @@ public class ReporteDiario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btn_generarReporte;
+    private javax.swing.JPanel Background;
+    private javax.swing.JPanel ClosePanel;
+    private javax.swing.JPanel MinPanel;
+    private javax.swing.JPanel PanelFechaReporte;
+    private javax.swing.JPanel btn_crearReporte;
     private javax.swing.JComboBox<String> cb_mes;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel slash1;
+    private javax.swing.JLabel slash2;
     private javax.swing.JTextField txt_anio;
+    private javax.swing.JLabel txt_close;
+    private javax.swing.JLabel txt_crearReporte;
     private javax.swing.JTextField txt_dia;
+    private javax.swing.JLabel txt_minimize;
+    private javax.swing.JLabel txt_tituloVentana;
     // End of variables declaration//GEN-END:variables
 }

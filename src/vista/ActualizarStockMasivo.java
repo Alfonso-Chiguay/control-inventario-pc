@@ -114,6 +114,7 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         BackGround.add(rb_filtrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
         txt_filtro.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
+        txt_filtro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         BackGround.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 390, 43));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -217,6 +218,8 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         });
         BackGround.add(txt_tituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 40));
 
+        btn_generarExcel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_generarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_generarExcel.setPreferredSize(new java.awt.Dimension(230, 70));
 
         txt_generarExcel.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
@@ -244,14 +247,17 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         btn_generarExcel.setLayout(btn_generarExcelLayout);
         btn_generarExcelLayout.setHorizontalGroup(
             btn_generarExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_generarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(txt_generarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
         );
         btn_generarExcelLayout.setVerticalGroup(
             btn_generarExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_generarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(txt_generarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         BackGround.add(btn_generarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 250, 70));
+
+        btn_subirExcel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_subirExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txt_subirExcel.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         txt_subirExcel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -277,11 +283,11 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
         btn_subirExcel.setLayout(btn_subirExcelLayout);
         btn_subirExcelLayout.setHorizontalGroup(
             btn_subirExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_subirExcel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(txt_subirExcel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
         );
         btn_subirExcelLayout.setVerticalGroup(
             btn_subirExcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt_subirExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(txt_subirExcel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
         );
 
         BackGround.add(btn_subirExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 550, 250, 70));
@@ -386,7 +392,8 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_generarExcelMousePressed
 
     private void txt_generarExcelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_generarExcelMouseReleased
-        btn_generarExcel.setBackground(mouseEnterPanelColor);
+        if(btn_generarExcel.contains(evt.getPoint())) btn_generarExcel.setBackground(mouseEnterPanelColor);
+        else btn_generarExcel.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_generarExcelMouseReleased
 
     private void txt_subirExcelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_subirExcelMouseEntered
@@ -419,7 +426,8 @@ public class ActualizarStockMasivo extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_subirExcelMousePressed
 
     private void txt_subirExcelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_subirExcelMouseReleased
-        btn_subirExcel.setBackground(mouseEnterPanelColor);
+        if(btn_subirExcel.contains(evt.getPoint())) btn_subirExcel.setBackground(mouseEnterPanelColor);
+        else btn_subirExcel.setBackground(mouseExitPanelColor);
     }//GEN-LAST:event_txt_subirExcelMouseReleased
    
     private void filtroEditable(){

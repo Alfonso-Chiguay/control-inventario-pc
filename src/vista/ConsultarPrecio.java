@@ -1,11 +1,13 @@
 package vista;
 import controlador.ConColores;
+import controlador.ConProducto;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.PaletaColor;
 import modelo.Producto;
 
@@ -13,6 +15,8 @@ import modelo.Producto;
 public class ConsultarPrecio extends javax.swing.JFrame {
 
     ArrayList<Producto> productos;
+    ConProducto cProducto = new ConProducto();
+    ArrayList<String> descartados = cProducto.listarDescartados();
     private static final ConColores cColor = new ConColores();  
     JFrame mainWindow;
     int xMouse, yMouse; 
@@ -69,7 +73,6 @@ public class ConsultarPrecio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(930, 500));
         setResizable(false);
 
         BackGround.setBackground(new java.awt.Color(230, 204, 178));
@@ -85,12 +88,13 @@ public class ConsultarPrecio extends javax.swing.JFrame {
         BackGround.add(lbl_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 910, 38));
 
         txt_codigoProducto.setFont(new java.awt.Font("Roboto Thin", 0, 20)); // NOI18N
+        txt_codigoProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_codigoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_codigoProductoActionPerformed(evt);
             }
         });
-        BackGround.add(txt_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 249, 38));
+        BackGround.add(txt_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 120, 290, 38));
 
         txt_nombreProducto.setEditable(false);
         txt_nombreProducto.setBackground(new java.awt.Color(230, 204, 178));
@@ -234,9 +238,14 @@ public class ConsultarPrecio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
-
-        //ConProducto cProducto = new ConProducto();
-        //Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
+        if(descartados.contains(txt_codigoProducto.getText().toUpperCase())){
+            JOptionPane.showMessageDialog(this, "Este producto está descartado","Producto descartado", JOptionPane.INFORMATION_MESSAGE);
+            txt_codigoProducto.setText("");
+            txt_codigoProducto.requestFocus();
+            txt_nombreProducto.setText("");
+            lbl_precio.setText("");
+            return;
+        }
         
         Producto p = new Producto();
         for(Producto producto: productos){

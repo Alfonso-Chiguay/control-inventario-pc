@@ -6,7 +6,9 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.PaletaColor;
 import modelo.Producto;
 
@@ -23,6 +25,8 @@ public class ConsultaStockUnit extends javax.swing.JFrame {
     Color mouseExitPanelColor = PanelColor;
     Color mouseClickPanelColor = paleta.getMouseClick();
     Color textColor = mouseEnterPanelColor;   
+    ConProducto cProducto = new ConProducto();
+    ArrayList<String> descartados = cProducto.listarDescartados();
     
     public ConsultaStockUnit() {
         initComponents();
@@ -158,12 +162,13 @@ public class ConsultaStockUnit extends javax.swing.JFrame {
         Background.add(MinPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 0, 40, 40));
 
         txt_codigoProducto.setFont(new java.awt.Font("Roboto Thin", 0, 20)); // NOI18N
+        txt_codigoProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_codigoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_codigoProductoActionPerformed(evt);
             }
         });
-        Background.add(txt_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 250, 38));
+        Background.add(txt_codigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 120, 280, 38));
 
         lbl_codigoProducto.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         lbl_codigoProducto.setForeground(new java.awt.Color(127, 85, 57));
@@ -232,8 +237,16 @@ public class ConsultaStockUnit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_codigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigoProductoActionPerformed
-
-        ConProducto cProducto = new ConProducto();
+        
+        if(descartados.contains(txt_codigoProducto.getText().toUpperCase())){
+            JOptionPane.showMessageDialog(this, "Este producto está descartado","Producto descartado", JOptionPane.INFORMATION_MESSAGE);
+            txt_codigoProducto.setText("");
+            txt_codigoProducto.requestFocus();
+            lbl_stock.setText("");
+            txt_nombreProducto.setText("");
+            return;
+        }
+        
         Producto p = cProducto.consultaPrecio(txt_codigoProducto.getText());        
         
         

@@ -136,13 +136,26 @@ public class ConProducto {
             log.RegistrarLog("[Query][ConProducto|listarProductos] "+query);
             ResultSet rs = stmt.executeQuery(query);
             
+            ArrayList<String> descartados = listarDescartados();
+            
             while(rs.next()){   
-                Producto p = new Producto();
-                p.setCodigo_barra(rs.getString(1));
-                p.setNombre(rs.getString(2));
-                p.setPrecio(rs.getInt(3));
-                p.setStock(rs.getInt(4));
-                lista.add(p);
+                if(!descartados.contains(rs.getString((1)))){
+                    Producto p = new Producto();
+                    p.setCodigo_barra(rs.getString(1));
+                    p.setNombre(rs.getString(2));
+                    p.setPrecio(rs.getInt(3));
+                    p.setStock(rs.getInt(4));
+                    lista.add(p);                    
+                }
+                else{
+                    Producto p = new Producto();
+                    p.setCodigo_barra(rs.getString(1));
+                    p.setNombre("CODIGO DE PRODUCTO DESCARTADO");
+                    p.setPrecio(1);
+                    p.setStock(0);
+                    lista.add(p); 
+                }
+
             } 
             log.RegistrarLog("[ConProducto|listarProductos] Consulta exitosa");              
         }
@@ -150,6 +163,27 @@ public class ConProducto {
             log.RegistrarLog("[ERROR][ConProducto|listarProductos] "+e.getMessage());            
         }   
         return lista;
+    }
+    
+    public ArrayList<String> listarDescartados(){
+        Logs log = new Logs();
+        ArrayList<String> lista = new ArrayList<>();
+        try{      
+            Statement stmt = Conexion.getConnection().createStatement();
+            String query = "SELECT codigo_barra FROM PRODUCTO_DESCARTADO WHERE is_descartado = true;";
+            log.RegistrarLog("[Query][ConProducto|listarDescartados] "+query);
+            ResultSet rs = stmt.executeQuery(query);           
+            
+            
+            while(rs.next()){   
+                lista.add(rs.getString(1));
+            } 
+            log.RegistrarLog("[ConProducto|listarDescartados] Consulta exitosa");              
+        }
+        catch(Exception e){
+            log.RegistrarLog("[ERROR][ConProducto|listarDescartados] "+e.getMessage());            
+        }   
+        return lista;       
     }
     
     public ArrayList<Producto> listarProductosFiltrado(String filtro){
@@ -538,22 +572,23 @@ public class ConProducto {
             else listado = listarProductosFiltrado(filtro);
             
             for (Producto p : listado) {
-
-                    rowCount += 1;
-
-                    Row row = sheet.createRow(rowCount);
-                    Cell cell = row.createCell(0);
-                    cell.setCellValue(p.getCodigo_barra());
-                    cell.setCellStyle(style);
-                    cell = row.createCell(1);
-                    cell.setCellValue(p.getNombre());
-                    cell.setCellStyle(style);
-                    cell = row.createCell(2);
-                    cell.setCellValue(String.valueOf(p.getPrecio()));
-                    cell.setCellStyle(style);
-                    cell = row.createCell(3);
-                    cell.setCellValue(String.valueOf(p.getStock()));                    
-                    cell.setCellStyle(style);
+                
+                if(p.getNombre().equals("CODIGO DE PRODUCTO DESCARTADO")) continue;
+                                
+                rowCount += 1;
+                Row row = sheet.createRow(rowCount);
+                Cell cell = row.createCell(0);
+                cell.setCellValue(p.getCodigo_barra());
+                cell.setCellStyle(style);
+                cell = row.createCell(1);
+                cell.setCellValue(p.getNombre());
+                cell.setCellStyle(style);
+                cell = row.createCell(2);
+                cell.setCellValue(String.valueOf(p.getPrecio()));
+                cell.setCellStyle(style);
+                cell = row.createCell(3);
+                cell.setCellValue(String.valueOf(p.getStock()));                    
+                cell.setCellStyle(style);
             }
 
             inputStream.close();
@@ -567,14 +602,10 @@ public class ConProducto {
             Desktop.getDesktop().open(new File(rutaStockMasivo));
              
         }
-        catch (Exception e) {
-            
+        catch (Exception e) {            
             log.RegistrarLog("[ERROR][ConProducto|excelCargaStockMasivo] "+e.getMessage());     
         }
-        
-        
-    }
-    
+    }  
     
     public Producto consultaPrecio(String codigo){
         Logs log = new Logs();
@@ -616,6 +647,7 @@ public class ConProducto {
             ResultSet rs = stmt.executeQuery(query);
 
             while(rs.next()){
+                if(listarDescartados().contains(rs.getString(1))) continue;
                 Producto p = new Producto();
                 p.setCodigo_barra(rs.getString(1));
                 p.setNombre(rs.getString(2));
@@ -860,6 +892,25 @@ public class ConProducto {
         catch (Exception e) {
             log.RegistrarLog("[ERROR][ConProducto|crearOferta] "+e.getMessage()); 
             JOptionPane.showMessageDialog(null, "[ERROR][ConProducto|crearOferta] "+e.getMessage(), "Error creando oferta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }        
+    }
+    
+    public boolean descartarProducto(String codigoBarra){
+        Logs log = new Logs();
+        try{
+            Statement stmt = Conexion.getConnection().createStatement();
+            String query = "INSERT INTO PRODUCTO_DESCARTADO VALUES('"+codigoBarra+"',true);";
+                    
+            log.RegistrarLog("[Query][ConProducto|descartarProducto] "+query);
+            stmt.execute(query);
+            log.RegistrarLog("[ConProducto|descartarProducto] Descartado - "+codigoBarra); 
+            return true;
+            
+        }
+        catch(Exception e){
+            log.RegistrarLog("[ConProducto|descartarProducto] NO descartado - "+codigoBarra);
+            log.RegistrarLog("[ERROR][ConProducto|descartarProducto] "+e.getMessage());
             return false;
         }        
     }
