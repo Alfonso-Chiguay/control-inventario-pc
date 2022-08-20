@@ -14,10 +14,10 @@ public class PaletaColor {
     
     public PaletaColor(){
         this.id_paleta = "";
-        this.Background = Color.decode("#c6ebbe");
-        this.Panel = Color.decode("#38369a");
-        this.MouseEnter = Color.decode("#020887");
-        this.MouseClick = Color.decode("#7ca5b8");
+        this.Background = Color.decode("#fff1d0");
+        this.Panel = Color.decode("#07a0c3");
+        this.MouseEnter = Color.decode("#086788");
+        this.MouseClick = Color.decode("#56b4e8");
     }
     
     public PaletaColor(String id_paleta, String bg, String panel, String mouse_enter, String mouse_click){

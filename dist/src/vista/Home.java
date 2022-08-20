@@ -1604,8 +1604,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_consultarPrecioMouseReleased
 
     private void txt_consultarStockMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultarStockMouseReleased
-        if(btn_consultarPrecio.contains(evt.getPoint())) btn_consultarPrecio.setBackground(mouseEnterColorInventario);
-        else btn_consultarPrecio.setBackground(mouseExitColorInventario);
+        if(btn_consultarStock.contains(evt.getPoint())) btn_consultarStock.setBackground(mouseEnterColorInventario);
+        else btn_consultarStock.setBackground(mouseExitColorInventario);
     }//GEN-LAST:event_txt_consultarStockMouseReleased
 
     /**

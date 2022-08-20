@@ -12,7 +12,10 @@ public class ConColores {
  
     public PaletaColor paletaActiva(){
         Logs log = new Logs();
-        try{   
+        try{
+            if(Conexion.getConnection() == null){
+                Conexion.getConnection();
+            }
             Statement stmt = Conexion.getConnection().createStatement();
             String query =  "SELECT c.id_paleta, c.background, c.panel, c.mouse_enter, c.mouse_click " +
                             "FROM COLORES c  JOIN PALETA p ON c.id_paleta = p.id_paleta " +

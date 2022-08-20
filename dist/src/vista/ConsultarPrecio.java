@@ -98,13 +98,13 @@ public class ConsultarPrecio extends javax.swing.JFrame {
 
         txt_nombreProducto.setEditable(false);
         txt_nombreProducto.setBackground(new java.awt.Color(230, 204, 178));
-        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 30)); // NOI18N
+        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 1, 30)); // NOI18N
         txt_nombreProducto.setForeground(new java.awt.Color(127, 85, 57));
         txt_nombreProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nombreProducto.setBorder(null);
         txt_nombreProducto.setFocusable(false);
         txt_nombreProducto.setRequestFocusEnabled(false);
-        BackGround.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 186, 910, 38));
+        BackGround.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 910, 38));
 
         lbl_precioText.setFont(new java.awt.Font("Roboto", 0, 22)); // NOI18N
         lbl_precioText.setForeground(new java.awt.Color(127, 85, 57));

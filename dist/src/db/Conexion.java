@@ -26,7 +26,6 @@ public class Conexion {
             conn = DriverManager.getConnection("jdbc:mysql://"+SERVER+"/"+DB
                     ,propiedadesConexion);
             log.RegistrarLog("[Conexion|getConnection] Conexion a base de datos exitosa");    
-            System.out.println("Creando conexion");
             
         }
         catch(Exception err){

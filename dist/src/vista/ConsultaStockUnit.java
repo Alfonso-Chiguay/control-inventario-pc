@@ -179,7 +179,7 @@ public class ConsultaStockUnit extends javax.swing.JFrame {
 
         txt_nombreProducto.setEditable(false);
         txt_nombreProducto.setBackground(new java.awt.Color(230, 204, 178));
-        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 30)); // NOI18N
+        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 1, 28)); // NOI18N
         txt_nombreProducto.setForeground(new java.awt.Color(127, 85, 57));
         txt_nombreProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nombreProducto.setBorder(null);
@@ -190,7 +190,7 @@ public class ConsultaStockUnit extends javax.swing.JFrame {
                 txt_nombreProductoActionPerformed(evt);
             }
         });
-        Background.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 910, 38));
+        Background.add(txt_nombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 910, 38));
 
         lbl_stockText.setFont(new java.awt.Font("Roboto", 0, 22)); // NOI18N
         lbl_stockText.setForeground(new java.awt.Color(127, 85, 57));

@@ -229,7 +229,7 @@
               <Color blue="b2" green="cc" red="e6" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto Thin" size="30" style="0"/>
+              <Font name="Roboto Thin" size="28" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="39" green="55" red="7f" type="rgb"/>
@@ -246,7 +246,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="180" width="910" height="38"/>
+              <AbsoluteConstraints x="10" y="190" width="910" height="38"/>
             </Constraint>
           </Constraints>
         </Component>

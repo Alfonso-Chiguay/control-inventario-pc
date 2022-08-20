@@ -183,7 +183,7 @@ public class DescartarProducto extends javax.swing.JFrame {
 
         txt_nombreProducto.setEditable(false);
         txt_nombreProducto.setBackground(new java.awt.Color(204, 204, 204));
-        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 0, 30)); // NOI18N
+        txt_nombreProducto.setFont(new java.awt.Font("Roboto Thin", 1, 28)); // NOI18N
         txt_nombreProducto.setForeground(new java.awt.Color(127, 85, 57));
         txt_nombreProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nombreProducto.setBorder(null);

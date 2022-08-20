@@ -10,7 +10,6 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -120,23 +119,7 @@ public class CrearOferta extends javax.swing.JFrame {
         btn_anadir1.setBackground(verde);
         btn_restar1.setBackground(rojo);
         btn_eliminar1.setBackground(rojo);
-        
 
-        /*listaNoSeMuestra.add("VASOMARLEY1");
-        listaNoSeMuestra.add("VASOMARLEY2");
-        listaNoSeMuestra.add("VASOMARLEY3");
-        listaNoSeMuestra.add("VASONESCAFE1");
-        listaNoSeMuestra.add("VASONESCAFE2");
-        listaNoSeMuestra.add("614143407048");
-        listaNoSeMuestra.add("614143407062");
-        listaNoSeMuestra.add("614143407086");
-        listaNoSeMuestra.add("614143407215");
-        listaNoSeMuestra.add("7613034848550");
-        listaNoSeMuestra.add("7613036935944");
-        listaNoSeMuestra.add("7613036935975");
-        listaNoSeMuestra.add("7613036939171");
-        listaNoSeMuestra.add("7613036956895");
-        listaNoSeMuestra.add("859940002991");*/
         
         //TABLA
         PanelTabla.setBackground(BackgroundColor);
@@ -155,7 +138,7 @@ public class CrearOferta extends javax.swing.JFrame {
     
         
         tbl_listadoProductos.setRowHeight(35);
-        tbl_listadoProductos.setFont(new Font("Roboto Thin", Font.PLAIN, 22));
+        tbl_listadoProductos.setFont(new Font("Roboto", Font.PLAIN, 20));
         tbl_listadoProductos.setBackground(BackgroundColor);
         tbl_listadoProductos.setForeground(textColor);
         tbl_listadoProductos.setOpaque(true);
@@ -452,7 +435,7 @@ public class CrearOferta extends javax.swing.JFrame {
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        listaFiltrada.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
+        listaFiltrada.setFont(new java.awt.Font("Roboto", 0, 17)); // NOI18N
         listaFiltrada.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listaFiltradaMouseClicked(evt);

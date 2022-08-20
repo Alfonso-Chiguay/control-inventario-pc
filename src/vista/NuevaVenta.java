@@ -95,7 +95,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         tbl_detalleVenta.getColumnModel().getColumn(4).setMaxWidth(110);      
         
         tbl_detalleVenta.setRowHeight(35);
-        tbl_detalleVenta.setFont(new Font("Roboto Thin", Font.PLAIN, 22));
+        tbl_detalleVenta.setFont(new Font("Roboto", Font.PLAIN, 20));
         tbl_detalleVenta.setBackground(BackgroundColor);
         tbl_detalleVenta.setForeground(textColor);
         tbl_detalleVenta.setOpaque(true);
@@ -159,7 +159,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     public void actualizarProductos(){
         String palabraClave = txt_nombreProducto.getText();
         ArrayList<Producto> listadoFinal = new ArrayList<>();
-        
+        DefaultListModel dl = new DefaultListModel();
         for(Producto p:productos){
             if(!listaNoSeMuestra.contains(p.getCodigo_barra())){
                 listadoFinal.add(p);
@@ -169,7 +169,7 @@ public class NuevaVenta extends javax.swing.JFrame {
         productos = listadoFinal;
         
         if(!palabraClave.equals("")){
-            DefaultListModel dl = new DefaultListModel();
+            
             dl.clear();
             
             productos.forEach((p) -> {
@@ -179,13 +179,13 @@ public class NuevaVenta extends javax.swing.JFrame {
                 }
             });
             
-            listaFiltrada.setModel(dl);
+            
         }
         else{
-            DefaultListModel dl = new DefaultListModel();
             dl.clear();
-            listaFiltrada.setModel(dl);
+            
         }
+        listaFiltrada.setModel(dl);
     }
 
     public void reiniciarModulo(){        
@@ -481,8 +481,6 @@ public class NuevaVenta extends javax.swing.JFrame {
         lbl_escanearCodigo = new javax.swing.JLabel();
         lbl_buscarManual = new javax.swing.JLabel();
         separador = new javax.swing.JSeparator();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaFiltrada = new javax.swing.JList<>();
         txt_nombreProducto = new javax.swing.JTextField();
         scrollPanelDetalleVenta = new javax.swing.JScrollPane();
         tbl_detalleVenta = new javax.swing.JTable();
@@ -494,6 +492,8 @@ public class NuevaVenta extends javax.swing.JFrame {
         txt_restar1 = new javax.swing.JLabel();
         btn_eliminar1 = new javax.swing.JPanel();
         txt_eliminar1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaFiltrada = new javax.swing.JList<>();
         PanelTotal = new javax.swing.JPanel();
         lbl_total = new javax.swing.JLabel();
         lbl_totalProductos = new javax.swing.JLabel();
@@ -578,20 +578,6 @@ public class NuevaVenta extends javax.swing.JFrame {
         separador.setForeground(new java.awt.Color(0, 0, 0));
         separador.setOrientation(javax.swing.SwingConstants.VERTICAL);
         separador.setPreferredSize(new java.awt.Dimension(1, 0));
-
-        listaFiltrada.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
-        listaFiltrada.setPreferredSize(new java.awt.Dimension(410, 0));
-        listaFiltrada.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaFiltradaMouseClicked(evt);
-            }
-        });
-        listaFiltrada.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                listaFiltradaKeyPressed(evt);
-            }
-        });
-        jScrollPane2.setViewportView(listaFiltrada);
 
         txt_nombreProducto.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         txt_nombreProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -767,6 +753,20 @@ public class NuevaVenta extends javax.swing.JFrame {
             .addComponent(txt_eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
         );
 
+        listaFiltrada.setFont(new java.awt.Font("Roboto", 0, 17)); // NOI18N
+        listaFiltrada.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaFiltrada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaFiltradaMouseClicked(evt);
+            }
+        });
+        listaFiltrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listaFiltradaKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaFiltrada);
+
         javax.swing.GroupLayout PanelProductoLayout = new javax.swing.GroupLayout(PanelProducto);
         PanelProducto.setLayout(PanelProductoLayout);
         PanelProductoLayout.setHorizontalGroup(
@@ -774,14 +774,12 @@ public class NuevaVenta extends javax.swing.JFrame {
             .addGroup(PanelProductoLayout.createSequentialGroup()
                 .addComponent(PanelPaso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lbl_escanearCodigo)
-                        .addComponent(txt_nombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_codigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbl_buscarManual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_escanearCodigo)
+                    .addComponent(txt_nombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_codigoBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_buscarManual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -803,25 +801,26 @@ public class NuevaVenta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelProductoLayout.createSequentialGroup()
-                        .addComponent(btn_anadir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(btn_restar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(btn_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(scrollPanelDetalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(PanelProductoLayout.createSequentialGroup()
-                            .addComponent(lbl_escanearCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_codigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lbl_buscarManual, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(2, 2, 2))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lbl_escanearCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_codigoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_buscarManual, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(PanelProductoLayout.createSequentialGroup()
+                        .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelProductoLayout.createSequentialGroup()
+                                .addComponent(btn_anadir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addComponent(btn_restar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addComponent(btn_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrollPanelDetalleVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         Background.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 1650, 380));
@@ -1472,18 +1471,6 @@ public class NuevaVenta extends javax.swing.JFrame {
         txt_minimize.setForeground(Color.BLACK);
     }//GEN-LAST:event_txt_minimizeMouseReleased
 
-    private void listaFiltradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFiltradaMouseClicked
-         if (evt.getClickCount() == 2) {
-            threadManual.run();            
-        }
-    }//GEN-LAST:event_listaFiltradaMouseClicked
-
-    private void listaFiltradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaFiltradaKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            threadManual.run();
-        }
-    }//GEN-LAST:event_listaFiltradaKeyPressed
-
     private void txt_anadir1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_anadir1MouseEntered
         btn_anadir1.setBackground(verdeMouseEnter);
     }//GEN-LAST:event_txt_anadir1MouseEntered
@@ -1510,7 +1497,14 @@ public class NuevaVenta extends javax.swing.JFrame {
             }            
         } 
         catch (Exception e) {
-            System.out.println("Nada seleccionado");
+            try {
+                threadManual.run(); 
+            } 
+            catch (Exception ex) {
+                System.out.println("Nada seleccionado");
+            }
+            
+            
         }
 
 
@@ -1714,6 +1708,17 @@ public class NuevaVenta extends javax.swing.JFrame {
     private void rb_edenredKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rb_edenredKeyPressed
         pressF10_ESC(evt);
     }//GEN-LAST:event_rb_edenredKeyPressed
+
+    private void listaFiltradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaFiltradaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            threadManual.run();
+        }
+    }//GEN-LAST:event_listaFiltradaKeyPressed
+
+    private void listaFiltradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFiltradaMouseClicked
+        if (evt.getClickCount() == 2) threadManual.run();            
+        
+    }//GEN-LAST:event_listaFiltradaMouseClicked
     
     private void seleccionEfectivo(){        
         if(!rb_efectivo.isSelected()){
@@ -1800,7 +1805,7 @@ public class NuevaVenta extends javax.swing.JFrame {
     private javax.swing.JLabel img_edenred;
     private javax.swing.JLabel img_efectivo;
     private javax.swing.JLabel img_transferencia;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_1;
     private javax.swing.JLabel lbl_2;
     private javax.swing.JLabel lbl_buscarManual;
