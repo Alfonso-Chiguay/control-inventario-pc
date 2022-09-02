@@ -51,22 +51,14 @@ public class NuevaVenta extends javax.swing.JFrame {
     Color rojoMouseEnter = new Color(240, 36, 15);
     Color rojoClick = new Color(255, 116, 0);
 
-    public NuevaVenta() {
-        initComponents();
-        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
-        this.setIconImage(icon);
-        this.setTitle("Pili's Coffee POS Software | Nueva venta");
-        DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
-        table.setRowCount(0);        
-    }
     
-    public NuevaVenta(ArrayList<Producto> listado) {
+    public NuevaVenta() {
         initComponents();
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
         this.setIconImage(icon);
         this.setTitle("Modulo venta");
         
-        productos = listado;
+        productos = CON_PRODUCTO.listarProductos();
         
         DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
         table.setRowCount(0);
@@ -160,11 +152,14 @@ public class NuevaVenta extends javax.swing.JFrame {
         String palabraClave = txt_nombreProducto.getText();
         ArrayList<Producto> listadoFinal = new ArrayList<>();
         DefaultListModel dl = new DefaultListModel();
-        for(Producto p:productos){
-            if(!listaNoSeMuestra.contains(p.getCodigo_barra())){
-                listadoFinal.add(p);
-            }
+        
+        if(productos.isEmpty()){
+            productos = CON_PRODUCTO.listarProductos();
         }
+        
+        productos.stream().filter((p) -> (!listaNoSeMuestra.contains(p.getCodigo_barra()))).forEachOrdered((p) -> {
+            listadoFinal.add(p);
+        });
         
         productos = listadoFinal;
         
@@ -188,9 +183,8 @@ public class NuevaVenta extends javax.swing.JFrame {
         listaFiltrada.setModel(dl);
     }
 
-    public void reiniciarModulo(){        
-        ConProducto cProducto = new ConProducto();
-        NuevaVenta ventana = new NuevaVenta(cProducto.listarProductos());
+    public void reiniciarModulo(){                
+        NuevaVenta ventana = new NuevaVenta();
         ventana.setVisible(true);
         this.dispose();        
     }
@@ -1643,6 +1637,7 @@ public class NuevaVenta extends javax.swing.JFrame {
 
     private void txt_crearVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_crearVentaMousePressed
         if(evt.getButton() == 1 && tbl_detalleVenta.getRowCount() > 0){
+            
             lbl_confirmandoVenta.setVisible(true);
             DefaultTableModel table = (DefaultTableModel) tbl_detalleVenta.getModel();
             Venta venta = new Venta();
@@ -1664,8 +1659,13 @@ public class NuevaVenta extends javax.swing.JFrame {
 
             ConVenta cVenta = new ConVenta();
             boolean operacion = cVenta.registrarVenta(venta, lista, this, lbl_confirmandoVenta);
-            if(operacion)   
-                reiniciarModulo();
+            if(operacion) reiniciarModulo();
+            else{
+                operacion = cVenta.registrarVenta(venta, lista, this, lbl_confirmandoVenta);
+                if(operacion) reiniciarModulo();
+                else JOptionPane.showMessageDialog(this, "No se pudo ingresar la venta", "Venta erronea", JOptionPane.INFORMATION_MESSAGE);
+            }
+                
         }
         else{
             JOptionPane.showMessageDialog(this, "Ningun producto ingresado", "Error ingresando venta", JOptionPane.ERROR_MESSAGE);

@@ -89,7 +89,7 @@ public class CambiarPaleta extends javax.swing.JFrame {
         txt_seleccionar = new javax.swing.JLabel();
         txt_tituloVentana = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 

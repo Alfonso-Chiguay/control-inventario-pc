@@ -2,7 +2,6 @@ package controlador;
 
 import db.Conexion;
 import java.awt.Color;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,11 +14,9 @@ import modelo.VentaProducto;
 public class ConVenta {
     
     public boolean registrarVenta(Venta venta, ArrayList<VentaProducto> detalleVenta, JFrame ventana, JLabel texto){
-        Logs log = new Logs();
-        ArrayList<String> stockDiferente = new ArrayList<>();        
+        Logs log = new Logs();      
         texto.setVisible(true);
         try{
-
             Statement stmt = Conexion.getConnection().createStatement();
             
             String query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
@@ -156,8 +153,7 @@ public class ConVenta {
 
             return true;
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(ventana, "No se pudo ingresar la venta", "Venta erronea", JOptionPane.INFORMATION_MESSAGE);
+        catch(Exception e){            
             log.RegistrarLog("[ERROR][ConVenta|registrarVenta] "+e.getMessage());               
             return false;
         }

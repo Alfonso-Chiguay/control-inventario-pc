@@ -446,7 +446,7 @@ public class ReporteDiario extends javax.swing.JFrame {
     
     private void maxCharacter(int cantidad, JTextField campo, java.awt.event.KeyEvent evt){
         if(campo.getText().length() == cantidad){
-            campo.setText("");
+            campo.setText("");            
         }
     }
     

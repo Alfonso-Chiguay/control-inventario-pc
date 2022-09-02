@@ -13,7 +13,7 @@ public class ConColores {
     public PaletaColor paletaActiva(){
         Logs log = new Logs();
         try{
-            if(Conexion.getConnection() == null){
+            if(Conexion.getConnection() == null || Conexion.getConnection().isClosed()){
                 Conexion.getConnection();
             }
             Statement stmt = Conexion.getConnection().createStatement();
