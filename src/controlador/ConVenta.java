@@ -18,13 +18,32 @@ public class ConVenta {
         texto.setVisible(true);
         try{
             Statement stmt = Conexion.getConnection().createStatement();
+            String query;
+            try {
+                query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
+                                + "(SELECT NOW() FROM DUAL), '"
+                                + venta.getTipo_venta() +"',"
+                                + venta.getTotal()+ ");";                   
+                log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);            
+                stmt.executeUpdate(query);
+
+            } catch (Exception e) {
+                if(e.getMessage().contains("Duplicate entry")){ 
+                    query = "UPDATE SEQ_FOLIO SET nuevo_folio = nuevo_folio + 1;";
+                    log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);                
+                    stmt.executeUpdate(query);
+                    query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
+                                + "(SELECT NOW() FROM DUAL), '"
+                                + venta.getTipo_venta() +"',"
+                                + venta.getTotal()+ ");";                   
+                    log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);            
+                    stmt.executeUpdate(query);
+                }
+                else{
+                    throw e;
+                }
+            }            
             
-            String query = "INSERT INTO VENTA VALUES((SELECT nuevo_folio FROM SEQ_FOLIO), "
-                            + "(SELECT NOW() FROM DUAL), '"
-                            + venta.getTipo_venta() +"',"
-                            + venta.getTotal()+ ");";                   
-            log.RegistrarLog("[Query][ConVenta|registrarVenta] "+query);            
-            stmt.executeUpdate(query);
             log.RegistrarLog("[ConVenta|registrarVenta] Consulta exitosa");             
             for(VentaProducto vp: detalleVenta){
                 query = "INSERT INTO VENTA_PRODUCTO VALUES ('"

@@ -1661,9 +1661,7 @@ public class NuevaVenta extends javax.swing.JFrame {
             boolean operacion = cVenta.registrarVenta(venta, lista, this, lbl_confirmandoVenta);
             if(operacion) reiniciarModulo();
             else{
-                operacion = cVenta.registrarVenta(venta, lista, this, lbl_confirmandoVenta);
-                if(operacion) reiniciarModulo();
-                else JOptionPane.showMessageDialog(this, "No se pudo ingresar la venta", "Venta erronea", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se pudo ingresar la venta", "Venta erronea", JOptionPane.INFORMATION_MESSAGE);
             }
                 
         }

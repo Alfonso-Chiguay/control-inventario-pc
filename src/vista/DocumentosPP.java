@@ -11,6 +11,8 @@ import controlador.ConProveedor;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,9 @@ public class DocumentosPP extends javax.swing.JFrame {
     
     public DocumentosPP() {
         initComponents();
+        Image icon = Toolkit.getDefaultToolkit().getImage("src\\img\\coffee-heart-original.png");  
+        this.setIconImage(icon);
+        this.setTitle("Documentos PP");           
         Background.setBackground(BackgroundColor);
         txt_titulo.setForeground(textColor);
         MinPanel.setBackground(BackgroundColor);
