@@ -1,0 +1,50 @@
+<10:34:27> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<10:34:27> [ConProducto|listarProductos] Consulta exitosa
+<10:34:47> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<10:34:48> [ConProducto|listarProductos] Consulta exitosa
+<10:34:58> [Query][ConProducto|obtenerProducto] SELECT * FROM PRODUCTO WHERE codigo_barra = '111';
+<10:34:58> [ConProducto|obtenerProducto] Consulta exitosa
+<10:35:03> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<10:35:04> [ConProducto|consultaPrecio] Consulta exitosa
+<10:35:05> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<10:35:06> [ConProducto|consultaPrecio] Consulta exitosa
+<10:39:47> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<10:39:47> [ConProducto|consultaPrecio] Consulta exitosa
+<10:39:53> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '222';
+<10:39:53> [ConProducto|consultaPrecio] Consulta exitosa
+<10:41:28> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<10:41:28> [ConProducto|consultaPrecio] Consulta exitosa
+<10:42:37> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<10:42:38> [ConProducto|consultaPrecio] Consulta exitosa, pero sin datos
+<09:49:30> [Query][ConProducto|consultaPrecio] SELECT precio, nombre FROM PRODUCTO WHERE codigo_barra = '111';
+<09:49:30> [ConProducto|consultaPrecio] Consulta exitosa, pero sin datos
+<09:49:55> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<09:49:55> [ConProducto|listarProductos] Consulta exitosa
+<09:50:44> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-04-008 00:00:00' AND '2022-04-008 23:59:59';
+<09:50:44> [ConVenta|ventasDia] Consulta exitosa
+<09:50:44> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 008-04-2022 105044.pdf
+<09:50:44> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:54:25> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-04-08 00:00:00' AND '2022-04-08 23:59:59';
+<09:54:25> [ConVenta|ventasDia] Consulta exitosa
+<09:54:25> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 08-04-2022 105425.pdf
+<09:54:25> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:54:58> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-04-08 00:00:00' AND '2022-04-08 23:59:59';
+<09:54:58> [ConVenta|ventasDia] Consulta exitosa
+<09:54:59> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 08-04-2022 105458.pdf
+<09:54:59> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:58:29> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-03-12 00:00:00' AND '2022-03-12 23:59:59';
+<09:58:29> [ConVenta|ventasDia] Consulta exitosa
+<09:58:29> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 12-03-2022 105829.pdf
+<09:58:29> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:58:36> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-03-02 00:00:00' AND '2022-03-02 23:59:59';
+<09:58:36> [ConVenta|ventasDia] Consulta exitosa
+<09:58:36> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 02-03-2022 105836.pdf
+<09:58:36> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:58:43> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-04-08 00:00:00' AND '2022-04-08 23:59:59';
+<09:58:44> [ConVenta|ventasDia] Consulta exitosa
+<09:58:44> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 08-04-2022 105844.pdf
+<09:58:44> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
+<09:58:53> [Query][ConVenta|ventasDia] SELECT * FROM VENTA WHERE fecha BETWEEN '2022-04-08 00:00:00' AND '2022-04-08 23:59:59';
+<09:58:53> [ConVenta|ventasDia] Consulta exitosa
+<09:58:53> [ConInformes|informeVentaPeriodo] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Venta diaria/Venta diaria 08-04-2022 105853.pdf
+<09:58:53> [ConInformes|informeVentaPeriodo] Creacion de reporte exitoso
