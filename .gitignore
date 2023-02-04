@@ -1,2 +1,4 @@
 src/db/
 build/classes/db/
+src/controlador/config.properties
+build/classes/controlador/config.properties

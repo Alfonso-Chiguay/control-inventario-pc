@@ -255,7 +255,7 @@ public class Home extends javax.swing.JFrame {
 
         Subtitle.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         Subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Subtitle.setText("POS Software v2.2");
+        Subtitle.setText("POS Software v2.3");
         LeftPanel.add(Subtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 280, -1));
 
         moduloHome_panelIzq.setBackground(new java.awt.Color(176, 137, 104));

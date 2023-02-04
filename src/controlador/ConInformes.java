@@ -5,13 +5,16 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Producto;
@@ -22,6 +25,8 @@ public class ConInformes {
         Document documento = new Document();
         Logs log = new Logs();
         try {
+            
+            
             Date date = Calendar.getInstance().getTime();
 
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -35,7 +40,9 @@ public class ConInformes {
             
             
             String ruta = System.getProperty("user.home")+"/Desktop/Reportes/Stock/Stock general/Listado stock "+today+" "+hora+".pdf";
+            
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
             log.RegistrarLog("[ConInformes|listadoStockGeneral] Creacion reporte en blanco: "+ruta);
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
@@ -134,6 +141,7 @@ public class ConInformes {
             
             String ruta = System.getProperty("user.home")+"/Desktop/Reportes/Stock/Stock general/Listado stock "+filtro.toLowerCase()+" "+today+" "+hora+".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
             log.RegistrarLog("[ConInformes|listadoStockGeneral] Creacion reporte en blanco: "+ruta);
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
@@ -333,7 +341,18 @@ public class ConInformes {
                 ruta = System.getProperty("user.home")+"/Desktop/Reportes/Venta periodo/Ventas "+fechaSolicitada+".pdf";
             }
             
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            Properties prop = new Properties();
+            try {
+                prop.load(new FileInputStream("src//controlador//config.properties"));
+            } catch (IOException e) {
+                log.RegistrarLog("[ConInformes|informeVentaPeriodo] No se puede tener acceso a datos de archivo de configuracion... ("+e.getMessage()+")");  
+            }
+            
+            
+            PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            writer.setEncryption(prop.getProperty("password_pdf").getBytes(), prop.getProperty("password_pdf").getBytes(),
+                    PdfWriter.ALLOW_PRINTING, PdfWriter.ENCRYPTION_AES_128 | PdfWriter.DO_NOT_ENCRYPT_METADATA);
+            
             log.RegistrarLog("[ConInformes|informeVentaPeriodo] Creacion reporte en blanco: "+ruta);            
             documento.open();
             Image header = Image.getInstance("src/img/Piliscoffee header.png");
