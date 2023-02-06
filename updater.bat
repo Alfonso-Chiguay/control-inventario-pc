@@ -1,5 +1,5 @@
 @echo off
 set PATH=%PATH%; C:\Program Files\Git\cmd
-cd C:\Program Files\Pilis Coffee Software\
+cd C:\Users\Local PilisCoffee\OneDrive\Documentos\Software Pilis Coffee
 git pull
 pause
