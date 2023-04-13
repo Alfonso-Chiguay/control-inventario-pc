@@ -1,6 +1,5 @@
 package piliscoffeepos;
 import controlador.ConDocumento;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,14 +8,10 @@ import modelo.Documento;
 import vista.AlertaFacturasPP;
 import vista.Home;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 
 public class Main {
     public static void main(String[] args){  
-        
         Home ventana = new Home();
         ventana.setVisible(true); 
         
