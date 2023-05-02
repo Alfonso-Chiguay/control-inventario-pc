@@ -1,0 +1,36 @@
+<07:58:18> [ConInformes|listadoStockGeneral] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Stock/Stock general/Listado stock 12-04-2022 085818.pdf
+<07:58:21> [Conexion|getConnection] Conexion a base de datos exitosa
+<07:58:21> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<07:58:21> [ConProducto|listarProductos] Consulta exitosa
+<07:58:23> [ConInformes|listadoStockGeneral] Creacion de reporte exitoso
+<07:58:59> [ConInformes|listadoStockGeneral] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Stock/Stock general/Listado stock 12-04-2022 085859.pdf
+<07:59:01> [Conexion|getConnection] Conexion a base de datos exitosa
+<07:59:01> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<07:59:01> [ConProducto|listarProductos] Consulta exitosa
+<07:59:02> [ConInformes|listadoStockGeneral] Creacion de reporte exitoso
+<07:59:29> [ConInformes|listadoStockGeneral] Creacion reporte en blanco: C:\Users\alfon/Desktop/Reportes/Stock/Stock general/Listado stock 12-04-2022 085929.pdf
+<07:59:31> [Conexion|getConnection] Conexion a base de datos exitosa
+<07:59:31> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<07:59:31> [ConProducto|listarProductos] Consulta exitosa
+<07:59:32> [ConInformes|listadoStockGeneral] Creacion de reporte exitoso
+<21:40:20> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:40:20> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:40:20> [ConProducto|listarProductos] Consulta exitosa
+<21:41:36> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:41:36> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:41:36> [ConProducto|listarProductos] Consulta exitosa
+<21:42:26> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:42:26> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:42:26> [ConProducto|listarProductos] Consulta exitosa
+<21:43:01> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:43:01> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:43:01> [ConProducto|listarProductos] Consulta exitosa
+<21:43:40> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:43:40> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:43:40> [ConProducto|listarProductos] Consulta exitosa
+<21:44:27> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:44:27> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:44:27> [ConProducto|listarProductos] Consulta exitosa
+<21:44:52> [Conexion|getConnection] Conexion a base de datos exitosa
+<21:44:52> [Query][ConProducto|listarProductos] SELECT * FROM PRODUCTO;
+<21:44:52> [ConProducto|listarProductos] Consulta exitosa
